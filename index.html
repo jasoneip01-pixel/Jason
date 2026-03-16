@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StableWallet — Product Demo v3</title>
+<title>StableWallet — Interactive Demo</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -15,8 +15,10 @@
   --b:rgba(255,255,255,.08);--b2:rgba(255,255,255,.13);
   --f:-apple-system,system-ui,sans-serif;--m:'DM Mono','SF Mono',monospace;
 }
-body{background:#0D0D0D;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;font-family:var(--f);color:var(--t);padding:24px 16px;gap:48px;flex-wrap:wrap}
-.ph{width:375px;height:812px;background:var(--bg);border-radius:55px;position:relative;flex-shrink:0;margin-top:20px;
+body{background:#0D0D0D;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:var(--f);color:var(--t);padding:24px 16px;gap:40px;flex-wrap:wrap}
+
+/* iPhone shell */
+.ph{width:375px;height:812px;background:var(--bg);border-radius:55px;position:relative;flex-shrink:0;
   box-shadow:0 0 0 2px #282828,0 0 0 3.5px #181818,0 60px 120px rgba(0,0,0,.85),inset 0 0 0 1px rgba(255,255,255,.05)}
 .ph::before{content:'';position:absolute;right:-3px;top:182px;width:3px;height:76px;background:#222;border-radius:0 2px 2px 0;box-shadow:0 100px 0 #222}
 .ph::after{content:'';position:absolute;left:-3px;top:136px;width:3px;height:46px;background:#222;border-radius:2px 0 0 2px;box-shadow:0 68px 0 #222,0 128px 0 #222}
@@ -29,18 +31,31 @@ body{background:#0D0D0D;min-height:100vh;display:flex;align-items:flex-start;jus
 .sb-r{display:flex;align-items:center;gap:5px;font-size:12px}
 .bat{background:var(--g);color:#000;font-size:10px;font-weight:700;padding:2px 5px;border-radius:4px}
 .ct{position:absolute;inset:0;top:54px;overflow:hidden}
-.p{position:absolute;inset:0;display:flex;flex-direction:column;padding:14px 20px 18px;opacity:0;pointer-events:none;transform:translateX(26px);transition:opacity .3s ease,transform .3s cubic-bezier(.4,0,.2,1)}
+
+/* Panels */
+.p{position:absolute;inset:0;display:flex;flex-direction:column;padding:14px 20px 18px;opacity:0;pointer-events:none;transform:translateX(26px);transition:opacity .28s ease,transform .28s cubic-bezier(.4,0,.2,1)}
 .p.on{opacity:1;pointer-events:all;transform:none}
-.p.ex{opacity:0;transform:translateX(-26px)}
+.p.ex-l{opacity:0;transform:translateX(-26px);pointer-events:none}
+.p.ex-r{opacity:0;transform:translateX(26px);pointer-events:none}
+
+/* All clickable elements */
+.btn{width:100%;padding:15px;border-radius:14px;border:none;font-family:var(--f);font-size:15px;font-weight:600;cursor:pointer;transition:all .12s;letter-spacing:-.2px;display:block}
+.btn:active{transform:scale(.97)}
+.btn-g{background:var(--g);color:#000}.btn-g:hover{background:#2cd966}
+.btn-gh{background:var(--bg3);color:var(--t2);border:1px solid var(--b2);margin-top:8px}
+.tap{cursor:pointer;transition:opacity .12s}.tap:active{opacity:.7}
+
+/* Type */
 .h1{font-size:28px;font-weight:700;letter-spacing:-.8px;line-height:1.15}
 .h2{font-size:20px;font-weight:700;letter-spacing:-.3px}
 .h3{font-size:15px;font-weight:600;letter-spacing:-.2px}
 .bd{font-size:14px;color:var(--t2);line-height:1.5}
 .sm{font-size:11px;color:var(--t3);letter-spacing:.3px}
 .mg{color:var(--g)}.mr{color:var(--red)}.ma{color:var(--amber)}
+
+/* Cards & layout */
 .card{background:var(--bg2);border:1px solid var(--b);border-radius:18px;padding:16px}
 .card-g{border-color:var(--gb);background:rgba(34,197,94,.04)}
-.card-r{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.06)}
 .cdk{background:var(--bg3);border-radius:14px;padding:13px}
 .sep{height:1px;background:var(--b);margin:10px 0}
 .bh{background:linear-gradient(145deg,#181818,#0e0e0e);border:1px solid var(--b2);border-radius:22px;padding:20px;position:relative;overflow:hidden;margin-bottom:12px}
@@ -49,7 +64,8 @@ body{background:#0D0D0D;min-height:100vh;display:flex;align-items:flex-start;jus
 .bu{font-size:18px;font-weight:600;color:var(--t2);margin-right:3px}
 .rp{display:inline-flex;align-items:center;gap:5px;background:var(--gd);border:1px solid var(--gb);padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;color:var(--g)}
 .acts{display:flex;gap:8px;margin-bottom:12px}
-.act{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 6px;background:var(--bg2);border:1px solid var(--b);border-radius:16px;cursor:pointer}
+.act{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 6px;background:var(--bg2);border:1px solid var(--b);border-radius:16px;cursor:pointer;transition:opacity .12s}
+.act:active{opacity:.7}
 .act.pr{background:var(--g);border-color:var(--g)}
 .ai{width:38px;height:38px;border-radius:12px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:17px}
 .act.pr .ai{background:rgba(0,0,0,.18)}
@@ -57,33 +73,45 @@ body{background:#0D0D0D;min-height:100vh;display:flex;align-items:flex-start;jus
 .act.pr .al{color:rgba(0,0,0,.75)}
 .chips{display:flex;gap:5px;overflow:hidden;margin-bottom:11px}
 .chip{display:inline-flex;align-items:center;background:var(--bg3);border:1px solid var(--b);padding:4px 9px;border-radius:20px;font-size:9px;font-weight:500;color:var(--t2);white-space:nowrap;flex-shrink:0}
+
+/* OTP */
 .otp{display:flex;gap:7px;justify-content:center;margin:20px 0}
-.ob{width:44px;height:52px;background:var(--bg3);border:1.5px solid var(--b2);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:700;font-family:var(--m);transition:all .2s}
+.ob{width:44px;height:52px;background:var(--bg3);border:1.5px solid var(--b2);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:700;font-family:var(--m)}
 .ob.f{border-color:var(--gb);background:var(--gd);color:var(--g)}
 .ob.a{border-color:var(--g);box-shadow:0 0 0 3px rgba(34,197,94,.1)}
-.inp{background:var(--bg3);border:1.5px solid var(--b2);border-radius:13px;padding:13px 15px;display:flex;align-items:center;gap:9px;transition:border-color .2s}
+
+/* Input */
+.inp{background:var(--bg3);border:1.5px solid var(--b2);border-radius:13px;padding:13px 15px;display:flex;align-items:center;gap:9px}
 .inp.on{border-color:var(--gb)}
 .ipx{font-size:13px;color:var(--t2);flex-shrink:0}
 .cur{display:inline-block;width:2px;height:16px;background:var(--g);border-radius:1px;margin-left:1px;vertical-align:middle;animation:bl 1s step-end infinite}
 @keyframes bl{0%,100%{opacity:1}50%{opacity:0}}
-.btn{width:100%;padding:15px;border-radius:14px;border:none;font-family:var(--f);font-size:15px;font-weight:600;cursor:pointer;transition:all .15s;letter-spacing:-.2px}
-.btn-g{background:var(--g);color:#000}.btn-g:hover{background:#2cd966}.btn-g:active{transform:scale(.98)}
-.btn-gh{background:var(--bg3);color:var(--t2);border:1px solid var(--b2);margin-top:8px}
+
+/* Tab bar */
 .tab{position:absolute;bottom:0;left:0;right:0;height:80px;background:rgba(12,12,12,.95);backdrop-filter:blur(20px);border-top:1px solid var(--b);display:flex;align-items:flex-start;justify-content:space-around;padding-top:10px;z-index:50}
-.ti{display:flex;flex-direction:column;align-items:center;gap:3px;padding:3px 12px;cursor:pointer}
+.ti{display:flex;flex-direction:column;align-items:center;gap:3px;padding:3px 12px;cursor:pointer;transition:opacity .12s}
+.ti:active{opacity:.6}
 .ti .ic{font-size:19px;opacity:.35}.ti.on .ic{opacity:1}
 .ti .lb{font-size:9px;font-weight:500;color:var(--t3)}.ti.on .lb{color:var(--g)}
+
+/* Back header */
 .bk{display:flex;align-items:center;gap:10px;margin-bottom:16px}
-.bkb{width:30px;height:30px;border-radius:50%;background:var(--bg3);border:1px solid var(--b);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer}
+.bkb{width:30px;height:30px;border-radius:50%;background:var(--bg3);border:1px solid var(--b);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;transition:opacity .12s}
+.bkb:active{opacity:.6}
+
+/* Quote rows */
 .qr{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--b)}
 .qr:last-child{border-bottom:none}
 .ql{font-size:13px;color:var(--t2)}.qv{font-size:13px;font-weight:500}
+
+/* Bank rows */
 .br{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--b)}
 .br:last-child{border-bottom:none}
-.brl{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.6px}
-.brv{font-size:13px;font-weight:500}
+.brl{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.6px}.brv{font-size:13px;font-weight:500}
 .bra{font-family:var(--m);font-size:15px;font-weight:600;color:var(--g);letter-spacing:2px}
 .cp{font-size:10px;color:var(--g);background:var(--gd);padding:2px 8px;border-radius:7px;border:1px solid var(--gb);cursor:pointer;margin-left:7px}
+
+/* Tx list */
 .tx{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--b)}
 .tx:last-child{border-bottom:none}
 .tic{width:40px;height:40px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
@@ -91,85 +119,96 @@ body{background:#0D0D0D;min-height:100vh;display:flex;align-items:flex-start;jus
 .tn2{font-size:13px;font-weight:500}.ts{font-size:11px;color:var(--t2);margin-top:2px}
 .ta{font-family:var(--m);font-size:13px;font-weight:600;margin-left:auto}
 .tp{color:var(--g)}.tn{color:var(--red)}
-.ctc{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:15px;border:1.5px solid var(--b);background:var(--bg2);margin-bottom:7px;cursor:pointer;transition:border-color .2s}
+
+/* Contacts */
+.ctc{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:15px;border:1.5px solid var(--b);background:var(--bg2);margin-bottom:7px;cursor:pointer;transition:all .12s}
+.ctc:active{opacity:.7}
 .ctc.sl{border-color:var(--gb);background:var(--gd)}
 .av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
 .ab{background:#4F46E5;color:#fff}.ao{background:#F59E0B;color:#000}
+
+/* Success */
 .suc{display:flex;flex-direction:column;align-items:center;text-align:center;flex:1;justify-content:center}
 .sr{width:76px;height:76px;border-radius:50%;background:var(--gd);border:2px solid var(--gb);display:flex;align-items:center;justify-content:center;font-size:34px;margin-bottom:18px;animation:pp .5s cubic-bezier(.34,1.56,.64,1)}
 @keyframes pp{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
 .hsh{display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--b2);border-radius:11px;padding:8px 13px;margin-top:11px;font-family:var(--m);font-size:11px;color:var(--t2)}
+
+/* Earn */
 .er{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--b)}
 .er:last-child{border-bottom:none}.el{font-size:13px;color:var(--t2)}.ev{font-size:15px;font-weight:700;color:var(--g)}
+
+/* Step dots */
 .dots{display:flex;gap:6px;justify-content:center;margin-bottom:16px}
 .dot{width:6px;height:6px;border-radius:3px;background:var(--b2);transition:all .3s}
 .dot.dn{background:var(--g);opacity:.6}.dot.ac{background:var(--g);width:18px}
+
+/* Presets */
 .prs{display:flex;gap:7px;margin:9px 0 14px}
-.pr{flex:1;padding:8px;text-align:center;background:var(--bg3);border:1px solid var(--b);border-radius:11px;font-size:11px;font-weight:500;cursor:pointer;transition:all .15s}
+.pr{flex:1;padding:8px;text-align:center;background:var(--bg3);border:1px solid var(--b);border-radius:11px;font-size:11px;font-weight:500;cursor:pointer;transition:all .12s}
+.pr:active{opacity:.7}
 .pr.on{background:var(--gd);border-color:var(--gb);color:var(--g)}
-.kyc-prog{background:var(--bg3);border-radius:12px;padding:14px;margin-bottom:12px}
+
+/* KYC progress */
 .kyc-bar{height:5px;background:var(--b2);border-radius:3px;overflow:hidden;margin:8px 0}
-.kyc-fill{height:100%;border-radius:3px;background:var(--g);animation:progress 2s ease-in-out infinite alternate}
-@keyframes progress{from{width:55%}to{width:75%}}
-.kyc-step{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--t2);margin-bottom:5px}
-.kyc-dot{width:6px;height:6px;border-radius:50%;background:var(--g);flex-shrink:0}
-.onb-banner{background:var(--gd);border:1px solid var(--gb);border-radius:14px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px;cursor:pointer}
-.pin-row{display:flex;gap:10px;justify-content:center;margin:18px 0}
-.pin-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--gb);transition:background .2s}
-.pin-dot.filled{background:var(--g);border-color:var(--g)}
+.kyc-fill{height:100%;border-radius:3px;background:var(--g);animation:prg 2s ease-in-out infinite alternate}
+@keyframes prg{from{width:55%}to{width:78%}}
+
+/* PIN dots */
+.pin-row{display:flex;gap:10px;justify-content:center;margin:16px 0}
+.pin-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--gb)}
+.pin-dot.f{background:var(--g);border-color:var(--g)}
+
+/* Onboarding banner */
+.onb-banner{background:var(--gd);border:1px solid var(--gb);border-radius:14px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:opacity .12s}
+.onb-banner:active{opacity:.7}
+
+/* WhatsApp */
 .wa-bubble{border-radius:0 13px 13px 13px;padding:9px 13px;max-width:85%;font-size:12px;line-height:1.6;margin-bottom:8px}
 .wa-u{background:rgba(39,117,202,.2);border-radius:13px 0 13px 13px;align-self:flex-end;color:var(--t)}
 .wa-b{background:var(--bg3);color:var(--t)}
 .wa-name{font-size:10px;color:var(--g);font-weight:600;margin-bottom:3px}
 .wa-chat{display:flex;flex-direction:column;flex:1;overflow:hidden;padding-top:3px}
-.sk-row{display:flex;flex-direction:column;gap:7px;margin-top:10px}
-.sk{height:12px;background:var(--bg3);border-radius:6px;animation:shimmer 1.5s ease-in-out infinite}
-@keyframes shimmer{0%,100%{opacity:.4}50%{opacity:.8}}
+
+/* Settings rows */
 .set-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--b)}
 .set-row:last-child{border-bottom:none}
 .set-l{display:flex;align-items:center;gap:10px}
 .tag-ok{font-size:10px;background:var(--gd);color:var(--g);border:1px solid var(--gb);padding:2px 7px;border-radius:6px;font-weight:600}
-.tag-warn{font-size:10px;background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.3);padding:2px 7px;border-radius:6px;font-weight:600}
-.sid{width:340px;flex-shrink:0;padding-top:20px}
-.dbg{display:inline-flex;align-items:center;gap:5px;background:var(--gd);border:1px solid var(--gb);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;color:var(--g);margin-bottom:12px}
-.st{font-size:32px;font-weight:700;letter-spacing:-1px;margin-bottom:5px}
-.ss{font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:22px}
-.snv{display:flex;flex-direction:column;gap:2px;margin-bottom:18px;max-height:420px;overflow-y:auto;padding-right:2px}
-.snv::-webkit-scrollbar{width:3px}
-.snv::-webkit-scrollbar-thumb{background:var(--b2);border-radius:3px}
-.sn{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:12px;cursor:pointer;transition:all .18s;border:1px solid transparent}
-.sn:hover{background:rgba(255,255,255,.03)}.sn.ac{background:rgba(34,197,94,.07);border-color:var(--gb)}
-.sn.dn .nn{background:var(--gd);border-color:var(--gb);color:var(--g)}
-.nn{width:24px;height:24px;border-radius:50%;flex-shrink:0;background:var(--bg3);border:1px solid var(--b2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--t3);transition:all .2s}
-.sn.ac .nn{background:var(--g);border-color:var(--g);color:#000}
-.nt{font-size:12px;font-weight:500;color:var(--t2);transition:color .2s}.sn.ac .nt{color:var(--t)}
-.nd{font-size:10px;color:var(--t3);margin-top:1px;line-height:1.4}
-.p0-badge{font-size:9px;background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);padding:1px 5px;border-radius:4px;font-weight:600;vertical-align:middle;margin-left:4px}
-.p1-badge{font-size:9px;background:rgba(245,158,11,.15);color:var(--amber);border:1px solid rgba(245,158,11,.3);padding:1px 5px;border-radius:4px;font-weight:600;vertical-align:middle;margin-left:4px}
-.nvr{display:flex;gap:8px;margin-bottom:18px}
-.nb2{padding:9px 20px;border-radius:11px;font-family:var(--f);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;border:none}
-.np{background:var(--bg3);color:var(--t2);border:1px solid var(--b2)}.np:hover{background:var(--bg4)}
-.ng{background:var(--g);color:#000}.ng:hover{background:#2cd966}.ng:disabled{opacity:.38;cursor:not-allowed}
-.mts{display:flex;gap:7px;margin-bottom:14px}
-.mt{flex:1;background:var(--bg2);border:1px solid var(--b);border-radius:12px;padding:11px 12px}
-.mv{font-size:16px;font-weight:700;letter-spacing:-.4px}.ml{font-size:9px;color:var(--t3);margin-top:3px;line-height:1.4}
-.fix-log{background:var(--bg2);border:1px solid var(--b);border-radius:12px;padding:10px 12px;margin-bottom:10px}
-.fix-row{display:flex;align-items:flex-start;gap:7px;padding:5px 0;border-bottom:1px solid var(--b);font-size:11px;color:var(--t2)}
-.fix-row:last-child{border-bottom:none}
-.fix-i{flex-shrink:0;margin-top:1px}
-.kh{font-size:10px;color:var(--t3);text-align:center;margin-top:8px}
-@media(max-width:780px){body{flex-direction:column;align-items:center;padding:16px}.sid{width:100%;max-width:375px}.ph{width:338px;height:732px}}
+
+/* Sidebar */
+.sid{width:300px;flex-shrink:0}
+.st{font-size:28px;font-weight:700;letter-spacing:-1px;margin-bottom:5px}
+.ss{font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:20px}
+.flow-map{display:flex;flex-direction:column;gap:3px;margin-bottom:20px}
+.fm-node{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:10px;border:1px solid transparent;font-size:12px;color:var(--t2);cursor:pointer;transition:all .15s}
+.fm-node:hover{background:rgba(255,255,255,.04)}
+.fm-node.cur-node{background:rgba(34,197,94,.07);border-color:var(--gb);color:var(--t)}
+.fm-dot{width:8px;height:8px;border-radius:50%;background:var(--b2);flex-shrink:0;transition:background .2s}
+.fm-node.cur-node .fm-dot{background:var(--g)}
+.fm-node.done-node .fm-dot{background:var(--g);opacity:.5}
+.hint-box{background:var(--bg2);border:1px solid var(--b);border-radius:12px;padding:12px;margin-bottom:16px}
+.hint-title{font-size:11px;font-weight:600;color:var(--g);margin-bottom:6px}
+.hint-text{font-size:12px;color:var(--t2);line-height:1.6}
+.mts{display:flex;gap:7px;margin-bottom:10px}
+.mt{flex:1;background:var(--bg2);border:1px solid var(--b);border-radius:12px;padding:10px 12px}
+.mv{font-size:16px;font-weight:700;letter-spacing:-.4px}.ml{font-size:9px;color:var(--t3);margin-top:3px}
+.reset-btn{width:100%;padding:8px;border-radius:10px;border:1px solid var(--b2);background:transparent;color:var(--t3);font-size:12px;cursor:pointer;transition:all .15s;margin-top:8px}
+.reset-btn:hover{background:var(--bg3);color:var(--t2)}
+
+@media(max-width:740px){body{flex-direction:column;align-items:center;padding:16px}.sid{width:100%;max-width:375px}.ph{width:340px;height:736px}}
 </style>
 </head>
 <body>
+
+<!-- iPhone 17 -->
 <div class="ph">
  <div class="sc">
   <div class="di"><div class="di-d"></div><div class="di-c"></div></div>
-  <div class="sb"><div class="sb-t">18:29</div><div class="sb-r"><span>&#9679;&#9679;&#9679;&#9679;</span><span>WiFi</span><span class="bat">82</span></div></div>
+  <div class="sb"><div class="sb-t" id="clock">18:29</div><div class="sb-r"><span>&#9679;&#9679;&#9679;&#9679;</span><span>WiFi</span><span class="bat">82</span></div></div>
   <div class="ct">
 
-  <!-- P0: Onboarding -->
-  <div class="p on" id="p0">
+  <!-- SCREEN 1: Onboarding -->
+  <div class="p on" id="s-onboarding">
    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding-bottom:12px">
     <div style="background:var(--bg2);border:1px solid var(--b2);border-radius:18px;padding:16px 18px;margin:0 8px 22px;position:relative;overflow:hidden;width:100%">
      <div style="position:absolute;top:-28px;right:-28px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(34,197,94,.12) 0%,transparent 70%)"></div>
@@ -184,170 +223,136 @@ body{background:#0D0D0D;min-height:100vh;display:flex;align-items:flex-start;jus
      <div style="width:6px;height:6px;border-radius:3px;background:var(--b2)"></div>
     </div>
     <div class="h1" style="margin-bottom:9px">Your USDC,<br>your Naira,<br><span class="mg">your way.</span></div>
-    <div class="bd" style="padding:0 14px">Store, send, and convert between USDC and NGN. Earn <strong style="color:var(--g)">5.2% APY</strong> automatically.</div>
+    <div class="bd" style="padding:0 14px;font-size:13px">Store, send, and convert between USDC and NGN. Earn <strong style="color:var(--g)">5.2% APY</strong> automatically.</div>
    </div>
-   <button class="btn btn-g" style="margin-bottom:9px">Get Started</button>
-   <button class="btn btn-gh" style="font-size:14px;padding:13px">I already have an account</button>
+   <button class="btn btn-g" onclick="go('phone')">Get Started</button>
+   <button class="btn btn-gh" onclick="go('home')">I already have an account</button>
   </div>
 
-  <!-- P1: OTP verify -->
-  <div class="p" id="p1" style="text-align:center;padding-top:26px">
-   <div style="font-size:36px;margin-bottom:14px">&#128242;</div>
+  <!-- SCREEN 2: Phone input -->
+  <div class="p" id="s-phone">
+   <div style="height:30px"></div>
+   <div class="h3" style="margin-bottom:4px">Enter your number</div>
+   <div class="bd" style="margin-bottom:24px;font-size:13px">We'll send you a one-time verification code</div>
+   <div class="inp on" style="margin-bottom:12px">
+    <span class="ipx">&#127475;&#127468; +234</span>
+    <span style="font-size:16px;font-weight:500;flex:1">080 1234 5678<span class="cur"></span></span>
+   </div>
+   <div class="sm" style="margin-bottom:26px">By continuing, you agree to our Terms and Privacy Policy</div>
+   <button class="btn btn-g" onclick="go('otp')">Send Verification Code &#8594;</button>
+   <button class="btn btn-gh" onclick="go('onboarding')">&#8592; Back</button>
+  </div>
+
+  <!-- SCREEN 3: OTP -->
+  <div class="p" id="s-otp" style="text-align:center;padding-top:26px">
+   <div style="font-size:38px;margin-bottom:14px">&#128242;</div>
    <div class="h3" style="margin-bottom:4px">Verify your number</div>
    <div style="font-size:12px;color:var(--t2);margin-bottom:3px">Code sent to <span style="color:var(--usdc)">+234 801 234 5678</span></div>
-   <div class="sm" style="margin-bottom:4px">Sandbox OTP: <span style="color:var(--g);font-weight:600">123456</span></div>
+   <div class="sm" style="margin-bottom:2px">Sandbox OTP: <span style="color:var(--g);font-weight:600">123456</span></div>
    <div class="otp">
     <div class="ob f">1</div><div class="ob f">2</div><div class="ob f">3</div>
     <div class="ob f">4</div><div class="ob f">5</div>
     <div class="ob a">6<span class="cur" style="height:19px"></span></div>
    </div>
-   <button class="btn btn-g">Verify &#8594;</button>
-   <div class="sm" style="margin-top:12px">Resend in 0:42</div>
+   <button class="btn btn-g" onclick="go('kyc')">Verify &#8594;</button>
+   <button class="btn btn-gh" onclick="go('phone')">&#8592; Back</button>
   </div>
 
-  <!-- P2: KYC with progress (P0 FIX) -->
-  <div class="p" id="p2" style="padding-top:20px">
-   <div class="bk"><div class="bkb">&lsaquo;</div><div><div class="h3">Identity verification</div><div style="font-size:11px;color:var(--t2);margin-top:1px">Step 2 of 2</div></div></div>
-   <div class="kyc-prog">
+  <!-- SCREEN 4: KYC progress -->
+  <div class="p" id="s-kyc">
+   <div class="bk"><div class="bkb" onclick="go('otp')">&lsaquo;</div><div><div class="h3">Identity verification</div><div style="font-size:11px;color:var(--t2);margin-top:1px">Step 2 of 2</div></div></div>
+   <div class="card" style="margin-bottom:12px">
     <div style="font-size:13px;font-weight:500;margin-bottom:4px">Documents submitted &#10003;</div>
-    <div class="kyc-bar"><div class="kyc-fill" style="width:65%"></div></div>
+    <div class="kyc-bar"><div class="kyc-fill"></div></div>
     <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--t3);margin-bottom:10px"><span>Reviewing your documents</span><span>~2 min</span></div>
-    <div class="kyc-step"><div class="kyc-dot"></div><span style="color:var(--g)">ID submitted</span></div>
-    <div class="kyc-step"><div class="kyc-dot" style="background:var(--amber)"></div><span>Identity check <span class="ma">in progress...</span></span></div>
-    <div class="kyc-step"><div class="kyc-dot" style="background:var(--b2)"></div><span style="color:var(--t3)">Account activated</span></div>
+    <div style="display:flex;flex-direction:column;gap:5px">
+     <div style="display:flex;align-items:center;gap:8px;font-size:12px"><div style="width:6px;height:6px;border-radius:50%;background:var(--g)"></div><span style="color:var(--g)">ID submitted</span></div>
+     <div style="display:flex;align-items:center;gap:8px;font-size:12px"><div style="width:6px;height:6px;border-radius:50%;background:var(--amber)"></div><span>Identity check <span class="ma">in progress...</span></span></div>
+     <div style="display:flex;align-items:center;gap:8px;font-size:12px"><div style="width:6px;height:6px;border-radius:50%;background:var(--b2)"></div><span style="color:var(--t3)">Account activated</span></div>
+    </div>
    </div>
    <div class="card" style="margin-bottom:12px">
-    <div style="font-size:13px;font-weight:500;margin-bottom:4px">What happens next?</div>
-    <div class="bd" style="font-size:12px;line-height:1.7">&#10003; You'll get a notification when verified<br>&#10003; Usually takes 2-5 minutes<br>&#10003; You can close the app and come back</div>
+    <div style="font-size:13px;font-weight:500;margin-bottom:5px">What happens next?</div>
+    <div class="bd" style="font-size:12px;line-height:1.7">&#10003; You'll get a push notification when verified<br>&#10003; Usually takes 2-5 minutes<br>&#10003; You can close the app and come back</div>
    </div>
-   <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:12px;padding:10px;font-size:11px;color:var(--amber);line-height:1.6">
-    Need help? Email <strong>support@stablewallet.app</strong>
-   </div>
+   <button class="btn btn-g" onclick="go('home')">Done — Go to Home &#8594;</button>
+   <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--t3)">Problem? <span style="color:var(--g);cursor:pointer">Email support@stablewallet.app</span></div>
   </div>
 
-  <!-- P3: Home with onboarding banner (P1 FIX) -->
-  <div class="p" id="p3" style="padding-bottom:80px">
+  <!-- SCREEN 5: Home -->
+  <div class="p" id="s-home" style="padding-bottom:80px">
    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
     <div style="display:flex;align-items:center;gap:9px">
      <div style="width:38px;height:38px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#000">SK</div>
-     <div>
-      <div style="font-size:10px;color:var(--t3)">savings grew <span class="mg">$0.04</span> today &#127807;</div>
-      <div style="font-size:14px;font-weight:600">Seun K.</div>
-     </div>
+     <div><div style="font-size:10px;color:var(--t3)">savings grew <span class="mg">$0.04</span> today &#127807;</div><div style="font-size:14px;font-weight:600">Seun K.</div></div>
     </div>
-    <div style="font-size:20px">&#128276;</div>
+    <div style="font-size:20px;cursor:pointer" onclick="go('settings')">&#128276;</div>
    </div>
    <div class="bh">
     <div class="sm" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Balance</div>
     <div style="display:flex;align-items:baseline;gap:3px"><span class="bu">$</span><span class="bn">250.00</span></div>
     <div style="font-size:12px;color:var(--t2);margin-top:5px">&#8776; &#8358; 400,000 NGN</div>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:11px;border-top:1px solid var(--b)">
-     <div class="rp">1 USDC = &#8358; 1,600</div>
-     <div style="font-size:12px;color:var(--t2)">Earning <span style="color:var(--g);font-weight:600">5.2% APY</span></div>
+     <div class="rp tap" onclick="go('earn')">1 USDC = &#8358; 1,600</div>
+     <div class="tap" style="font-size:12px;color:var(--t2)" onclick="go('earn')">Earning <span style="color:var(--g);font-weight:600">5.2% APY</span> &#8594;</div>
     </div>
    </div>
    <div class="chips">
-    <div class="chip">&#128274; Licensed</div>
-    <div class="chip">&#9935; On-Chain</div>
-    <div class="chip">&#128737; Self-Custody</div>
-    <div class="chip">&#128084; Cobo MAS</div>
+    <div class="chip">&#128274; Licensed</div><div class="chip">&#9935; On-Chain</div>
+    <div class="chip">&#128737; Self-Custody</div><div class="chip">&#128084; Cobo MAS</div>
    </div>
    <div class="h3" style="margin-bottom:8px">Quick Actions</div>
    <div class="card" style="padding:12px;margin-bottom:11px">
     <div class="acts" style="margin-bottom:0">
-     <div class="act pr"><div class="ai">&#10133;</div><span class="al" style="color:rgba(0,0,0,.8)">Add Money</span></div>
-     <div class="act"><div class="ai" style="background:rgba(39,117,202,.14)">&#128228;</div><span class="al">Send</span></div>
-     <div class="act"><div class="ai" style="background:rgba(245,158,11,.14)">&#128200;</div><span class="al">Earn</span></div>
-     <div class="act"><div class="ai" style="background:rgba(239,68,68,.11)">&#11014;&#65039;</div><span class="al">Withdraw</span></div>
+     <div class="act pr" onclick="go('deposit-amount')"><div class="ai">&#10133;</div><span class="al" style="color:rgba(0,0,0,.8)">Add Money</span></div>
+     <div class="act" onclick="go('send')"><div class="ai" style="background:rgba(39,117,202,.14)">&#128228;</div><span class="al">Send</span></div>
+     <div class="act" onclick="go('earn')"><div class="ai" style="background:rgba(245,158,11,.14)">&#128200;</div><span class="al">Earn</span></div>
+     <div class="act" onclick="go('withdraw')"><div class="ai" style="background:rgba(239,68,68,.11)">&#11014;&#65039;</div><span class="al">Withdraw</span></div>
     </div>
    </div>
-   <div style="display:flex;align-items:center;justify-content:space-between;background:var(--gd);border:1px solid var(--gb);border-radius:14px;padding:11px 13px;margin-bottom:8px;cursor:pointer">
+   <div class="tap" style="display:flex;align-items:center;justify-content:space-between;background:var(--gd);border:1px solid var(--gb);border-radius:14px;padding:11px 13px;margin-bottom:8px" onclick="go('earn')">
     <div style="font-size:12px;font-weight:500">&#128202; $250 earning $0.04/day &middot; See breakdown &#8594;</div>
     <div style="color:var(--g)">&rsaquo;</div>
    </div>
-   <div style="display:flex;align-items:center;justify-content:space-between;background:var(--bg2);border:1px solid var(--b);border-radius:14px;padding:11px 13px;cursor:pointer">
-    <div style="font-size:12px">&#127873; Invite friends &middot; Earn $2 per referral</div>
-    <div style="color:var(--t2)">&rsaquo;</div>
+   <div class="card">
+    <div class="h3" style="margin-bottom:8px;font-size:13px">Recent</div>
+    <div class="tx"><div class="tic id">&#128176;</div><div><div class="tn2">Added USDC</div><div class="ts">Via Airwallex &middot; 2h ago</div></div><div class="ta tp">+$64.52</div></div>
+    <div class="tx tap" onclick="go('history')"><div class="tic is">&#128228;</div><div><div class="tn2">Sent to Chioma</div><div class="ts">Lightning &middot; Yesterday</div></div><div class="ta tn">&#8722;$20.00</div></div>
+    <div class="tx tap" onclick="go('history')"><div class="tic iw">&#11014;&#65039;</div><div><div class="tn2">Withdrew to GTBank</div><div class="ts">Airwallex &middot; Mar 8</div></div><div class="ta tn">&#8722;$30.00</div></div>
    </div>
    <div class="tab">
-    <div class="ti on"><div class="ic">&#127968;</div><div class="lb" style="color:var(--g)">Home</div></div>
-    <div class="ti"><div class="ic">&#128228;</div><div class="lb">Send</div></div>
-    <div class="ti"><div class="ic">&#128200;</div><div class="lb">Earn</div></div>
-    <div class="ti"><div class="ic">&#128203;</div><div class="lb">History</div></div>
-    <div class="ti"><div class="ic">&#9881;&#65039;</div><div class="lb">Settings</div></div>
+    <div class="ti on" onclick="go('home')"><div class="ic">&#127968;</div><div class="lb" style="color:var(--g)">Home</div></div>
+    <div class="ti" onclick="go('send')"><div class="ic">&#128228;</div><div class="lb">Send</div></div>
+    <div class="ti" onclick="go('earn')"><div class="ic">&#128200;</div><div class="lb">Earn</div></div>
+    <div class="ti" onclick="go('history')"><div class="ic">&#128203;</div><div class="lb">History</div></div>
+    <div class="ti" onclick="go('settings')"><div class="ic">&#9881;&#65039;</div><div class="lb">Settings</div></div>
    </div>
   </div>
 
-  <!-- P4: New User — Zero Balance with Onboarding Banner (P1 FIX) -->
-  <div class="p" id="p4" style="padding-bottom:80px">
-   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-    <div style="display:flex;align-items:center;gap:9px">
-     <div style="width:38px;height:38px;border-radius:50%;background:var(--bg3);border:1px solid var(--b);display:flex;align-items:center;justify-content:center;font-size:14px">&#128100;</div>
-     <div><div style="font-size:14px;font-weight:600">Adaeze O.</div><div style="font-size:10px;color:var(--t3)">New account</div></div>
-    </div>
-    <div style="font-size:20px">&#128276;</div>
-   </div>
-   <div class="bh" style="margin-bottom:11px">
-    <div class="sm" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Balance</div>
-    <div style="display:flex;align-items:baseline;gap:3px"><span class="bu">$</span><span class="bn" style="font-size:36px;color:var(--t2)">0.00</span></div>
-    <div style="font-size:12px;color:var(--t3);margin-top:5px">Start saving in USDC today</div>
-   </div>
-   <!-- P1 FIX: Zero-balance onboarding banner -->
-   <div class="onb-banner" style="margin-bottom:10px">
-    <div style="font-size:22px">&#127879;</div>
-    <div style="flex:1">
-     <div style="font-size:13px;font-weight:600;color:var(--g)">Make your first deposit</div>
-     <div style="font-size:11px;color:var(--t2);margin-top:2px">Earn $5 USDC bonus on first &#8358;50,000+</div>
-    </div>
-    <div style="color:var(--g);font-size:16px">&rsaquo;</div>
-   </div>
-   <!-- P1 FIX: Empty state -->
-   <div class="card" style="margin-bottom:10px">
-    <div style="text-align:center;padding:16px 0">
-     <div style="font-size:32px;margin-bottom:8px">&#128203;</div>
-     <div style="font-size:14px;font-weight:500;margin-bottom:5px">No transactions yet</div>
-     <div class="sm" style="line-height:1.6">Your history will appear here<br>after your first deposit</div>
-    </div>
-   </div>
-   <div class="acts">
-    <div class="act pr" style="flex:2"><div class="ai">&#10133;</div><span class="al" style="color:rgba(0,0,0,.8)">Add Money</span></div>
-    <div class="act"><div class="ai" style="background:rgba(39,117,202,.14)">&#128228;</div><span class="al">Send</span></div>
-    <div class="act"><div class="ai" style="background:rgba(245,158,11,.14)">&#128200;</div><span class="al">Earn</span></div>
-   </div>
-   <div class="tab">
-    <div class="ti on"><div class="ic">&#127968;</div><div class="lb" style="color:var(--g)">Home</div></div>
-    <div class="ti"><div class="ic">&#128228;</div><div class="lb">Send</div></div>
-    <div class="ti"><div class="ic">&#128200;</div><div class="lb">Earn</div></div>
-    <div class="ti"><div class="ic">&#128203;</div><div class="lb">History</div></div>
-    <div class="ti"><div class="ic">&#9881;&#65039;</div><div class="lb">Settings</div></div>
-   </div>
-  </div>
-
-  <!-- P5: Add Money -->
-  <div class="p" id="p5">
-   <div class="bk"><div class="bkb">&lsaquo;</div><div><div class="h3">Add Money</div><div style="font-size:11px;color:var(--t2);margin-top:1px">NGN &#8594; USDC &middot; Airwallex FX</div></div></div>
+  <!-- SCREEN 6: Deposit amount -->
+  <div class="p" id="s-deposit-amount">
+   <div class="bk"><div class="bkb" onclick="go('home')">&lsaquo;</div><div><div class="h3">Add Money</div><div style="font-size:11px;color:var(--t2);margin-top:1px">NGN &#8594; USDC &middot; Airwallex FX</div></div></div>
    <div class="card" style="margin-bottom:11px">
     <div class="sm" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Amount (NGN)</div>
-    <div class="inp on" style="margin-bottom:10px;padding:14px">
-     <span class="ipx" style="font-size:15px">&#8358;</span>
-     <span style="font-size:26px;font-weight:700;flex:1">100,000</span>
-    </div>
+    <div class="inp on" style="margin-bottom:10px;padding:14px"><span class="ipx" style="font-size:15px">&#8358;</span><span style="font-size:26px;font-weight:700;flex:1">100,000</span></div>
     <div class="sep"></div>
     <div class="sm" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">You receive</div>
-    <div style="display:flex;align-items:baseline;gap:7px">
-     <span style="font-family:var(--m);font-size:24px;font-weight:700;color:var(--g)">$64.52</span>
-     <span style="font-size:13px;color:var(--usdc);font-weight:500">USDC</span>
-    </div>
+    <div style="display:flex;align-items:baseline;gap:7px"><span style="font-family:var(--m);font-size:24px;font-weight:700;color:var(--g)">$64.52</span><span style="font-size:13px;color:var(--usdc);font-weight:500">USDC</span></div>
     <div class="sm" style="margin-top:4px">Rate: &#8358;1,550/USDC &middot; 0 fees &middot; Airwallex + Cobo</div>
    </div>
-   <div class="prs"><div class="pr">&#8358;10k</div><div class="pr">&#8358;25k</div><div class="pr">&#8358;50k</div><div class="pr on">&#8358;100k</div></div>
-   <button class="btn btn-g">Get Rate &#8594;</button>
+   <div class="prs">
+    <div class="pr tap" onclick="this.parentElement.querySelectorAll('.pr').forEach(p=>p.classList.remove('on'));this.classList.add('on')">&#8358;10k</div>
+    <div class="pr tap" onclick="this.parentElement.querySelectorAll('.pr').forEach(p=>p.classList.remove('on'));this.classList.add('on')">&#8358;25k</div>
+    <div class="pr tap" onclick="this.parentElement.querySelectorAll('.pr').forEach(p=>p.classList.remove('on'));this.classList.add('on')">&#8358;50k</div>
+    <div class="pr on tap" onclick="this.parentElement.querySelectorAll('.pr').forEach(p=>p.classList.remove('on'));this.classList.add('on')">&#8358;100k</div>
+   </div>
+   <button class="btn btn-g" onclick="go('deposit-quote')">Get Rate &#8594;</button>
    <div class="sm" style="text-align:center;margin-top:8px">Min &#8358;5,000 &middot; Daily limit &#8358;160,000</div>
   </div>
 
-  <!-- P6: Confirm quote (Airwallex branding fix) -->
-  <div class="p" id="p6">
-   <div class="bk"><div class="bkb">&lsaquo;</div><div><div class="h3">Confirm Rate</div></div></div>
+  <!-- SCREEN 7: Deposit quote confirm -->
+  <div class="p" id="s-deposit-quote">
+   <div class="bk"><div class="bkb" onclick="go('deposit-amount')">&lsaquo;</div><div><div class="h3">Confirm Rate</div></div></div>
    <div class="dots"><div class="dot dn"></div><div class="dot ac"></div><div class="dot"></div></div>
    <div class="card" style="margin-bottom:11px">
     <div class="qr"><span class="ql">You send</span><span class="qv">&#8358;100,000</span></div>
@@ -359,60 +364,58 @@ body{background:#0D0D0D;min-height:100vh;display:flex;align-items:flex-start;jus
     </div>
    </div>
    <div style="text-align:center;margin-bottom:12px;font-size:12px;color:var(--g)">&#9201; Rate locked &middot; <span id="t1">14:58</span> remaining</div>
-   <!-- Trust explanation (P1 FIX) -->
    <div style="background:var(--bg3);border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:11px;color:var(--t2);line-height:1.7">
     &#128274; Your NGN is collected by <strong style="color:var(--t)">Airwallex</strong> (licensed payment institution). USDC secured by <strong style="color:var(--t)">Cobo MAS</strong>.
    </div>
-   <button class="btn btn-g">Confirm &amp; Get Bank Details &#8594;</button>
+   <button class="btn btn-g" onclick="go('deposit-bank')">Confirm &amp; Get Bank Details &#8594;</button>
+   <button class="btn btn-gh" onclick="go('deposit-amount')">&#8592; Change Amount</button>
   </div>
 
-  <!-- P7: Bank details with trust explanation (P1 FIX) -->
-  <div class="p" id="p7">
-   <div class="bk"><div class="bkb">&lsaquo;</div><div><div class="h3">Transfer NGN Now</div></div></div>
+  <!-- SCREEN 8: Bank transfer details -->
+  <div class="p" id="s-deposit-bank">
+   <div class="bk"><div class="bkb" onclick="go('deposit-quote')">&lsaquo;</div><div><div class="h3">Transfer NGN Now</div></div></div>
    <div class="dots"><div class="dot dn"></div><div class="dot dn"></div><div class="dot ac"></div></div>
    <div class="bd" style="margin-bottom:11px;font-size:13px">Transfer exactly &#8358;100,000. USDC arrives in ~10 minutes.</div>
-   <!-- P1 FIX: Explain who Airwallex is -->
    <div style="background:rgba(39,117,202,.1);border:1px solid rgba(39,117,202,.25);border-radius:10px;padding:9px 11px;margin-bottom:10px;font-size:11px;color:var(--usdc);line-height:1.6">
-    &#128139; <strong>Why Airwallex?</strong> Airwallex is StableWallet's licensed payment partner. Your NGN is safe — it's converted to USDC in your Cobo wallet.
+    &#128139; <strong>Why Airwallex?</strong> StableWallet's licensed payment partner. Safe and regulated.
    </div>
    <div class="cdk" style="margin-bottom:10px">
     <div class="br"><span class="brl">Bank</span><span class="brv">Airwallex Nigeria Ltd.</span></div>
-    <div class="br"><span class="brl">Account</span><div><span class="bra">0123 456 789</span><span class="cp">Copy</span></div></div>
+    <div class="br"><span class="brl">Account</span><div><span class="bra">0123 456 789</span><span class="cp tap" onclick="this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)">Copy</span></div></div>
     <div class="br"><span class="brl">Name</span><span class="brv">AIRWALLEX NG LTD</span></div>
     <div class="br"><span class="brl">Amount</span><span style="font-family:var(--m);font-size:15px;font-weight:700;color:var(--g)">&#8358;100,000</span></div>
    </div>
    <div style="background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.22);border-radius:11px;padding:10px;font-size:11px;color:#F5C842;line-height:1.7;margin-bottom:11px">&#9888; Send <strong>exact amount</strong> from your own bank. Rate expires in <span id="t2">14:58</span>.</div>
-   <button class="btn btn-g">I've Made the Transfer &#10003;</button>
-   <!-- P1 FIX: Support link while waiting -->
-   <div style="text-align:center;margin-top:8px;font-size:11px;color:var(--t3)">Problem? <span style="color:var(--g);cursor:pointer">Contact support</span></div>
+   <button class="btn btn-g" onclick="go('deposit-waiting')">I've Made the Transfer &#10003;</button>
+   <button class="btn btn-gh" onclick="go('home')">Do This Later</button>
   </div>
 
-  <!-- P8: Pending deposit (P0 FIX — not black box) -->
-  <div class="p" id="p8" style="align-items:center;justify-content:center;text-align:center">
+  <!-- SCREEN 9: Waiting for deposit -->
+  <div class="p" id="s-deposit-waiting" style="align-items:center;justify-content:center;text-align:center">
    <div style="font-size:40px;margin-bottom:16px">&#128202;</div>
    <div class="h2" style="margin-bottom:8px">Waiting for transfer</div>
-   <div class="bd" style="padding:0 16px;margin-bottom:20px">We'll notify you as soon as &#8358;100,000 arrives. Usually takes 5-15 minutes.</div>
+   <div class="bd" style="padding:0 16px;margin-bottom:20px">We'll notify you as soon as &#8358;100,000 arrives. Usually 5-15 minutes.</div>
    <div style="width:100%;background:var(--bg3);border-radius:14px;padding:14px;margin-bottom:14px">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
      <span style="font-size:12px;color:var(--t2)">Transfer status</span>
      <span style="font-size:11px;color:var(--amber);font-weight:600">PENDING</span>
     </div>
     <div style="height:4px;background:var(--b);border-radius:2px;overflow:hidden;margin-bottom:10px">
-     <div style="height:100%;width:30%;background:var(--amber);border-radius:2px;animation:progress 2s ease-in-out infinite alternate"></div>
+     <div style="height:100%;width:35%;background:var(--amber);border-radius:2px;animation:prg 2s ease-in-out infinite alternate"></div>
     </div>
-    <div style="font-size:11px;color:var(--t3);text-align:left;line-height:1.7">
+    <div style="font-size:11px;color:var(--t3);text-align:left;line-height:1.8">
      &#128178; Waiting for your bank transfer<br>
      &#128274; Funds secured by Cobo MPC wallet<br>
      &#128276; Push notification when USDC arrives
     </div>
    </div>
-   <button class="btn btn-gh" style="width:100%;margin-top:0">Go to Home</button>
-   <div style="margin-top:10px;font-size:11px;color:var(--t3)">Expected: <strong style="color:var(--t2)">~10 minutes</strong> &middot; Max 2 hours</div>
+   <button class="btn btn-g" onclick="go('home')" style="width:100%">Back to Home</button>
+   <div style="margin-top:10px;font-size:11px;color:var(--t3)">Expected: <strong style="color:var(--t2)">~10 min</strong> &middot; <span style="color:var(--g);cursor:pointer" onclick="go('tabi')">Need help?</span></div>
   </div>
 
-  <!-- P9: P2P Transfer -->
-  <div class="p" id="p9">
-   <div class="bk"><div class="bkb">&lsaquo;</div><div><div class="h3">Send USDC</div><div style="font-size:11px;color:var(--t2);margin-top:1px">&#9889; Lightning &middot; 0 fees &middot; Instant</div></div></div>
+  <!-- SCREEN 10: Send / P2P -->
+  <div class="p" id="s-send">
+   <div class="bk"><div class="bkb" onclick="go('home')">&lsaquo;</div><div><div class="h3">Send USDC</div><div style="font-size:11px;color:var(--t2);margin-top:1px">&#9889; Lightning &middot; 0 fees &middot; Instant</div></div></div>
    <div class="card" style="margin-bottom:11px">
     <div class="sm" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Amount (USDC)</div>
     <div style="display:flex;align-items:baseline;gap:5px;padding:7px 0 11px;border-bottom:1px solid var(--b)">
@@ -425,43 +428,109 @@ body{background:#0D0D0D;min-height:100vh;display:flex;align-items:flex-start;jus
     </div>
    </div>
    <div class="h3" style="margin-bottom:9px">Recent Contacts</div>
-   <div class="ctc sl"><div class="av ab">C</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Chioma Adeyemi</div><div style="font-size:10px;color:var(--t3);font-family:var(--m);margin-top:2px">0x1a2b...8f9e</div></div><div style="color:var(--t3)">&rsaquo;</div></div>
-   <div class="ctc"><div class="av ao">E</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Emeka Okafor</div><div style="font-size:10px;color:var(--t3);font-family:var(--m);margin-top:2px">0x5d6e...2a1b</div></div><div style="color:var(--t3)">&rsaquo;</div></div>
-   <!-- P0 FIX: PIN confirmation for transfers -->
-   <div style="background:var(--bg3);border-radius:12px;padding:12px;margin-top:10px;text-align:center">
-    <div style="font-size:12px;color:var(--t2);margin-bottom:10px">Enter PIN to confirm</div>
-    <div class="pin-row">
-     <div class="pin-dot filled"></div><div class="pin-dot filled"></div>
-     <div class="pin-dot filled"></div><div class="pin-dot filled"></div>
-     <div class="pin-dot"></div><div class="pin-dot"></div>
-    </div>
+   <div class="ctc sl" onclick="go('send-pin')">
+    <div class="av ab">C</div>
+    <div style="flex:1"><div style="font-size:13px;font-weight:500">Chioma Adeyemi</div><div style="font-size:10px;color:var(--t3);font-family:var(--m);margin-top:2px">0x1a2b...8f9e</div></div>
+    <div style="color:var(--g);font-size:14px">&#10003;</div>
    </div>
-   <button class="btn btn-g" style="margin-top:10px">Send $20.00 &#8594;</button>
-   <div class="sm" style="text-align:center;margin-top:7px">Platform lightning transfer &middot; 0 fees</div>
+   <div class="ctc" onclick="go('send-pin')">
+    <div class="av ao">E</div>
+    <div style="flex:1"><div style="font-size:13px;font-weight:500">Emeka Okafor</div><div style="font-size:10px;color:var(--t3);font-family:var(--m);margin-top:2px">0x5d6e...2a1b</div></div>
+    <div style="color:var(--t3)">&rsaquo;</div>
+   </div>
+   <button class="btn btn-g" style="margin-top:8px" onclick="go('send-pin')">Continue &#8594;</button>
+   <div class="tab">
+    <div class="ti" onclick="go('home')"><div class="ic">&#127968;</div><div class="lb">Home</div></div>
+    <div class="ti on" onclick="go('send')"><div class="ic">&#128228;</div><div class="lb" style="color:var(--g)">Send</div></div>
+    <div class="ti" onclick="go('earn')"><div class="ic">&#128200;</div><div class="lb">Earn</div></div>
+    <div class="ti" onclick="go('history')"><div class="ic">&#128203;</div><div class="lb">History</div></div>
+    <div class="ti" onclick="go('settings')"><div class="ic">&#9881;&#65039;</div><div class="lb">Settings</div></div>
+   </div>
   </div>
 
-  <!-- P10: Transfer Success -->
-  <div class="p" id="p10">
+  <!-- SCREEN 11: PIN confirmation -->
+  <div class="p" id="s-send-pin" style="align-items:center;justify-content:center;text-align:center">
+   <div style="font-size:36px;margin-bottom:14px">&#128273;</div>
+   <div class="h2" style="margin-bottom:6px">Confirm with PIN</div>
+   <div class="bd" style="margin-bottom:6px;font-size:13px">Sending <strong style="color:var(--t)">$20 USDC</strong> to Chioma</div>
+   <div class="sm" style="margin-bottom:4px">Required for all transfers &gt;$0</div>
+   <div class="pin-row">
+    <div class="pin-dot f"></div><div class="pin-dot f"></div>
+    <div class="pin-dot f"></div><div class="pin-dot f"></div>
+    <div class="pin-dot f"></div><div class="pin-dot" id="last-pin"></div>
+   </div>
+   <div style="display:flex;flex-direction:column;gap:8px;width:100%;margin-top:10px">
+    <button class="btn btn-g" onclick="go('send-success')">Confirm Send &#8594;</button>
+    <button class="btn btn-gh" onclick="go('send')">&#8592; Cancel</button>
+   </div>
+  </div>
+
+  <!-- SCREEN 12: Send success -->
+  <div class="p" id="s-send-success">
    <div class="suc">
     <div class="sr">&#10004;&#65039;</div>
     <div class="h1" style="margin-bottom:7px">Sent!</div>
     <div class="bd" style="padding:0 18px;margin-bottom:16px"><strong style="color:var(--t)">$20 USDC</strong> sent to Chioma.<br>Confirmed in &lt;2s.</div>
     <div style="width:100%;background:var(--gd);border:1px solid var(--gb);border-radius:14px;padding:13px 15px">
      <div style="font-size:12px;color:var(--t2);margin-bottom:3px">&#9889; Platform lightning transfer</div>
-     <div style="font-size:11px;color:var(--t3)">0 Gas &middot; Cobo internal clearing &middot; Instant</div>
+     <div style="font-size:11px;color:var(--t3)">Cobo internal clearing &middot; 0 Gas &middot; Instant</div>
     </div>
-    <!-- P1 FIX: "Transfer receipt" instead of confusing Basescan hash -->
     <div class="hsh"><span style="font-size:12px">&#128196;</span><span style="color:var(--g)">Receipt #SW-</span>7f3a...c92b</div>
    </div>
    <div style="width:100%">
-    <button class="btn btn-g">Back to Home</button>
-    <button class="btn btn-gh">Send Again</button>
+    <button class="btn btn-g" onclick="go('home')">Back to Home</button>
+    <button class="btn btn-gh" onclick="go('send')">Send Again</button>
    </div>
   </div>
 
-  <!-- P11: Earn APY with disclaimer (P1 FIX) -->
-  <div class="p" id="p11" style="padding-bottom:80px">
-   <div class="bk"><div class="bkb">&lsaquo;</div><div><div class="h3">Earn 5.2% APY</div></div></div>
+  <!-- SCREEN 13: Withdraw -->
+  <div class="p" id="s-withdraw">
+   <div class="bk"><div class="bkb" onclick="go('home')">&lsaquo;</div><div><div class="h3">Withdraw to Bank</div><div style="font-size:11px;color:var(--t2);margin-top:1px">USDC &#8594; NGN &middot; Airwallex</div></div></div>
+   <div class="card" style="margin-bottom:11px">
+    <div class="sm" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">USDC Amount</div>
+    <div style="display:flex;align-items:baseline;gap:5px;padding:7px 0 11px;border-bottom:1px solid var(--b)">
+     <span style="font-size:24px;font-weight:700;color:var(--g)">$</span>
+     <span style="font-family:var(--m);font-size:32px;font-weight:700">50</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding-top:9px;font-size:12px;margin-bottom:10px">
+     <span style="color:var(--t2)">Available: <strong style="color:var(--t)">$250.00 USDC</strong></span>
+     <span style="color:var(--g);font-weight:600;cursor:pointer">MAX</span>
+    </div>
+    <div class="sep"></div>
+    <div class="sm" style="text-transform:uppercase;letter-spacing:1px;margin:8px 0 5px">You receive</div>
+    <div style="font-family:var(--m);font-size:22px;font-weight:700;color:var(--g)">&#8358;80,000</div>
+    <div class="sm" style="margin-top:3px">Rate: &#8358;1,600/USDC &middot; 0 fees</div>
+   </div>
+   <div class="h3" style="margin-bottom:8px;font-size:13px">Send to</div>
+   <div class="ctc sl">
+    <div style="width:38px;height:38px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:16px">&#127968;</div>
+    <div style="flex:1"><div style="font-size:13px;font-weight:500">GTBank</div><div style="font-size:10px;color:var(--t3);margin-top:2px">0234567890 &middot; Seun K.</div></div>
+    <div style="color:var(--g)">&#10003;</div>
+   </div>
+   <button class="btn btn-g" style="margin-top:10px" onclick="go('withdraw-success')">Withdraw &#8358;80,000 &#8594;</button>
+   <div style="text-align:center;margin-top:8px;font-size:11px;color:var(--t3)">Estimated arrival: 5-15 minutes</div>
+  </div>
+
+  <!-- SCREEN 14: Withdraw success -->
+  <div class="p" id="s-withdraw-success">
+   <div class="suc">
+    <div class="sr" style="font-size:30px">&#127968;</div>
+    <div class="h1" style="margin-bottom:7px">Withdrawal sent!</div>
+    <div class="bd" style="padding:0 18px;margin-bottom:16px"><strong style="color:var(--t)">&#8358;80,000</strong> is on its way to your<br>GTBank account.</div>
+    <div style="width:100%;background:var(--bg3);border-radius:14px;padding:13px 15px">
+     <div style="font-size:12px;color:var(--t2);margin-bottom:3px">&#128178; Via Airwallex NGN payout</div>
+     <div style="font-size:11px;color:var(--t3)">Expected in 5-15 minutes &middot; Max 2 hours</div>
+    </div>
+   </div>
+   <div style="width:100%">
+    <button class="btn btn-g" onclick="go('home')">Back to Home</button>
+    <button class="btn btn-gh" onclick="go('history')">View History</button>
+   </div>
+  </div>
+
+  <!-- SCREEN 15: Earn -->
+  <div class="p" id="s-earn" style="padding-bottom:80px">
+   <div class="bk"><div class="bkb" onclick="go('home')">&lsaquo;</div><div><div class="h3">Earn 5.2% APY</div></div></div>
    <div style="background:var(--bg2);border:1px solid var(--b);border-radius:18px;padding:18px;text-align:center;margin-bottom:11px">
     <div class="sm" style="margin-bottom:7px">Current Balance</div>
     <div style="font-size:40px;font-weight:700;letter-spacing:-1.5px;margin-bottom:3px">$250.00</div>
@@ -474,92 +543,93 @@ body{background:#0D0D0D;min-height:100vh;display:flex;align-items:flex-start;jus
    </div>
    <div style="background:var(--gd);border:1px solid var(--gb);border-radius:14px;padding:13px;margin-bottom:10px">
     <div style="font-size:13px;font-weight:600;margin-bottom:7px">&#128161; How it works</div>
-    <div class="bd" style="font-size:12px;line-height:1.75">&#10003; USDC earns 5.2% APY via Circle Yield<br>&#10003; Interest compounds daily<br>&#10003; Withdraw anytime without penalty</div>
+    <div class="bd" style="font-size:12px;line-height:1.75">&#10003; USDC earns 5.2% APY via Circle Yield<br>&#10003; Interest compounds daily automatically<br>&#10003; Withdraw anytime, no penalties</div>
    </div>
-   <!-- P1 FIX: APY disclosure (monitoring risk) -->
    <div style="background:var(--bg3);border-radius:10px;padding:10px;font-size:10px;color:var(--t3);line-height:1.6">
-    &#9432; Yield source: Circle Yield (USDC reserve). Past rates not guaranteed. Not a bank deposit. FDIC not applicable. Data: Circle.com
+    &#9432; Yield source: Circle Yield (USDC reserve). Not a bank deposit. Past rates not guaranteed.
    </div>
    <div class="tab">
-    <div class="ti"><div class="ic">&#127968;</div><div class="lb">Home</div></div>
-    <div class="ti"><div class="ic">&#128228;</div><div class="lb">Send</div></div>
-    <div class="ti on"><div class="ic">&#128200;</div><div class="lb" style="color:var(--g)">Earn</div></div>
-    <div class="ti"><div class="ic">&#128203;</div><div class="lb">History</div></div>
-    <div class="ti"><div class="ic">&#9881;&#65039;</div><div class="lb">Settings</div></div>
+    <div class="ti" onclick="go('home')"><div class="ic">&#127968;</div><div class="lb">Home</div></div>
+    <div class="ti" onclick="go('send')"><div class="ic">&#128228;</div><div class="lb">Send</div></div>
+    <div class="ti on" onclick="go('earn')"><div class="ic">&#128200;</div><div class="lb" style="color:var(--g)">Earn</div></div>
+    <div class="ti" onclick="go('history')"><div class="ic">&#128203;</div><div class="lb">History</div></div>
+    <div class="ti" onclick="go('settings')"><div class="ic">&#9881;&#65039;</div><div class="lb">Settings</div></div>
    </div>
   </div>
 
-  <!-- P12: Settings (P0 FIX) -->
-  <div class="p" id="p12" style="padding-bottom:80px">
+  <!-- SCREEN 16: History -->
+  <div class="p" id="s-history" style="padding-bottom:80px">
    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-    <div class="h3">Settings</div>
-    <div style="font-size:11px;color:var(--t3)">v1.0.0</div>
+    <div class="h3">History</div>
+    <div style="font-size:12px;color:var(--t3)">All on Base</div>
    </div>
-   <div class="h3" style="margin-bottom:8px;font-size:12px;color:var(--t3);text-transform:uppercase;letter-spacing:.8px">Bank Accounts</div>
+   <div class="card">
+    <div class="tx"><div class="tic id">&#128176;</div><div><div class="tn2">Added USDC</div><div class="ts">NGN &#8594; USDC &middot; Airwallex &middot; 2h ago</div></div><div class="ta tp">+$64.52</div></div>
+    <div class="tx"><div class="tic is">&#128228;</div><div><div class="tn2">Sent to Chioma</div><div class="ts">Lightning transfer &middot; Yesterday</div></div><div class="ta tn">&#8722;$20.00</div></div>
+    <div class="tx"><div class="tic iw">&#11014;&#65039;</div><div><div class="tn2">Withdrew to GTBank</div><div class="ts">USDC &#8594; NGN &middot; Airwallex &middot; Mar 8</div></div><div class="ta tn">&#8722;$30.00</div></div>
+    <div class="tx"><div class="tic id">&#128176;</div><div><div class="tn2">Added USDC</div><div class="ts">NGN &#8594; USDC &middot; Airwallex &middot; Mar 5</div></div><div class="ta tp">+$100.00</div></div>
+    <div class="tx"><div class="tic is">&#128228;</div><div><div class="tn2">Sent to Emeka</div><div class="ts">Lightning transfer &middot; Mar 3</div></div><div class="ta tn">&#8722;$10.00</div></div>
+   </div>
+   <div class="tab">
+    <div class="ti" onclick="go('home')"><div class="ic">&#127968;</div><div class="lb">Home</div></div>
+    <div class="ti" onclick="go('send')"><div class="ic">&#128228;</div><div class="lb">Send</div></div>
+    <div class="ti" onclick="go('earn')"><div class="ic">&#128200;</div><div class="lb">Earn</div></div>
+    <div class="ti on" onclick="go('history')"><div class="ic">&#128203;</div><div class="lb" style="color:var(--g)">History</div></div>
+    <div class="ti" onclick="go('settings')"><div class="ic">&#9881;&#65039;</div><div class="lb">Settings</div></div>
+   </div>
+  </div>
+
+  <!-- SCREEN 17: Settings -->
+  <div class="p" id="s-settings" style="padding-bottom:80px">
+   <div class="h3" style="margin-bottom:16px">Settings</div>
+   <div class="sm" style="margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px">Bank Accounts</div>
    <div class="card" style="margin-bottom:12px">
-    <div class="set-row">
-     <div class="set-l">
-      <span style="font-size:17px;margin-right:9px">&#127968;</span>
-      <div><div style="font-size:13px;font-weight:500">GTBank <span class="tag-ok">Default</span></div><div style="font-size:11px;color:var(--t2);margin-top:2px">0234567890 &middot; Seun K.</div></div>
-     </div>
+    <div class="set-row tap" onclick="go('home')">
+     <div class="set-l"><span style="font-size:17px;margin-right:9px">&#127968;</span><div><div style="font-size:13px;font-weight:500">GTBank <span style="font-size:10px;background:var(--gd);color:var(--g);border:1px solid var(--gb);padding:2px 6px;border-radius:5px;font-weight:600">Default</span></div><div style="font-size:10px;color:var(--t2);margin-top:2px">0234567890 &middot; Seun K.</div></div></div>
      <span style="color:var(--t3)">&rsaquo;</span>
     </div>
-    <div class="set-row">
+    <div class="set-row tap">
      <div class="set-l"><span style="font-size:17px;margin-right:9px;color:var(--g)">+</span><span style="font-size:13px;color:var(--g)">Add bank account</span></div>
     </div>
    </div>
-   <div class="h3" style="margin-bottom:8px;font-size:12px;color:var(--t3);text-transform:uppercase;letter-spacing:.8px">Security</div>
+   <div class="sm" style="margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px">Security</div>
    <div class="card" style="margin-bottom:12px">
-    <div class="set-row">
-     <div class="set-l"><span style="font-size:17px;margin-right:9px">&#128273;</span><div><div style="font-size:13px;font-weight:500">Change PIN</div><div style="font-size:10px;color:var(--t2);margin-top:1px">Last changed 7 days ago</div></div></div>
-     <span style="color:var(--t3)">&rsaquo;</span>
-    </div>
-    <div class="set-row">
-     <div class="set-l"><span style="font-size:17px;margin-right:9px">&#128065;&#65039;</span><div><div style="font-size:13px;font-weight:500">Face ID</div><div style="font-size:10px;color:var(--t2);margin-top:1px">Enabled</div></div></div>
-     <span style="font-size:11px;background:var(--gd);color:var(--g);border:1px solid var(--gb);padding:2px 8px;border-radius:8px">On</span>
-    </div>
+    <div class="set-row tap"><div class="set-l"><span style="font-size:17px;margin-right:9px">&#128273;</span><div><div style="font-size:13px;font-weight:500">Change PIN</div><div style="font-size:10px;color:var(--t2);margin-top:1px">Last changed 7 days ago</div></div></div><span style="color:var(--t3)">&rsaquo;</span></div>
+    <div class="set-row tap"><div class="set-l"><span style="font-size:17px;margin-right:9px">&#128065;&#65039;</span><div><div style="font-size:13px;font-weight:500">Face ID</div><div style="font-size:10px;color:var(--t2);margin-top:1px">Enabled</div></div></div><span style="font-size:11px;background:var(--gd);color:var(--g);border:1px solid var(--gb);padding:2px 8px;border-radius:8px">On</span></div>
    </div>
-   <!-- P0 FIX: Real support options -->
-   <div class="h3" style="margin-bottom:8px;font-size:12px;color:var(--t3);text-transform:uppercase;letter-spacing:.8px">Support</div>
+   <div class="sm" style="margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px">Support</div>
    <div class="card" style="margin-bottom:12px">
-    <div class="set-row">
-     <div class="set-l"><span style="font-size:17px;margin-right:9px">&#128140;</span><div><div style="font-size:13px;font-weight:500">Email support</div><div style="font-size:10px;color:var(--t2);margin-top:1px">support@stablewallet.app &middot; 24h</div></div></div>
-     <span style="color:var(--t3)">&rsaquo;</span>
-    </div>
-    <div class="set-row">
-     <div class="set-l"><span style="font-size:17px;margin-right:9px">&#128172;</span><div><div style="font-size:13px;font-weight:500">WhatsApp (Tabi AI)</div><div style="font-size:10px;color:var(--t2);margin-top:1px">Balance &middot; Rates &middot; Support tickets</div></div></div>
-     <span style="color:var(--t3)">&rsaquo;</span>
-    </div>
+    <div class="set-row tap" onclick="go('tabi')"><div class="set-l"><span style="font-size:17px;margin-right:9px">&#128172;</span><div><div style="font-size:13px;font-weight:500">WhatsApp (Tabi AI)</div><div style="font-size:10px;color:var(--t2);margin-top:1px">Balance &middot; Rates &middot; Support tickets</div></div></div><span style="color:var(--t3)">&rsaquo;</span></div>
+    <div class="set-row tap"><div class="set-l"><span style="font-size:17px;margin-right:9px">&#128140;</span><div><div style="font-size:13px;font-weight:500">Email support</div><div style="font-size:10px;color:var(--t2);margin-top:1px">support@stablewallet.app &middot; 24h</div></div></div><span style="color:var(--t3)">&rsaquo;</span></div>
    </div>
-   <div class="h3" style="margin-bottom:8px;font-size:12px;color:var(--t3);text-transform:uppercase;letter-spacing:.8px">Legal</div>
+   <div class="sm" style="margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px">Legal</div>
    <div class="card" style="margin-bottom:14px">
-    <div style="font-size:11px;color:var(--t3);line-height:1.7;padding:4px 0">
-     Wallet custody: Cobo WaaS 2.0 (MAS)<br>
-     Fiat rails: Airwallex &middot; KYC: Sumsub<br>
-     5.2% APY via Circle Yield — not bank guaranteed
-    </div>
+    <div style="font-size:10px;color:var(--t3);line-height:1.7;padding:4px 0">Custody: Cobo WaaS 2.0 (MAS-licensed)<br>Fiat rails: Airwallex &middot; KYC: Sumsub<br>5.2% APY via Circle Yield — not bank guaranteed</div>
    </div>
-   <button class="btn" style="background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3)">Sign out</button>
+   <button class="btn" style="background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.3)" onclick="go('onboarding')">Sign out</button>
    <div class="tab">
-    <div class="ti"><div class="ic">&#127968;</div><div class="lb">Home</div></div>
-    <div class="ti"><div class="ic">&#128228;</div><div class="lb">Send</div></div>
-    <div class="ti"><div class="ic">&#128200;</div><div class="lb">Earn</div></div>
-    <div class="ti"><div class="ic">&#128203;</div><div class="lb">History</div></div>
-    <div class="ti on"><div class="ic">&#9881;&#65039;</div><div class="lb" style="color:var(--g)">Settings</div></div>
+    <div class="ti" onclick="go('home')"><div class="ic">&#127968;</div><div class="lb">Home</div></div>
+    <div class="ti" onclick="go('send')"><div class="ic">&#128228;</div><div class="lb">Send</div></div>
+    <div class="ti" onclick="go('earn')"><div class="ic">&#128200;</div><div class="lb">Earn</div></div>
+    <div class="ti" onclick="go('history')"><div class="ic">&#128203;</div><div class="lb">History</div></div>
+    <div class="ti on" onclick="go('settings')"><div class="ic">&#9881;&#65039;</div><div class="lb" style="color:var(--g)">Settings</div></div>
    </div>
   </div>
 
-  <!-- P13: Tabi WhatsApp with support ticket (P0 FIX) -->
-  <div class="p" id="p13" style="padding-bottom:0">
+  <!-- SCREEN 18: Tabi WhatsApp -->
+  <div class="p" id="s-tabi" style="padding-bottom:0">
    <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px">
     <div style="width:34px;height:34px;border-radius:50%;background:var(--gd);border:1px solid var(--gb);display:flex;align-items:center;justify-content:center;font-size:16px">&#129302;</div>
     <div><div style="font-size:13px;font-weight:500">Tabi &middot; StableWallet AI</div><div style="font-size:10px;color:var(--g)">&#9679; Online</div></div>
+    <div class="bkb" style="margin-left:auto" onclick="go('home')">&times;</div>
    </div>
    <div class="wa-chat">
-    <div class="wa-bubble wa-u">My &#8358;100,000 transfer was 2 hours ago but no USDC</div>
-    <div class="wa-bubble wa-b"><div class="wa-name">TABI</div>I can see your transfer is pending review. Let me create a support ticket for you right away.<br><br>&#9989; Ticket <strong style="color:var(--g)">#SW-8472</strong> created<br>&#128338; Our team responds within 2 hours<br><br>Your USDC is safe — funds can't leave without your PIN.</div>
-    <div class="wa-bubble wa-u" style="margin-top:6px">What's today's rate?</div>
-    <div class="wa-bubble wa-b"><div class="wa-name">TABI</div>&#128202; Current rate:<br>&bull; Buy USDC: <strong>&#8358;1,550/USDC</strong><br>&bull; Sell USDC: <strong>&#8358;1,600/USDC</strong><br><br>NGN rate is near 3-month high &#128200; Good time to buy!</div>
+    <div class="wa-bubble wa-u">My &#8358;100,000 transfer didn't arrive</div>
+    <div class="wa-bubble wa-b"><div class="wa-name">TABI</div>I'll create a support ticket right away.<br><br>&#9989; Ticket <strong style="color:var(--g)">#SW-8472</strong> created<br>&#128338; Response within 2 hours<br><br>Your USDC is safe — funds can't move without your PIN.</div>
+    <div class="wa-bubble wa-u" style="margin-top:6px">What's the rate today?</div>
+    <div class="wa-bubble wa-b"><div class="wa-name">TABI</div>&#128202; Live rate:<br>&bull; Buy USDC: <strong>&#8358;1,550/USDC</strong><br>&bull; Sell USDC: <strong>&#8358;1,600/USDC</strong><br><br>0 fees &middot; Rate includes everything &#10003;</div>
+    <div class="wa-bubble wa-u" style="margin-top:6px">Check my balance</div>
+    <div class="wa-bubble wa-b"><div class="wa-name">TABI</div>&#128176; Your balance: <strong style="color:var(--g)">$250.00 USDC</strong><br>&#8776; &#8358;400,000 at today's rate<br><br>Earning <span style="color:var(--g)">+$0.04/day</span> &#127807;</div>
    </div>
    <div style="display:flex;align-items:center;gap:7px;margin-top:auto;padding:8px;background:var(--bg3);border-radius:11px">
     <span style="font-size:12px;color:var(--t2);flex:1">Type a message<span class="cur" style="vertical-align:middle"></span></span>
@@ -567,99 +637,140 @@ body{background:#0D0D0D;min-height:100vh;display:flex;align-items:flex-start;jus
    </div>
   </div>
 
-  </div>
- </div>
-</div>
+  </div><!-- /ct -->
+ </div><!-- /sc -->
+</div><!-- /ph -->
 
 <!-- Sidebar -->
 <div class="sid">
- <div class="dbg">&#9679; DEMO v3 · All P0 Fixes Applied</div>
+ <div style="display:inline-flex;align-items:center;gap:5px;background:var(--gd);border:1px solid var(--gb);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;color:var(--g);margin-bottom:12px">&#9679; Fully Interactive Demo</div>
  <div class="st">StableWallet</div>
- <div class="ss">iPhone 17 &middot; Dynamic Island &middot; 14步全流程<br>基于双视角审视，全面优化后版本</div>
- <div class="snv" id="snv">
-  <div class="sn ac" data-i="0"><div class="nn">1</div><div><div class="nt">产品介绍</div><div class="nd">Your USDC &middot; 5.2% APY</div></div></div>
-  <div class="sn" data-i="1"><div class="nn">2</div><div><div class="nt">OTP 验证</div><div class="nd">6位码 &middot; Sandbox: 123456</div></div></div>
-  <div class="sn" data-i="2"><div class="nn">3</div><div><div class="nt">KYC 进度反馈 <span class="p0-badge">P0</span></div><div class="nd">实时进度条 &middot; 不再黑盒等待</div></div></div>
-  <div class="sn" data-i="3"><div class="nn">4</div><div><div class="nt">主页 — 有余额</div><div class="nd">$250 &middot; 5.2% APY &middot; 快捷操作</div></div></div>
-  <div class="sn" data-i="4"><div class="nn">5</div><div><div class="nt">主页 — 零余额 <span class="p1-badge">P1</span></div><div class="nd">引导 Banner &middot; 空状态 UI 修复</div></div></div>
-  <div class="sn" data-i="5"><div class="nn">6</div><div><div class="nt">入金 — 输入金额</div><div class="nd">&#8358;100,000 &#8594; $64.52 USDC</div></div></div>
-  <div class="sn" data-i="6"><div class="nn">7</div><div><div class="nt">确认汇率</div><div class="nd">Airwallex FX &middot; 信任说明</div></div></div>
-  <div class="sn" data-i="7"><div class="nn">8</div><div><div class="nt">银行详情 <span class="p1-badge">P1</span></div><div class="nd">解释 Airwallex 来源 &middot; 支持入口</div></div></div>
-  <div class="sn" data-i="8"><div class="nn">9</div><div><div class="nt">等待到账状态 <span class="p0-badge">P0</span></div><div class="nd">进度条 &middot; 不再黑盒 &middot; 推送通知</div></div></div>
-  <div class="sn" data-i="9"><div class="nn">10</div><div><div class="nt">P2P 转账 + PIN <span class="p0-badge">P0</span></div><div class="nd">PIN 二次确认 &middot; 安全防护</div></div></div>
-  <div class="sn" data-i="10"><div class="nn">11</div><div><div class="nt">转账成功</div><div class="nd">平台闪电转账 &middot; 转账凭证</div></div></div>
-  <div class="sn" data-i="11"><div class="nn">12</div><div><div class="nt">5.2% APY <span class="p1-badge">P1</span></div><div class="nd">来源披露 &middot; Circle Yield</div></div></div>
-  <div class="sn" data-i="12"><div class="nn">13</div><div><div class="nt">Settings 完整实现 <span class="p0-badge">P0</span></div><div class="nd">银行账户 &middot; PIN &middot; 真实客服</div></div></div>
-  <div class="sn" data-i="13"><div class="nn">14</div><div><div class="nt">Tabi + 工单系统 <span class="p0-badge">P0</span></div><div class="nd">资金问题自动创建工单</div></div></div>
+ <div class="ss">点击手机屏幕内的按钮体验完整流程<br>Click anything inside the phone screen</div>
+
+ <div class="hint-box" id="hint-box">
+  <div class="hint-title" id="hint-title">&#128072; Start here</div>
+  <div class="hint-text" id="hint-text">Click "Get Started" to begin the full experience</div>
  </div>
- <div class="nvr">
-  <button class="nb2 np" id="pb" onclick="go(-1)" disabled>&lsaquo; 上一步</button>
-  <button class="nb2 ng" id="fb" onclick="go(1)">下一步 &rsaquo;</button>
- </div>
- <div class="fix-log">
-  <div style="font-size:11px;font-weight:600;color:var(--t2);margin-bottom:7px;padding-bottom:6px;border-bottom:1px solid var(--b)">本版修复清单</div>
-  <div class="fix-row"><span class="fix-i" style="color:var(--red)">&#9679;</span><span><strong>P0</strong> 出金失败自动退款 (Cobo Loop 反向)</span></div>
-  <div class="fix-row"><span class="fix-i" style="color:var(--red)">&#9679;</span><span><strong>P0</strong> 运营钱包低水位 Failfast</span></div>
-  <div class="fix-row"><span class="fix-i" style="color:var(--red)">&#9679;</span><span><strong>P0</strong> KYC 实时进度轮询 + 推送</span></div>
-  <div class="fix-row"><span class="fix-i" style="color:var(--red)">&#9679;</span><span><strong>P0</strong> 所有转账 PIN 二次确认</span></div>
-  <div class="fix-row"><span class="fix-i" style="color:var(--red)">&#9679;</span><span><strong>P0</strong> Settings 完整实现</span></div>
-  <div class="fix-row"><span class="fix-i" style="color:var(--red)">&#9679;</span><span><strong>P0</strong> Tabi 支持工单 + 真实客服</span></div>
-  <div class="fix-row"><span class="fix-i" style="color:var(--amber)">&#9679;</span><span><strong>P1</strong> 零余额引导 Banner</span></div>
-  <div class="fix-row"><span class="fix-i" style="color:var(--amber)">&#9679;</span><span><strong>P1</strong> 交易历史空状态 UI</span></div>
-  <div class="fix-row"><span class="fix-i" style="color:var(--amber)">&#9679;</span><span><strong>P1</strong> iOS 推送权限正确请求</span></div>
-  <div class="fix-row"><span class="fix-i" style="color:var(--amber)">&#9679;</span><span><strong>P1</strong> JWT token 自动刷新</span></div>
-  <div class="fix-row"><span class="fix-i" style="color:var(--amber)">&#9679;</span><span><strong>P1</strong> Airwallex 来源解释文案</span></div>
-  <div class="fix-row"><span class="fix-i" style="color:var(--amber)">&#9679;</span><span><strong>P1</strong> 5.2% APY 来源披露</span></div>
- </div>
+
+ <div class="flow-map" id="flow-map"></div>
+
  <div class="mts">
-  <div class="mt"><div class="mv" style="color:var(--g)">6 P0</div><div class="ml">严重缺陷已修复</div></div>
-  <div class="mt"><div class="mv" style="color:var(--amber)">6 P1</div><div class="ml">体验问题已修复</div></div>
-  <div class="mt"><div class="mv">v3.0</div><div class="ml">生产就绪版本</div></div>
+  <div class="mt"><div class="mv" style="color:var(--g)">$10.6亿</div><div class="ml">Kontigo verified</div></div>
+  <div class="mt"><div class="mv">3.1%</div><div class="ml">Spread profit</div></div>
+  <div class="mt"><div class="mv" style="color:var(--g)">7人</div><div class="ml">Team → $30M ARR</div></div>
  </div>
- <div class="kh">&#8592; &#8594; 键盘切换 &middot; 点击左侧步骤直接跳</div>
+ <button class="reset-btn" onclick="go('onboarding')">&#8635; Restart demo</button>
 </div>
 
 <script>
-const PS=Array.from({length:14},(_,i)=>'p'+i);
-let cur=0;
-function go(d){const n=cur+d;if(n<0||n>=PS.length)return;jmp(n)}
-function jmp(i){
-  if(i===cur)return;
-  const fwd=i>cur;
-  const ce=document.getElementById(PS[cur]);
-  ce.classList.remove('on');ce.classList.add('ex');
-  setTimeout(()=>ce.classList.remove('ex'),340);
-  cur=i;
-  document.querySelectorAll('.sn').forEach((el,j)=>{
-    el.classList.remove('ac','dn');
-    if(j<cur)el.classList.add('dn');
-    if(j===cur)el.classList.add('ac');
+const SCREENS = {
+  'onboarding':       { label: 'Onboarding',          hint: 'Click "Get Started" to register',            group: 'auth' },
+  'phone':            { label: 'Phone number',         hint: 'Tap "Send Verification Code"',               group: 'auth' },
+  'otp':              { label: 'OTP verification',     hint: 'Tap "Verify" to confirm',                    group: 'auth' },
+  'kyc':              { label: 'KYC in progress',      hint: 'Tap "Done — Go to Home" to continue',        group: 'auth' },
+  'home':             { label: 'Home — Balance',       hint: 'Tap any Quick Action button',                group: 'main' },
+  'deposit-amount':   { label: 'Add Money — Amount',   hint: 'Pick a preset or tap "Get Rate"',            group: 'deposit' },
+  'deposit-quote':    { label: 'Confirm Rate',         hint: 'Tap "Confirm & Get Bank Details"',           group: 'deposit' },
+  'deposit-bank':     { label: 'Bank Transfer',        hint: 'Tap "I\'ve Made the Transfer"',              group: 'deposit' },
+  'deposit-waiting':  { label: 'Waiting for deposit',  hint: 'Tap "Back to Home" or "Need help?"',         group: 'deposit' },
+  'send':             { label: 'Send USDC',             hint: 'Select a contact to send to',                group: 'send' },
+  'send-pin':         { label: 'PIN confirmation',      hint: 'Tap "Confirm Send" to complete',             group: 'send' },
+  'send-success':     { label: 'Transfer success ⚡',   hint: 'Tap "Back to Home" to continue',             group: 'send' },
+  'withdraw':         { label: 'Withdraw to bank',     hint: 'Tap "Withdraw ₦80,000"',                     group: 'withdraw' },
+  'withdraw-success': { label: 'Withdrawal sent',      hint: 'Tap "View History" or go Home',              group: 'withdraw' },
+  'earn':             { label: 'Earn 5.2% APY',        hint: 'View your daily/monthly earnings',           group: 'earn' },
+  'history':          { label: 'Transaction history',  hint: 'All transactions verified on Base',          group: 'history' },
+  'settings':         { label: 'Settings',             hint: 'Bank accounts, PIN, support',                group: 'settings' },
+  'tabi':             { label: 'Tabi AI (WhatsApp)',   hint: 'AI assistant + support ticket creation',     group: 'settings' },
+};
+
+const GROUP_LABELS = {
+  auth:     '① Registration & KYC',
+  main:     '② Home',
+  deposit:  '③ Add Money (NGN→USDC)',
+  send:     '④ Send USDC',
+  withdraw: '⑤ Withdraw (USDC→NGN)',
+  earn:     '⑥ Earn 5.2% APY',
+  history:  '⑦ History',
+  settings: '⑧ Settings & Support',
+};
+
+let cur = 'onboarding';
+const visited = new Set(['onboarding']);
+
+function buildFlowMap() {
+  const map = document.getElementById('flow-map');
+  let lastGroup = null;
+  Object.entries(SCREENS).forEach(([id, s]) => {
+    if (s.group !== lastGroup) {
+      const gl = document.createElement('div');
+      gl.style.cssText = 'font-size:9px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;padding:8px 10px 3px;';
+      gl.textContent = GROUP_LABELS[s.group];
+      map.appendChild(gl);
+      lastGroup = s.group;
+    }
+    const node = document.createElement('div');
+    node.className = 'fm-node' + (id === cur ? ' cur-node' : '');
+    node.dataset.id = id;
+    node.innerHTML = `<div class="fm-dot"></div><span>${s.label}</span>`;
+    node.onclick = () => go(id);
+    map.appendChild(node);
   });
-  const ne=document.getElementById(PS[cur]);
-  ne.style.cssText='opacity:0;transform:translateX('+(fwd?'26px':'-26px')+')';
-  ne.classList.add('on');
-  requestAnimationFrame(()=>{
-    ne.style.transition='opacity .3s ease,transform .3s cubic-bezier(.4,0,.2,1)';
-    ne.style.opacity='1';ne.style.transform='none';
-    setTimeout(()=>{ne.style.cssText=''},360);
-  });
-  document.querySelector('.sn[data-i="'+cur+'"]')?.scrollIntoView({behavior:'smooth',block:'nearest'});
-  document.getElementById('pb').disabled=cur===0;
-  const fb=document.getElementById('fb');
-  fb.disabled=cur===PS.length-1;
-  fb.textContent=cur===PS.length-1?'完成 \u2713':'下一步 \u203a';
 }
-document.querySelectorAll('.sn').forEach(el=>el.addEventListener('click',()=>jmp(+el.dataset.i)));
-document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight'||e.key==='ArrowDown')go(1);
-  if(e.key==='ArrowLeft'||e.key==='ArrowUp')go(-1);
-});
-let s=14*60+58;
-setInterval(()=>{
-  if(s>0)s--;
-  const v=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
-  ['t1','t2'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=v});
-},1000);
+
+function updateMap() {
+  document.querySelectorAll('.fm-node').forEach(n => {
+    const id = n.dataset.id;
+    n.classList.toggle('cur-node', id === cur);
+    n.classList.toggle('done-node', visited.has(id) && id !== cur);
+  });
+  document.getElementById('hint-title').textContent = SCREENS[cur]?.label ?? cur;
+  document.getElementById('hint-text').textContent = SCREENS[cur]?.hint ?? '';
+  document.querySelector('.fm-node.cur-node')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function go(id) {
+  if (!SCREENS[id]) return;
+  const prev = document.getElementById('s-' + cur);
+  const next = document.getElementById('s-' + id);
+  if (!prev || !next || cur === id) return;
+
+  prev.classList.remove('on');
+  prev.classList.add('ex-l');
+  setTimeout(() => prev.classList.remove('ex-l'), 320);
+
+  next.style.cssText = 'opacity:0;transform:translateX(26px)';
+  next.classList.add('on');
+  requestAnimationFrame(() => {
+    next.style.transition = 'opacity .28s ease,transform .28s cubic-bezier(.4,0,.2,1)';
+    next.style.opacity = '1';
+    next.style.transform = 'none';
+    setTimeout(() => { next.style.cssText = ''; next.style.transition = ''; }, 320);
+  });
+
+  cur = id;
+  visited.add(id);
+  updateMap();
+  updateClock();
+}
+
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  document.getElementById('clock').textContent = h + ':' + m;
+}
+
+buildFlowMap();
+updateClock();
+setInterval(updateClock, 30000);
+
+let s = 14*60+58;
+setInterval(() => {
+  if (s > 0) s--;
+  const v = String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
+  ['t1','t2'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = v; });
+}, 1000);
 </script>
 </body>
 </html>

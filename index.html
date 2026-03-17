@@ -68,7 +68,7 @@ body{display:flex;align-items:flex-start;justify-content:center;gap:32px;padding
 .scroll{
   position:absolute;
   top:0;left:0;right:0;bottom:0;
-  overflow-y:auto;
+  overflow-y:scroll;
   overflow-x:hidden;
   -webkit-overflow-scrolling:touch;
   scrollbar-width:none;
@@ -77,20 +77,17 @@ body{display:flex;align-items:flex-start;justify-content:center;gap:32px;padding
 
 /* ── Content inside scroll ── */
 .content{
-  min-height:100%;
   padding:68px 20px 24px;
   display:flex;
   flex-direction:column;
 }
-/* Extra bottom padding when tab bar present */
-.content.has-tab{padding-bottom:92px}
+/* Screens with tab bar: scroll stops above tab bar */
+.panel.has-tab .scroll{bottom:80px}
 
 /* ── Tab bar — sticky inside .content ── */
 .tabbar{
-  position:sticky;
-  bottom:0;
-  margin:auto -20px 0;
-  width:calc(100% + 40px);
+  position:absolute;
+  bottom:0;left:0;right:0;
   height:80px;
   background:rgba(10,10,10,.97);
   backdrop-filter:blur(20px);
@@ -100,7 +97,7 @@ body{display:flex;align-items:flex-start;justify-content:center;gap:32px;padding
   align-items:flex-start;
   justify-content:space-around;
   padding-top:10px;
-  flex-shrink:0;
+  z-index:10;
 }
 .ti{display:flex;flex-direction:column;align-items:center;gap:3px;padding:3px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
 .ti-ic{font-size:20px;opacity:.3}.ti.on .ti-ic{opacity:1}
@@ -239,7 +236,7 @@ body{display:flex;align-items:flex-start;justify-content:center;gap:32px;padding
 .tagline{font-size:12px;color:var(--t2);line-height:1.6;margin-bottom:16px}
 .hcard{background:var(--bg2);border:1px solid var(--b);border-radius:12px;padding:10px 12px;margin-bottom:12px}
 .ht{font-size:11px;font-weight:600;color:var(--g);margin-bottom:3px}.hb{font-size:11px;color:var(--t2);line-height:1.5}
-.nmap{display:flex;flex-direction:column;gap:2px;margin-bottom:16px;max-height:380px;overflow-y:auto;padding-right:2px}
+.nmap{display:flex;flex-direction:column;gap:2px;margin-bottom:16px;max-height:380px;overflow-y:scroll;padding-right:2px}
 .nmap::-webkit-scrollbar{width:3px}.nmap::-webkit-scrollbar-thumb{background:var(--b2);border-radius:3px}
 .ngl{font-size:9px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;padding:6px 8px 2px}
 .ni{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:9px;border:1px solid transparent;cursor:pointer;font-size:11px;color:var(--t2)}
@@ -251,7 +248,7 @@ body{display:flex;align-items:flex-start;justify-content:center;gap:32px;padding
 .mv{font-size:14px;font-weight:700;letter-spacing:-.3px}.ml{font-size:9px;color:var(--t3);margin-top:2px}
 .rbtn{width:100%;padding:7px;border-radius:9px;border:1px solid var(--b2);background:transparent;color:var(--t3);font-size:11px;cursor:pointer;font-family:var(--f)}
 
-@media(max-width:720px){html,body{overflow-y:auto;height:auto}body{flex-direction:column;align-items:center;overflow:visible}.sid{width:100%;max-width:375px}.phone{width:340px;height:736px}}
+@media(max-width:720px){html,body{overflow-y:scroll;height:auto}body{flex-direction:column;align-items:center;overflow:visible}.sid{width:100%;max-width:375px}.phone{width:340px;height:736px}}
 </style>
 </head>
 <body>
@@ -332,8 +329,8 @@ body{display:flex;align-items:flex-start;justify-content:center;gap:32px;padding
   </div>
 
   <!-- SCREEN: home -->
-  <div class="panel" id="p-home">
-   <div class="scroll"><div class="content has-tab">
+  <div class="panel has-tab" id="p-home">
+   <div class="scroll"><div class="content">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
      <div style="display:flex;align-items:center;gap:9px">
       <div style="width:38px;height:38px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#000">SK</div>
@@ -377,14 +374,15 @@ body{display:flex;align-items:flex-start;justify-content:center;gap:32px;padding
      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">&#129302;</span><div><div style="font-size:13px;font-weight:500">Ask Tabi on WhatsApp</div><div style="font-size:11px;color:var(--t3);margin-top:1px">Balance &#8901; Rates &#8901; Support</div></div></div>
      <div style="color:var(--t2)">&rsaquo;</div>
     </div>
-    <div class="tabbar">
+    
+   </div></div>
+   <div class="tabbar">
      <div class="ti on" onclick="nav('home')"><div class="ti-ic">&#127968;</div><div class="ti-lb" style="color:var(--g)">Home</div></div>
      <div class="ti" onclick="nav('send')"><div class="ti-ic">&#128228;</div><div class="ti-lb">Send</div></div>
      <div class="ti" onclick="nav('earn')"><div class="ti-ic">&#128200;</div><div class="ti-lb">Earn</div></div>
      <div class="ti" onclick="nav('history')"><div class="ti-ic">&#128203;</div><div class="ti-lb">History</div></div>
      <div class="ti" onclick="nav('settings')"><div class="ti-ic">&#9881;&#65039;</div><div class="ti-lb">Settings</div></div>
     </div>
-   </div></div>
   </div>
 
   <!-- SCREEN: dep-amt -->
@@ -473,8 +471,8 @@ body{display:flex;align-items:flex-start;justify-content:center;gap:32px;padding
   </div>
 
   <!-- SCREEN: send -->
-  <div class="panel" id="p-send">
-   <div class="scroll"><div class="content has-tab">
+  <div class="panel has-tab" id="p-send">
+   <div class="scroll"><div class="content">
     <div class="bk"><div class="bkb" onclick="nav('home')">&lsaquo;</div><div><div class="h3">Send USDC</div><div style="font-size:11px;color:var(--t2);margin-top:1px">&#9889; Lightning &#8901; 0 fees &#8901; Instant</div></div></div>
     <div class="card" style="margin-bottom:12px">
      <div class="cap" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Amount (USDC)</div>
@@ -485,14 +483,15 @@ body{display:flex;align-items:flex-start;justify-content:center;gap:32px;padding
     <div class="ctc sel" onclick="nav('send-pin')"><div class="av avb">C</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Chioma Adeyemi</div><div style="font-size:10px;color:var(--t3);font-family:var(--m);margin-top:2px">0x1a2b...8f9e</div></div><div style="color:var(--g);font-size:14px">&#10003;</div></div>
     <div class="ctc" onclick="nav('send-pin')"><div class="av avo">E</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Emeka Okafor</div><div style="font-size:10px;color:var(--t3);font-family:var(--m);margin-top:2px">0x5d6e...2a1b</div></div><div style="color:var(--t3)">&rsaquo;</div></div>
     <button class="btn btn-g" style="margin-top:10px" onclick="nav('send-pin')">Continue &#8594;</button>
-    <div class="tabbar">
+    
+   </div></div>
+   <div class="tabbar">
      <div class="ti" onclick="nav('home')"><div class="ti-ic">&#127968;</div><div class="ti-lb">Home</div></div>
      <div class="ti on" onclick="nav('send')"><div class="ti-ic">&#128228;</div><div class="ti-lb" style="color:var(--g)">Send</div></div>
      <div class="ti" onclick="nav('earn')"><div class="ti-ic">&#128200;</div><div class="ti-lb">Earn</div></div>
      <div class="ti" onclick="nav('history')"><div class="ti-ic">&#128203;</div><div class="ti-lb">History</div></div>
      <div class="ti" onclick="nav('settings')"><div class="ti-ic">&#9881;&#65039;</div><div class="ti-lb">Settings</div></div>
     </div>
-   </div></div>
   </div>
 
   <!-- SCREEN: send-pin -->
@@ -555,8 +554,8 @@ body{display:flex;align-items:flex-start;justify-content:center;gap:32px;padding
   </div>
 
   <!-- SCREEN: earn -->
-  <div class="panel" id="p-earn">
-   <div class="scroll"><div class="content has-tab">
+  <div class="panel has-tab" id="p-earn">
+   <div class="scroll"><div class="content">
     <div class="bk"><div class="bkb" onclick="nav('home')">&lsaquo;</div><div><div class="h3">Earn 5.2% APY</div></div></div>
     <div style="background:var(--bg2);border:1px solid var(--b);border-radius:18px;padding:18px;text-align:center;margin-bottom:12px"><div class="cap" style="margin-bottom:7px">Current Balance</div><div style="font-size:40px;font-weight:700;letter-spacing:-1.5px;margin-bottom:3px">$250.00</div><div style="font-size:13px;color:var(--t2)">USDC</div></div>
     <div class="card" style="margin-bottom:12px">
@@ -566,19 +565,20 @@ body{display:flex;align-items:flex-start;justify-content:center;gap:32px;padding
     </div>
     <div style="background:var(--gd);border:1px solid var(--gb);border-radius:14px;padding:13px;margin-bottom:10px"><div style="font-size:13px;font-weight:600;margin-bottom:7px">&#128161; How it works</div><div class="body" style="font-size:12px;line-height:1.75">&#10003; USDC earns 5.2% APY via Circle Yield<br>&#10003; Compounds daily<br>&#10003; Withdraw anytime, no penalties</div></div>
     <div style="background:var(--bg3);border-radius:10px;padding:10px;font-size:10px;color:var(--t3);line-height:1.6">&#9432; Circle Yield. Not a bank deposit. Past rates not guaranteed.</div>
-    <div class="tabbar">
+    
+   </div></div>
+   <div class="tabbar">
      <div class="ti" onclick="nav('home')"><div class="ti-ic">&#127968;</div><div class="ti-lb">Home</div></div>
      <div class="ti" onclick="nav('send')"><div class="ti-ic">&#128228;</div><div class="ti-lb">Send</div></div>
      <div class="ti on" onclick="nav('earn')"><div class="ti-ic">&#128200;</div><div class="ti-lb" style="color:var(--g)">Earn</div></div>
      <div class="ti" onclick="nav('history')"><div class="ti-ic">&#128203;</div><div class="ti-lb">History</div></div>
      <div class="ti" onclick="nav('settings')"><div class="ti-ic">&#9881;&#65039;</div><div class="ti-lb">Settings</div></div>
     </div>
-   </div></div>
   </div>
 
   <!-- SCREEN: history -->
-  <div class="panel" id="p-history">
-   <div class="scroll"><div class="content has-tab">
+  <div class="panel has-tab" id="p-history">
+   <div class="scroll"><div class="content">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><div class="h3">History</div><div class="cap">Verified on Base</div></div>
     <div class="card">
      <div class="tx"><div class="tic ti-in">&#128176;</div><div><div class="tnm">Added USDC</div><div class="tsb">Airwallex &#8901; 2h ago</div></div><div class="tam tp">+$64.52</div></div>
@@ -587,19 +587,20 @@ body{display:flex;align-items:flex-start;justify-content:center;gap:32px;padding
      <div class="tx"><div class="tic ti-in">&#128176;</div><div><div class="tnm">Added USDC</div><div class="tsb">Airwallex &#8901; Mar 5</div></div><div class="tam tp">+$100.00</div></div>
      <div class="tx"><div class="tic ti-s">&#128228;</div><div><div class="tnm">Sent to Emeka</div><div class="tsb">Lightning &#8901; Mar 3</div></div><div class="tam tn">&#8722;$10.00</div></div>
     </div>
-    <div class="tabbar">
+    
+   </div></div>
+   <div class="tabbar">
      <div class="ti" onclick="nav('home')"><div class="ti-ic">&#127968;</div><div class="ti-lb">Home</div></div>
      <div class="ti" onclick="nav('send')"><div class="ti-ic">&#128228;</div><div class="ti-lb">Send</div></div>
      <div class="ti" onclick="nav('earn')"><div class="ti-ic">&#128200;</div><div class="ti-lb">Earn</div></div>
      <div class="ti on" onclick="nav('history')"><div class="ti-ic">&#128203;</div><div class="ti-lb" style="color:var(--g)">History</div></div>
      <div class="ti" onclick="nav('settings')"><div class="ti-ic">&#9881;&#65039;</div><div class="ti-lb">Settings</div></div>
     </div>
-   </div></div>
   </div>
 
   <!-- SCREEN: settings -->
-  <div class="panel" id="p-settings">
-   <div class="scroll"><div class="content has-tab">
+  <div class="panel has-tab" id="p-settings">
+   <div class="scroll"><div class="content">
     <div class="h3" style="margin-bottom:16px">Settings</div>
     <div class="cap" style="margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px">Bank Accounts</div>
     <div class="card" style="margin-bottom:12px">
@@ -618,14 +619,15 @@ body{display:flex;align-items:flex-start;justify-content:center;gap:32px;padding
     </div>
     <div class="card" style="margin-bottom:14px"><div style="font-size:10px;color:var(--t3);line-height:1.7;padding:4px 0">Custody: Cobo WaaS 2.0 (MAS)<br>Fiat: Airwallex &#8901; KYC: Sumsub<br>5.2% APY via Circle Yield &#8212; not bank guaranteed</div></div>
     <button class="btn btn-d" onclick="nav('onboarding')">Sign out</button>
-    <div class="tabbar">
+    
+   </div></div>
+   <div class="tabbar">
      <div class="ti" onclick="nav('home')"><div class="ti-ic">&#127968;</div><div class="ti-lb">Home</div></div>
      <div class="ti" onclick="nav('send')"><div class="ti-ic">&#128228;</div><div class="ti-lb">Send</div></div>
      <div class="ti" onclick="nav('earn')"><div class="ti-ic">&#128200;</div><div class="ti-lb">Earn</div></div>
      <div class="ti" onclick="nav('history')"><div class="ti-ic">&#128203;</div><div class="ti-lb">History</div></div>
      <div class="ti on" onclick="nav('settings')"><div class="ti-ic">&#9881;&#65039;</div><div class="ti-lb" style="color:var(--g)">Settings</div></div>
     </div>
-   </div></div>
   </div>
 
   <!-- SCREEN: tabi -->

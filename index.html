@@ -5,199 +5,73 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>StableWallet</title>
+<title>StableWallet — Nigeria USDC Neobank</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-
 :root{
-  --bg:#0B0B0B;--bg2:#141414;--bg3:#1C1C1C;
+  --bg:#0B0B0B;--bg2:#141414;--bg3:#1C1C1C;--bg4:#252525;
   --g:#22C55E;--gd:rgba(34,197,94,.13);--gb:rgba(34,197,94,.28);
-  --usdc:#2775CA;--red:#EF4444;--amber:#F59E0B;
+  --usdc:#2775CA;--red:#EF4444;--amber:#F59E0B;--btc:#F7931A;--btcd:rgba(247,147,26,.13);--btcb:rgba(247,147,26,.28);
   --t:#FFF;--t2:#A1A1AA;--t3:#52525B;
   --b:rgba(255,255,255,.08);--b2:rgba(255,255,255,.13);
   --f:-apple-system,system-ui,sans-serif;--mo:'DM Mono','SF Mono',monospace;
-  --st:env(safe-area-inset-top,0px);
-  --sb:env(safe-area-inset-bottom,0px);
+  --st:env(safe-area-inset-top,0px);--sb:env(safe-area-inset-bottom,0px);
 }
 
-/* ─────────────────────────────────────────────
-   CRITICAL: html AND body MUST NEVER SCROLL
-   This is what was breaking on iPhone before:
-   the @media(max-width) was re-enabling body scroll
-   ───────────────────────────────────────────── */
-html {
-  width:100%; height:100%;
-  overflow:hidden !important;
-  position:fixed;
-  background:#0B0B0B;
-}
-body {
-  width:100%; height:100%;
-  overflow:hidden !important;
-  position:fixed;
-  background:#0B0B0B;
-  font-family:var(--f);
-  color:var(--t);
-  /* Center the phone shell on desktop */
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
+/* MOBILE: fixed viewport — NO body scroll on iPhone */
+html{width:100%;height:100%;overflow:hidden !important;position:fixed;background:#0B0B0B}
+body{width:100%;height:100%;overflow:hidden !important;position:fixed;background:#0B0B0B;font-family:var(--f);color:var(--t);display:flex;align-items:center;justify-content:center}
 
-/* ─────────────────────────────────────────────
-   PHONE SHELL — on mobile this IS the viewport
-   ───────────────────────────────────────────── */
-.phone{
-  position:relative;
-  width:100vw;
-  height:100vh;
-  /* Mobile: fill entire screen */
-  background:#0B0B0B;
-  overflow:hidden;
-  flex-shrink:0;
-}
-
-/* Desktop: show as iPhone shell */
+/* Phone shell */
+.phone{position:relative;width:100vw;height:100vh;background:#0B0B0B;overflow:hidden;flex-shrink:0}
 @media(min-width:700px){
-  body{
-    background:#0D0D0D;
-    align-items:flex-start;
-    justify-content:center;
-    gap:36px;
-    padding:28px 16px;
-    /* Desktop body CAN scroll to show sidebar */
-    overflow-y:auto !important;
-    overflow-x:hidden !important;
-    position:static;
-    height:auto;
-    flex-wrap:wrap;
-  }
-  html{
-    overflow:auto !important;
-    position:static;
-    height:auto;
-  }
-  .phone{
-    width:375px;
-    height:812px;
-    border-radius:55px;
-    box-shadow:0 0 0 2px #2a2a2a,0 0 0 3.5px #1a1a1a,
-               0 60px 120px rgba(0,0,0,.85),
-               inset 0 0 0 1px rgba(255,255,255,.05);
-    flex-shrink:0;
-  }
-  .phone::before{
-    content:'';position:absolute;right:-3px;top:182px;
-    width:3px;height:76px;background:#222;border-radius:0 2px 2px 0;
-    box-shadow:0 100px 0 #222;
-  }
-  .phone::after{
-    content:'';position:absolute;left:-3px;top:136px;
-    width:3px;height:46px;background:#222;border-radius:2px 0 0 2px;
-    box-shadow:0 68px 0 #222,0 128px 0 #222;
-  }
+  body{background:#0D0D0D;align-items:flex-start;justify-content:center;gap:36px;padding:28px 16px;
+    overflow-y:auto !important;overflow-x:hidden !important;position:static;height:auto;flex-wrap:wrap}
+  html{overflow:auto !important;position:static;height:auto}
+  .phone{width:375px;height:812px;border-radius:55px;
+    box-shadow:0 0 0 2px #2a2a2a,0 0 0 3.5px #1a1a1a,0 60px 120px rgba(0,0,0,.85),inset 0 0 0 1px rgba(255,255,255,.05);flex-shrink:0}
+  .phone::before{content:'';position:absolute;right:-3px;top:182px;width:3px;height:76px;background:#222;border-radius:0 2px 2px 0;box-shadow:0 100px 0 #222}
+  .phone::after{content:'';position:absolute;left:-3px;top:136px;width:3px;height:46px;background:#222;border-radius:2px 0 0 2px;box-shadow:0 68px 0 #222,0 128px 0 #222}
 }
 
-/* Screen inner (clipping layer) */
-.screen{
-  position:absolute;
-  inset:0;
-  overflow:hidden;
-  background:#0B0B0B;
-}
-@media(min-width:700px){
-  .screen{ inset:2px; border-radius:53px; }
-}
+.screen{position:absolute;inset:0;overflow:hidden;background:#0B0B0B}
+@media(min-width:700px){.screen{inset:2px;border-radius:53px}}
 
-/* Dynamic Island — desktop only */
 .di{display:none}
 @media(min-width:700px){
-  .di{
-    display:flex;position:absolute;top:13px;left:50%;
-    transform:translateX(-50%);width:120px;height:34px;
-    background:#000;border-radius:20px;z-index:200;
-    align-items:center;justify-content:center;gap:12px;pointer-events:none;
-  }
+  .di{display:flex;position:absolute;top:13px;left:50%;transform:translateX(-50%);
+    width:120px;height:34px;background:#000;border-radius:20px;z-index:200;
+    align-items:center;justify-content:center;gap:12px;pointer-events:none}
   .di-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.1)}
   .di-cam{width:10px;height:10px;border-radius:50%;border:2px solid rgba(255,255,255,.07)}
 }
 
-/* Status bar */
-.sb{
-  position:absolute;top:0;left:0;right:0;
-  height:calc(54px + var(--st));
-  padding-top:var(--st);
+.sb{position:absolute;top:0;left:0;right:0;height:calc(54px + var(--st));padding-top:var(--st);
   display:flex;align-items:flex-end;justify-content:space-between;
-  padding-left:24px;padding-right:24px;padding-bottom:8px;
-  z-index:150;pointer-events:none;
-}
+  padding-left:24px;padding-right:24px;padding-bottom:8px;z-index:150;pointer-events:none}
 .sb-t{font-size:15px;font-weight:600}
 .sb-r{display:flex;align-items:center;gap:5px;font-size:12px}
 .bat{background:#22C55E;color:#000;font-size:10px;font-weight:700;padding:2px 5px;border-radius:4px}
 
-/* ─────────────────────────────────────────────
-   PANEL SYSTEM
-   display:none  = completely gone, cannot be touched
-   display:block = shown, contained within .screen
-   ───────────────────────────────────────────── */
-.panel{
-  display:none;
-  position:absolute;
-  top:0;left:0;right:0;bottom:0;
-}
-.panel.on{ display:block; }
-
-/* Scroll layer inside each panel */
-.scroll{
-  position:absolute;
-  top:0;left:0;right:0;bottom:0;
-  overflow-x:hidden;
-  overflow-y:scroll;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-}
+/* Panel system — display:none/block, no opacity hacks */
+.panel{display:none;position:absolute;top:0;left:0;right:0;bottom:0}
+.panel.on{display:block}
+.scroll{position:absolute;top:0;left:0;right:0;bottom:0;overflow-x:hidden;overflow-y:scroll;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .scroll::-webkit-scrollbar{display:none}
-
-/* Panels with tab bar — scroll stops 80px from bottom */
-.panel.has-tab > .scroll{ bottom:80px; }
-
-/* Content wrapper inside scroll */
-.content{
-  min-height:100%;
-  padding:calc(54px + var(--st) + 10px) 20px 24px;
-  display:flex;
-  flex-direction:column;
-}
-
-/* Tab bar — sibling of .scroll, NOT inside it */
-.tabbar{
-  position:absolute;
-  left:0;right:0;bottom:0;
-  height:calc(80px + var(--sb));
-  padding-bottom:var(--sb);
-  background:rgba(10,10,10,.97);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-  border-top:1px solid rgba(255,255,255,.08);
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-around;
-  padding-top:10px;
-  z-index:50;
-}
-.ti{display:flex;flex-direction:column;align-items:center;gap:3px;padding:3px 14px;cursor:pointer;user-select:none}
+.panel.has-tab>.scroll{bottom:80px}
+.content{min-height:100%;padding:calc(54px + var(--st) + 10px) 20px 24px;display:flex;flex-direction:column}
+.tabbar{position:absolute;left:0;right:0;bottom:0;height:calc(80px + var(--sb));padding-bottom:var(--sb);
+  background:rgba(10,10,10,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:flex-start;
+  justify-content:space-around;padding-top:10px;z-index:50}
+.ti{display:flex;flex-direction:column;align-items:center;gap:3px;padding:3px 10px;cursor:pointer;user-select:none}
 .ti-ic{font-size:20px;opacity:.3}.ti.on .ti-ic{opacity:1}
 .ti-lb{font-size:9px;font-weight:500;color:var(--t3)}.ti.on .ti-lb{color:var(--g)}
 
 /* Sidebar — desktop only */
 .sidebar{display:none}
-@media(min-width:700px){
-  .sidebar{
-    display:block;width:280px;flex-shrink:0;padding-top:8px;
-    /* Sidebar does not affect mobile layout at all */
-  }
-}
+@media(min-width:700px){.sidebar{display:block;width:280px;flex-shrink:0;padding-top:8px}}
 
 /* ── Typography ── */
 .h1{font-size:27px;font-weight:700;letter-spacing:-.7px;line-height:1.15}
@@ -206,7 +80,7 @@ body {
 .bd{font-size:14px;color:var(--t2);line-height:1.5}
 .cp{font-size:11px;color:var(--t3)}
 .mn{font-family:var(--mo)}
-.cg{color:var(--g)}.cr{color:var(--red)}.ca{color:var(--amber)}
+.cg{color:var(--g)}.cr{color:var(--red)}.ca{color:var(--amber)}.cb{color:var(--btc)}
 
 /* ── Cards ── */
 .card{background:var(--bg2);border:1px solid var(--b);border-radius:18px;padding:16px}
@@ -214,11 +88,7 @@ body {
 .sep{height:1px;background:var(--b);margin:10px 0}
 
 /* ── Balance hero ── */
-.bcard{
-  background:linear-gradient(145deg,#181818,#0e0e0e);
-  border:1px solid var(--b2);border-radius:22px;padding:20px;
-  position:relative;overflow:hidden;margin-bottom:12px;
-}
+.bcard{background:linear-gradient(145deg,#181818,#0e0e0e);border:1px solid var(--b2);border-radius:22px;padding:20px;position:relative;overflow:hidden;margin-bottom:12px}
 .bcard::before{content:'';position:absolute;top:-50px;right:-50px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(34,197,94,.1) 0%,transparent 70%)}
 .bnum{font-size:44px;font-weight:700;letter-spacing:-2px;line-height:1}
 .busd{font-size:18px;font-weight:600;color:var(--t2);margin-right:3px}
@@ -237,6 +107,7 @@ body {
 /* ── Buttons ── */
 .btn{width:100%;padding:15px;border-radius:14px;border:none;font-family:var(--f);font-size:15px;font-weight:600;cursor:pointer;letter-spacing:-.2px;display:block;user-select:none}
 .btn-g{background:var(--g);color:#000}
+.btn-b{background:var(--btc);color:#fff}
 .btn-gh{background:var(--bg3);color:var(--t2);border:1px solid var(--b2);margin-top:8px}
 .btn-d{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.3)}
 
@@ -261,7 +132,7 @@ body {
 .dot{width:6px;height:6px;border-radius:3px;background:var(--b2)}
 .dot.dn{background:var(--g);opacity:.5}.dot.ac{background:var(--g);width:18px}
 
-/* ── Rows ── */
+/* ── Quote rows ── */
 .qr{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--b)}.qr:last-child{border-bottom:none}
 .ql{font-size:13px;color:var(--t2)}.qv{font-size:13px;font-weight:500}
 .br{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--b)}.br:last-child{border-bottom:none}
@@ -272,10 +143,10 @@ body {
 /* ── Transactions ── */
 .tx{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--b)}.tx:last-child{border-bottom:none}
 .tic{width:40px;height:40px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-.ti-in{background:var(--gd)}.ti-s{background:rgba(39,117,202,.14)}.ti-out{background:rgba(239,68,68,.11)}
+.ti-in{background:var(--gd)}.ti-s{background:rgba(39,117,202,.14)}.ti-out{background:rgba(239,68,68,.11)}.ti-btc{background:rgba(247,147,26,.13)}
 .tnm{font-size:13px;font-weight:500}.tsb{font-size:11px;color:var(--t2);margin-top:2px}
 .tam{font-family:var(--mo);font-size:13px;font-weight:600;margin-left:auto}
-.tp{color:var(--g)}.tn{color:var(--red)}
+.tp{color:var(--g)}.tn{color:var(--red)}.tb{color:var(--btc)}
 
 /* ── Contact ── */
 .ctc{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:15px;border:1.5px solid var(--b);background:var(--bg2);margin-bottom:7px;cursor:pointer;user-select:none}
@@ -283,19 +154,23 @@ body {
 .av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
 .avb{background:#4F46E5;color:#fff}.avo{background:#F59E0B;color:#000}
 
-/* ── Success ── */
+/* ── Success ring ── */
 .sring{width:76px;height:76px;border-radius:50%;background:var(--gd);border:2px solid var(--gb);display:flex;align-items:center;justify-content:center;font-size:34px;margin:0 auto 18px;animation:pop .5s cubic-bezier(.34,1.56,.64,1)}
 @keyframes pop{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
 .pins{display:flex;gap:12px;justify-content:center;margin:18px 0}
 .pd{width:14px;height:14px;border-radius:50%;border:2px solid var(--gb)}
 .pd.f{background:var(--g);border-color:var(--g)}
 
-/* ── Earn / Settings ── */
+/* ── Earn ── */
 .er{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--b)}.er:last-child{border-bottom:none}
 .el{font-size:13px;color:var(--t2)}.ev{font-size:15px;font-weight:700;color:var(--g)}
+.ev-btc{font-size:15px;font-weight:700;color:var(--btc)}
+
+/* ── Settings rows ── */
 .sr{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--b);cursor:pointer;user-select:none}.sr:last-child{border-bottom:none}
 .sl{display:flex;align-items:center;gap:10px}
 .tok{font-size:10px;background:var(--gd);color:var(--g);border:1px solid var(--gb);padding:2px 6px;border-radius:5px;font-weight:600}
+.tok-sec{font-size:10px;background:rgba(39,117,202,.12);color:var(--usdc);border:1px solid rgba(39,117,202,.3);padding:2px 6px;border-radius:5px;font-weight:600}
 
 /* ── Presets ── */
 .prs{display:flex;gap:7px;margin:10px 0 14px}
@@ -311,7 +186,26 @@ body {
 .pb{height:4px;background:var(--b);border-radius:2px;overflow:hidden;margin:8px 0}
 .pf{height:100%;width:35%;background:var(--amber);border-radius:2px;animation:kp 2s ease-in-out infinite alternate}
 
-/* ── WhatsApp ── */
+/* ── Notification bar ── */
+.notif{background:var(--bg2);border:1px solid var(--gb);border-radius:14px;padding:11px 13px;margin-bottom:10px;display:flex;align-items:center;gap:10px;cursor:pointer;animation:slideIn .4s ease-out}
+@keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.notif-icon{width:36px;height:36px;border-radius:50%;background:var(--gd);border:1px solid var(--gb);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* ── Earn product cards ── */
+.earn-card{border-radius:18px;padding:16px;margin-bottom:10px;position:relative;overflow:hidden;cursor:pointer;border:1.5px solid}
+.earn-card.usdc{background:linear-gradient(145deg,#0a1520,#0e0e0e);border-color:rgba(39,117,202,.3)}
+.earn-card.btc{background:linear-gradient(145deg,#1a1008,#0e0e0e);border-color:rgba(247,147,26,.25)}
+.earn-card::before{content:'';position:absolute;top:-40px;right:-40px;width:120px;height:120px;border-radius:50%}
+.earn-card.usdc::before{background:radial-gradient(circle,rgba(39,117,202,.12) 0%,transparent 70%)}
+.earn-card.btc::before{background:radial-gradient(circle,rgba(247,147,26,.12) 0%,transparent 70%)}
+
+/* ── Referral ── */
+.ref-step{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--b)}
+.ref-step:last-child{border-bottom:none}
+.step-n{width:22px;height:22px;border-radius:50%;background:var(--g);color:#000;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.code-box{display:flex;align-items:center;gap:8px;background:var(--bg3);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+
+/* ── Tabi/WhatsApp ── */
 .wabox{display:flex;flex-direction:column}
 .wab{border-radius:0 13px 13px 13px;padding:9px 13px;font-size:12px;line-height:1.6;margin-bottom:8px;max-width:86%}
 .wau{background:rgba(39,117,202,.2);border-radius:13px 0 13px 13px;align-self:flex-end;color:var(--t)}
@@ -319,14 +213,14 @@ body {
 .wan{font-size:10px;color:var(--g);font-weight:600;margin-bottom:3px}
 .wainp{display:flex;align-items:center;gap:7px;padding:8px 12px;background:var(--bg3);border-radius:11px;margin-top:12px}
 
-/* ── Sidebar styles ── */
+/* ── Sidebar ── */
 .dtag{display:inline-flex;align-items:center;gap:5px;background:var(--gd);border:1px solid var(--gb);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;color:var(--g);margin-bottom:12px}
 .logo{font-size:26px;font-weight:700;letter-spacing:-1px;margin-bottom:4px}
-.tline{font-size:12px;color:var(--t2);line-height:1.6;margin-bottom:16px}
-.hcard{background:var(--bg2);border:1px solid var(--b);border-radius:12px;padding:10px 12px;margin-bottom:12px}
+.tline{font-size:12px;color:var(--t2);line-height:1.6;margin-bottom:14px}
+.hcard{background:var(--bg2);border:1px solid var(--b);border-radius:12px;padding:10px 12px;margin-bottom:10px}
 .ht{font-size:11px;font-weight:600;color:var(--g);margin-bottom:3px}
 .hb{font-size:11px;color:var(--t2);line-height:1.5}
-.nmap{display:flex;flex-direction:column;gap:2px;margin-bottom:16px;max-height:380px;overflow-y:auto;padding-right:2px}
+.nmap{display:flex;flex-direction:column;gap:2px;margin-bottom:14px;max-height:340px;overflow-y:auto;padding-right:2px}
 .nmap::-webkit-scrollbar{width:3px}.nmap::-webkit-scrollbar-thumb{background:var(--b2);border-radius:3px}
 .ngl{font-size:9px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;padding:6px 8px 2px}
 .ni{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:9px;border:1px solid transparent;cursor:pointer;font-size:11px;color:var(--t2)}
@@ -337,504 +231,720 @@ body {
 .mt{flex:1;background:var(--bg2);border:1px solid var(--b);border-radius:10px;padding:9px 10px}
 .mv{font-size:14px;font-weight:700;letter-spacing:-.3px}.ml{font-size:9px;color:var(--t3);margin-top:2px}
 .rbtn{width:100%;padding:7px;border-radius:9px;border:1px solid var(--b2);background:transparent;color:var(--t3);font-size:11px;cursor:pointer;font-family:var(--f)}
+.vs-row{display:flex;align-items:center;gap:5px;padding:5px 0;font-size:10px;color:var(--t2);border-bottom:1px solid var(--b)}
+.vs-row:last-child{border-bottom:none}
+.vs-check{color:var(--g);font-size:10px;width:14px;flex-shrink:0}
+.vs-x{color:var(--red);font-size:10px;width:14px;flex-shrink:0}
 </style>
 </head>
 <body>
 
-<!-- ══ PHONE / APP WRAPPER ══ -->
 <div class="phone">
-  <div class="screen">
-    <div class="di"><div class="di-dot"></div><div class="di-cam"></div></div>
-    <div class="sb"><span class="sb-t" id="clk">18:29</span><div class="sb-r"><span>&#9679;&#9679;&#9679;&#9679;</span><span>WiFi</span><span class="bat">82</span></div></div>
+ <div class="screen">
+  <div class="di"><div class="di-dot"></div><div class="di-cam"></div></div>
+  <div class="sb"><span class="sb-t" id="clk">18:29</span><div class="sb-r"><span>&#9679;&#9679;&#9679;&#9679;</span><span>WiFi</span><span class="bat">82</span></div></div>
 
-    <!-- ── onboarding ── -->
-    <div class="panel on" id="p-onboarding">
-      <div class="scroll"><div class="content" style="align-items:center;justify-content:center;text-align:center">
-        <div style="background:var(--bg2);border:1px solid var(--b2);border-radius:18px;padding:16px;margin-bottom:22px;position:relative;overflow:hidden;width:100%">
-          <div style="position:absolute;top:-28px;right:-28px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(34,197,94,.12) 0%,transparent 70%)"></div>
-          <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Daily Yield</div>
-          <div style="font-size:28px;font-weight:700;color:var(--g)">+$0.04</div>
-          <div style="font-size:12px;color:var(--g);margin-top:3px">5.2% APY &#128200;</div>
-          <div style="font-size:11px;color:var(--t3);margin-top:8px">&#8776; &#8358;400,000 NGN</div>
-        </div>
-        <div style="display:flex;gap:6px;margin-bottom:22px">
-          <div style="width:18px;height:6px;border-radius:3px;background:var(--g)"></div>
-          <div style="width:6px;height:6px;border-radius:3px;background:var(--b2)"></div>
-          <div style="width:6px;height:6px;border-radius:3px;background:var(--b2)"></div>
-        </div>
-        <div class="h1" style="margin-bottom:9px">Your USDC,<br>your Naira,<br><span class="cg">your way.</span></div>
-        <div class="bd" style="padding:0 8px;font-size:13px;margin-bottom:28px">Store and earn on USDC. Earn <strong style="color:var(--g)">5.2% APY</strong> automatically.</div>
-        <button class="btn btn-g" style="margin-bottom:9px" onclick="nav('phone')">Get Started</button>
-        <button class="btn btn-gh" onclick="nav('home')">I already have an account</button>
-      </div></div>
+  <!-- ════════════════════════════════════════
+       SCREEN: onboarding  (v4 — competitive messaging)
+       ════════════════════════════════════════ -->
+  <div class="panel on" id="p-onboarding">
+   <div class="scroll"><div class="content" style="align-items:center;justify-content:center;text-align:center">
+    <!-- Yield card -->
+    <div style="background:var(--bg2);border:1px solid var(--b2);border-radius:18px;padding:16px;margin-bottom:14px;position:relative;overflow:hidden;width:100%">
+     <div style="position:absolute;top:-28px;right:-28px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(34,197,94,.12) 0%,transparent 70%)"></div>
+     <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Daily Yield · Seun K.</div>
+     <div style="font-size:30px;font-weight:700;color:var(--g)">+$0.07</div>
+     <div style="font-size:12px;color:var(--g);margin-top:3px">8.5% APY &#128200; &#183; <span style="color:var(--btc)">+&#8383;0.000003 Kolo</span></div>
+     <div style="font-size:11px;color:var(--t3);margin-top:7px">&#8776; &#8358;112 earned while you slept</div>
+    </div>
+    <!-- Social proof -->
+    <div style="display:flex;gap:6px;margin-bottom:6px">
+     <div style="background:var(--bg3);border:1px solid var(--b);border-radius:10px;padding:8px 12px;flex:1;text-align:left">
+      <div style="font-size:18px;font-weight:700;color:var(--g)">8.5%</div>
+      <div style="font-size:10px;color:var(--t3)">USDC APY</div>
+     </div>
+     <div style="background:var(--bg3);border:1px solid var(--b);border-radius:10px;padding:8px 12px;flex:1;text-align:left">
+      <div style="font-size:18px;font-weight:700;color:var(--btc)">&#8383; Kolo</div>
+      <div style="font-size:10px;color:var(--t3)">BTC savings</div>
+     </div>
+     <div style="background:var(--bg3);border:1px solid var(--b);border-radius:10px;padding:8px 12px;flex:1;text-align:left">
+      <div style="font-size:18px;font-weight:700;color:var(--t)">$0</div>
+      <div style="font-size:10px;color:var(--t3)">Fees ever</div>
+     </div>
+    </div>
+    <!-- $5 bonus banner -->
+    <div style="display:flex;align-items:center;gap:8px;background:rgba(34,197,94,.07);border:1px solid var(--gb);border-radius:12px;padding:10px 13px;margin-bottom:14px;width:100%">
+     <span style="font-size:18px">&#127873;</span>
+     <div style="text-align:left"><div style="font-size:12px;font-weight:600;color:var(--g)">$5 USDC welcome bonus</div><div style="font-size:11px;color:var(--t3)">On your first &#8358;5,000 deposit</div></div>
+    </div>
+    <div class="h1" style="margin-bottom:8px">Your money,<br>dollar-stable,<br><span class="cg">always earning.</span></div>
+    <div class="bd" style="padding:0 8px;font-size:13px;margin-bottom:20px">The Nigerian USDC neobank. Phone number &#8594; 10 min KYC &#8594; earning 8.5% APY.</div>
+    <button class="btn btn-g" style="margin-bottom:9px" onclick="nav('phone')">Get Started — Free</button>
+    <button class="btn btn-gh" onclick="nav('home')">I have an account</button>
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-top:12px">
+     <div style="font-size:10px;color:var(--t3)">&#128274; Cobo MAS</div><div style="color:var(--b2)">&#183;</div>
+     <div style="font-size:10px;color:var(--t3)">&#9989; ISA 2025 Licensed</div><div style="color:var(--b2)">&#183;</div>
+     <div style="font-size:10px;color:var(--t3)">&#128737; Non-custodial</div>
+    </div>
+   </div></div>
+  </div>
+
+  <!-- ════ SCREEN: phone ════ -->
+  <div class="panel" id="p-phone">
+   <div class="scroll"><div class="content">
+    <div style="height:8px"></div>
+    <div class="h3" style="margin-bottom:4px">Enter your number</div>
+    <div class="bd" style="margin-bottom:22px;font-size:13px">We send a one-time code. No passwords, ever.</div>
+    <div class="inp" style="margin-bottom:11px"><span class="ipx">&#127475;&#127468; +234</span><span style="font-size:16px;font-weight:500;flex:1">080 1234 5678<span class="cur"></span></span></div>
+    <div style="background:rgba(34,197,94,.06);border:1px solid var(--gb);border-radius:11px;padding:10px;margin-bottom:22px;display:flex;align-items:center;gap:8px">
+     <span style="font-size:16px">&#127873;</span>
+     <div style="font-size:12px;color:var(--g)">Enter a referral code? Get <strong>$5 USDC</strong> instantly when you deposit &#8358;5,000.</div>
+    </div>
+    <button class="btn btn-g" onclick="nav('otp')">Send Verification Code &#8594;</button>
+    <button class="btn btn-gh" onclick="nav('onboarding')">&#8592; Back</button>
+    <div class="cp" style="text-align:center;margin-top:10px">By continuing you agree to our Terms &amp; Privacy Policy</div>
+   </div></div>
+  </div>
+
+  <!-- ════ SCREEN: otp ════ -->
+  <div class="panel" id="p-otp">
+   <div class="scroll"><div class="content" style="text-align:center">
+    <div style="font-size:38px;margin-bottom:14px;margin-top:8px">&#128242;</div>
+    <div class="h3" style="margin-bottom:4px">Verify your number</div>
+    <div style="font-size:12px;color:var(--t2);margin-bottom:2px">Code sent to <span style="color:var(--usdc)">+234 801 234 5678</span></div>
+    <div class="cp" style="margin-bottom:2px">Sandbox OTP: <span style="color:var(--g);font-weight:600">123456</span></div>
+    <div class="otp"><div class="ob f">1</div><div class="ob f">2</div><div class="ob f">3</div><div class="ob f">4</div><div class="ob f">5</div><div class="ob a">6<span class="cur" style="height:18px"></span></div></div>
+    <button class="btn btn-g" onclick="nav('kyc')">Verify &#8594;</button>
+    <button class="btn btn-gh" onclick="nav('phone')">&#8592; Back</button>
+    <div class="cp" style="margin-top:12px">Resend in 0:42</div>
+   </div></div>
+  </div>
+
+  <!-- ════ SCREEN: kyc ════ -->
+  <div class="panel" id="p-kyc">
+   <div class="scroll"><div class="content">
+    <div class="bk"><div class="bkb" onclick="nav('otp')">&lsaquo;</div><div><div class="h3">Identity verification</div><div style="font-size:11px;color:var(--t2);margin-top:1px">Step 2 of 2 · Sumsub</div></div></div>
+    <div class="card" style="margin-bottom:12px">
+     <div style="font-size:13px;font-weight:500;margin-bottom:4px">Documents submitted &#10003;</div>
+     <div class="kb"><div class="kf"></div></div>
+     <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--t3);margin-bottom:10px"><span>Reviewing documents</span><span>~2 min</span></div>
+     <div class="ks"><div class="kd" style="background:var(--g)"></div><span style="color:var(--g)">NIN submitted</span></div>
+     <div class="ks"><div class="kd" style="background:var(--amber)"></div><span>Identity check <span class="ca">in progress...</span></span></div>
+     <div class="ks"><div class="kd" style="background:var(--b2)"></div><span style="color:var(--t3)">Account activated</span></div>
+    </div>
+    <div style="background:rgba(34,197,94,.06);border:1px solid var(--gb);border-radius:14px;padding:13px;margin-bottom:12px">
+     <div style="font-size:13px;font-weight:600;margin-bottom:7px;color:var(--g)">&#127873; Your $5 USDC is waiting!</div>
+     <div class="bd" style="font-size:12px;line-height:1.75">&#10003; Complete KYC to unlock<br>&#10003; Then deposit &#8358;5,000+<br>&#10003; $5 USDC credited instantly</div>
+    </div>
+    <div class="card" style="margin-bottom:12px">
+     <div style="font-size:13px;font-weight:500;margin-bottom:5px">After verification</div>
+     <div class="bd" style="font-size:12px;line-height:1.75">&#10003; Daily limit: $100 (upgrade to $1,000)<br>&#10003; Push notification when done<br>&#10003; Usually 2-5 minutes</div>
+    </div>
+    <button class="btn btn-g" onclick="nav('home')">Done — Go to Home &#8594;</button>
+   </div></div>
+  </div>
+
+  <!-- ════ SCREEN: home (v4) ════ -->
+  <div class="panel has-tab" id="p-home">
+   <div class="scroll"><div class="content">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+     <div style="display:flex;align-items:center;gap:9px">
+      <div style="width:38px;height:38px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#000">SK</div>
+      <div><div style="font-size:10px;color:var(--t3)">earned <span class="cg">$0.07</span> while sleeping &#127807;</div><div style="font-size:14px;font-weight:600">Good morning, Seun!</div></div>
+     </div>
+     <div style="font-size:20px;cursor:pointer" onclick="nav('settings')">&#128276;</div>
     </div>
 
-    <!-- ── phone ── -->
-    <div class="panel" id="p-phone">
-      <div class="scroll"><div class="content">
-        <div style="height:8px"></div>
-        <div class="h3" style="margin-bottom:4px">Enter your number</div>
-        <div class="bd" style="margin-bottom:22px;font-size:13px">We will send a one-time verification code</div>
-        <div class="inp" style="margin-bottom:11px"><span class="ipx">&#127475;&#127468; +234</span><span style="font-size:16px;font-weight:500;flex:1">080 1234 5678<span class="cur"></span></span></div>
-        <div class="cp" style="margin-bottom:26px">By continuing you agree to our Terms &amp; Privacy</div>
-        <button class="btn btn-g" onclick="nav('otp')">Send Verification Code &#8594;</button>
-        <button class="btn btn-gh" onclick="nav('onboarding')">&#8592; Back</button>
-      </div></div>
+    <!-- Push notification mock -->
+    <div class="notif" onclick="nav('earn')">
+     <div class="notif-icon">&#9889;</div>
+     <div style="flex:1"><div style="font-size:12px;font-weight:500">Daily yield credited</div><div style="font-size:11px;color:var(--t2);margin-top:1px">+$0.07 USDC &#183; 8.5% APY &#183; Just now</div></div>
+     <div style="color:var(--t3);font-size:11px">&rsaquo;</div>
     </div>
 
-    <!-- ── otp ── -->
-    <div class="panel" id="p-otp">
-      <div class="scroll"><div class="content" style="text-align:center">
-        <div style="font-size:38px;margin-bottom:14px;margin-top:8px">&#128242;</div>
-        <div class="h3" style="margin-bottom:4px">Verify your number</div>
-        <div style="font-size:12px;color:var(--t2);margin-bottom:2px">Code sent to <span style="color:var(--usdc)">+234 801 234 5678</span></div>
-        <div class="cp" style="margin-bottom:2px">Sandbox OTP: <span style="color:var(--g);font-weight:600">123456</span></div>
-        <div class="otp"><div class="ob f">1</div><div class="ob f">2</div><div class="ob f">3</div><div class="ob f">4</div><div class="ob f">5</div><div class="ob a">6<span class="cur" style="height:18px"></span></div></div>
-        <button class="btn btn-g" onclick="nav('kyc')">Verify &#8594;</button>
-        <button class="btn btn-gh" onclick="nav('phone')">&#8592; Back</button>
-        <div class="cp" style="margin-top:12px">Resend in 0:42</div>
-      </div></div>
+    <!-- Balance card -->
+    <div class="bcard">
+     <div class="cp" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">USDC Balance</div>
+     <div style="display:flex;align-items:baseline;gap:3px"><span class="busd">$</span><span class="bnum">250.07</span></div>
+     <div style="font-size:12px;color:var(--t2);margin-top:5px">&#8776; &#8358;400,112 NGN</div>
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:11px;border-top:1px solid var(--b)">
+      <div class="rpill" onclick="nav('earn')">1 USDC = &#8358;1,600</div>
+      <div style="font-size:12px;color:var(--t2);cursor:pointer" onclick="nav('earn')">Earning <span style="color:var(--g);font-weight:600">8.5% APY</span> &#8594;</div>
+     </div>
     </div>
 
-    <!-- ── kyc ── -->
-    <div class="panel" id="p-kyc">
-      <div class="scroll"><div class="content">
-        <div class="bk"><div class="bkb" onclick="nav('otp')">&lsaquo;</div><div><div class="h3">Identity verification</div><div style="font-size:11px;color:var(--t2);margin-top:1px">Step 2 of 2</div></div></div>
-        <div class="card" style="margin-bottom:12px">
-          <div style="font-size:13px;font-weight:500;margin-bottom:4px">Documents submitted &#10003;</div>
-          <div class="kb"><div class="kf"></div></div>
-          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--t3);margin-bottom:10px"><span>Reviewing documents</span><span>~2 min</span></div>
-          <div class="ks"><div class="kd" style="background:var(--g)"></div><span style="color:var(--g)">ID submitted</span></div>
-          <div class="ks"><div class="kd" style="background:var(--amber)"></div><span>Identity check <span class="ca">in progress...</span></span></div>
-          <div class="ks"><div class="kd" style="background:var(--b2)"></div><span style="color:var(--t3)">Account activated</span></div>
-        </div>
-        <div class="card" style="margin-bottom:12px">
-          <div style="font-size:13px;font-weight:500;margin-bottom:5px">What happens next?</div>
-          <div class="bd" style="font-size:12px;line-height:1.75">&#10003; Push notification when verified<br>&#10003; Usually 2-5 minutes<br>&#10003; You can close the app</div>
-        </div>
-        <button class="btn btn-g" onclick="nav('home')">Done — Go to Home &#8594;</button>
-      </div></div>
+    <!-- Kolo BTC mini card -->
+    <div style="background:linear-gradient(145deg,#141008,#0e0e0e);border:1px solid var(--btcb);border-radius:16px;padding:13px 15px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer" onclick="nav('btc-savings')">
+     <div style="display:flex;align-items:center;gap:9px">
+      <div style="width:36px;height:36px;border-radius:50%;background:var(--btcd);border:1px solid var(--btcb);display:flex;align-items:center;justify-content:center;font-size:16px">&#129311;</div>
+      <div><div style="font-size:13px;font-weight:500;color:var(--btc)">Kolo — BTC Savings</div><div style="font-size:11px;color:var(--t3);margin-top:1px">&#8383;0.00041 &#183; $27.50 &#183; Auto-DCA $1/day</div></div>
+     </div>
+     <div style="font-size:11px;color:var(--btc);font-weight:600">+18.3% &#8599;</div>
     </div>
 
-    <!-- ── home ── -->
-    <div class="panel has-tab" id="p-home">
-      <div class="scroll"><div class="content">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-          <div style="display:flex;align-items:center;gap:9px">
-            <div style="width:38px;height:38px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#000">SK</div>
-            <div><div style="font-size:10px;color:var(--t3)">savings grew <span class="cg">$0.04</span> today &#127807;</div><div style="font-size:14px;font-weight:600">Seun K.</div></div>
-          </div>
-          <div style="font-size:20px;cursor:pointer" onclick="nav('settings')">&#128276;</div>
-        </div>
-        <div class="bcard">
-          <div class="cp" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Balance</div>
-          <div style="display:flex;align-items:baseline;gap:3px"><span class="busd">$</span><span class="bnum">250.00</span></div>
-          <div style="font-size:12px;color:var(--t2);margin-top:5px">&#8776; &#8358;400,000 NGN</div>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:11px;border-top:1px solid var(--b)">
-            <div class="rpill" onclick="nav('earn')">1 USDC = &#8358;1,600</div>
-            <div style="font-size:12px;color:var(--t2);cursor:pointer" onclick="nav('earn')">Earning <span style="color:var(--g);font-weight:600">5.2% APY</span> &#8594;</div>
-          </div>
-        </div>
-        <div class="chips"><div class="chip">&#128274; Licensed</div><div class="chip">&#9935; On-Chain</div><div class="chip">&#128737; Self-Custody</div><div class="chip">&#128084; Cobo MAS</div></div>
-        <div class="h3" style="margin-bottom:8px">Quick Actions</div>
-        <div class="card" style="padding:12px;margin-bottom:12px">
-          <div class="acts" style="margin-bottom:0">
-            <div class="act pr" onclick="nav('dep-amt')"><div class="aic">&#10133;</div><span class="alb" style="color:rgba(0,0,0,.8)">Add Money</span></div>
-            <div class="act" onclick="nav('send')"><div class="aic" style="background:rgba(39,117,202,.14)">&#128228;</div><span class="alb">Send</span></div>
-            <div class="act" onclick="nav('earn')"><div class="aic" style="background:rgba(245,158,11,.14)">&#128200;</div><span class="alb">Earn</span></div>
-            <div class="act" onclick="nav('withdraw')"><div class="aic" style="background:rgba(239,68,68,.11)">&#11014;&#65039;</div><span class="alb">Withdraw</span></div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;background:var(--gd);border:1px solid var(--gb);border-radius:14px;padding:11px 13px;margin-bottom:10px;cursor:pointer" onclick="nav('earn')">
-          <div style="font-size:12px;font-weight:500">&#128202; $250 earning $0.04/day &#183; See breakdown</div>
-          <div style="color:var(--g)">&rsaquo;</div>
-        </div>
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-            <div class="h3" style="font-size:13px">Recent</div>
-            <div style="font-size:12px;color:var(--g);cursor:pointer" onclick="nav('history')">See all &#8594;</div>
-          </div>
-          <div class="tx"><div class="tic ti-in">&#128176;</div><div><div class="tnm">Added USDC</div><div class="tsb">Airwallex &#183; 2h ago</div></div><div class="tam tp">+$64.52</div></div>
-          <div class="tx" style="cursor:pointer" onclick="nav('history')"><div class="tic ti-s">&#128228;</div><div><div class="tnm">Sent to Chioma</div><div class="tsb">Lightning &#183; Yesterday</div></div><div class="tam tn">&#8722;$20.00</div></div>
-          <div class="tx" style="cursor:pointer" onclick="nav('history')"><div class="tic ti-out">&#11014;&#65039;</div><div><div class="tnm">Withdrew to GTBank</div><div class="tsb">Airwallex &#183; Mar 8</div></div><div class="tam tn">&#8722;$30.00</div></div>
-        </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;background:var(--bg2);border:1px solid var(--b);border-radius:14px;padding:11px 13px;margin-top:10px;cursor:pointer" onclick="nav('tabi')">
-          <div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">&#129302;</span><div><div style="font-size:13px;font-weight:500">Ask Tabi on WhatsApp</div><div style="font-size:11px;color:var(--t3);margin-top:1px">Balance &#183; Rates &#183; Support</div></div></div>
-          <div style="color:var(--t2)">&rsaquo;</div>
-        </div>
-      </div></div>
-      <div class="tabbar">
-        <div class="ti on" onclick="nav('home')"><div class="ti-ic">&#127968;</div><div class="ti-lb" style="color:var(--g)">Home</div></div>
-        <div class="ti" onclick="nav('send')"><div class="ti-ic">&#128228;</div><div class="ti-lb">Send</div></div>
-        <div class="ti" onclick="nav('earn')"><div class="ti-ic">&#128200;</div><div class="ti-lb">Earn</div></div>
-        <div class="ti" onclick="nav('history')"><div class="ti-ic">&#128203;</div><div class="ti-lb">History</div></div>
-        <div class="ti" onclick="nav('settings')"><div class="ti-ic">&#9881;&#65039;</div><div class="ti-lb">Settings</div></div>
-      </div>
+    <div class="chips"><div class="chip">&#128274; Cobo MAS</div><div class="chip">&#9989; ISA 2025</div><div class="chip">&#9935; Base L2</div><div class="chip">&#128737; Non-custodial</div></div>
+
+    <div class="h3" style="margin-bottom:8px">Quick Actions</div>
+    <div class="card" style="padding:12px;margin-bottom:12px">
+     <div class="acts" style="margin-bottom:0">
+      <div class="act pr" onclick="nav('dep-amt')"><div class="aic">&#10133;</div><span class="alb" style="color:rgba(0,0,0,.8)">Add Money</span></div>
+      <div class="act" onclick="nav('send')"><div class="aic" style="background:rgba(39,117,202,.14)">&#128228;</div><span class="alb">Send</span></div>
+      <div class="act" onclick="nav('btc-savings')"><div class="aic" style="background:rgba(247,147,26,.14)">&#129311;</div><span class="alb">Kolo</span></div>
+      <div class="act" onclick="nav('withdraw')"><div class="aic" style="background:rgba(239,68,68,.11)">&#11014;&#65039;</div><span class="alb">Withdraw</span></div>
+      <div class="act" onclick="nav('referral')"><div class="aic" style="background:rgba(34,197,94,.11)">&#127873;</div><span class="alb">Invite</span></div>
+     </div>
     </div>
 
-    <!-- ── dep-amt ── -->
-    <div class="panel" id="p-dep-amt">
-      <div class="scroll"><div class="content">
-        <div class="bk"><div class="bkb" onclick="nav('home')">&lsaquo;</div><div><div class="h3">Add Money</div><div style="font-size:11px;color:var(--t2);margin-top:1px">NGN &#8594; USDC &#183; Airwallex</div></div></div>
-        <div class="card" style="margin-bottom:12px">
-          <div class="cp" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Amount (NGN)</div>
-          <div class="inp" style="margin-bottom:10px;padding:14px"><span class="ipx" style="font-size:15px">&#8358;</span><span style="font-size:26px;font-weight:700;flex:1">100,000</span></div>
-          <div class="sep"></div>
-          <div class="cp" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">You receive</div>
-          <div style="display:flex;align-items:baseline;gap:7px"><span style="font-family:var(--mo);font-size:24px;font-weight:700;color:var(--g)">$64.52</span><span style="font-size:13px;color:var(--usdc);font-weight:500">USDC</span></div>
-          <div class="cp" style="margin-top:4px">&#8358;1,550/USDC &#183; 0 fees &#183; Airwallex+Cobo</div>
-        </div>
-        <div class="prs">
-          <div class="pre" onclick="selPre(this)">&#8358;10k</div>
-          <div class="pre" onclick="selPre(this)">&#8358;25k</div>
-          <div class="pre" onclick="selPre(this)">&#8358;50k</div>
-          <div class="pre on" onclick="selPre(this)">&#8358;100k</div>
-        </div>
-        <button class="btn btn-g" onclick="nav('dep-quote')">Get Rate &#8594;</button>
-        <div class="cp" style="text-align:center;margin-top:8px">Min &#8358;5,000 &#183; Daily limit &#8358;160,000</div>
-      </div></div>
+    <div class="card">
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div class="h3" style="font-size:13px">Recent</div>
+      <div style="font-size:12px;color:var(--g);cursor:pointer" onclick="nav('history')">See all &#8594;</div>
+     </div>
+     <div class="tx"><div class="tic ti-in">&#128176;</div><div><div class="tnm">Added USDC</div><div class="tsb">Airwallex &#183; 2h ago</div></div><div class="tam tp">+$64.52</div></div>
+     <div class="tx"><div class="tic ti-btc">&#129311;</div><div><div class="tnm">Kolo Auto-DCA</div><div class="tsb">Daily BTC buy &#183; Today</div></div><div class="tam tb">&#8722;$1.00</div></div>
+     <div class="tx" style="cursor:pointer" onclick="nav('history')"><div class="tic ti-s">&#128228;</div><div><div class="tnm">Sent to Chioma</div><div class="tsb">Lightning &#183; Yesterday</div></div><div class="tam tn">&#8722;$20.00</div></div>
     </div>
 
-    <!-- ── dep-quote ── -->
-    <div class="panel" id="p-dep-quote">
-      <div class="scroll"><div class="content">
-        <div class="bk"><div class="bkb" onclick="nav('dep-amt')">&lsaquo;</div><div><div class="h3">Confirm Rate</div></div></div>
-        <div class="dots"><div class="dot dn"></div><div class="dot ac"></div><div class="dot"></div></div>
-        <div class="card" style="margin-bottom:12px">
-          <div class="qr"><span class="ql">You send</span><span class="qv">&#8358;100,000</span></div>
-          <div class="qr"><span class="ql">Exchange rate</span><span class="qv mn">&#8358;1,550/USDC</span></div>
-          <div class="qr"><span class="ql">Fees</span><span class="qv cg" style="font-weight:600">$0.00</span></div>
-          <div style="background:var(--gd);border:1px solid var(--gb);border-radius:12px;padding:12px;margin-top:9px;display:flex;justify-content:space-between;align-items:center">
-            <span style="font-size:13px;color:var(--t2)">You receive</span>
-            <div><span style="font-family:var(--mo);font-size:20px;font-weight:700;color:var(--g)">$64.52</span><span class="cp" style="margin-left:5px">USDC</span></div>
-          </div>
-        </div>
-        <div style="text-align:center;margin-bottom:12px;font-size:12px;color:var(--g)">&#9201; Rate locked &#183; <span id="t1">14:58</span> remaining</div>
-        <div style="background:var(--bg3);border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:11px;color:var(--t2);line-height:1.7">&#128274; NGN collected by <strong style="color:var(--t)">Airwallex</strong> (licensed). USDC in <strong style="color:var(--t)">Cobo MAS</strong>.</div>
-        <button class="btn btn-g" onclick="nav('dep-bank')">Confirm &amp; Get Bank Details &#8594;</button>
-        <button class="btn btn-gh" onclick="nav('dep-amt')">&#8592; Change Amount</button>
-      </div></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;background:var(--bg2);border:1px solid var(--b);border-radius:14px;padding:11px 13px;margin-top:10px;cursor:pointer" onclick="nav('tabi')">
+     <div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">&#129302;</span><div><div style="font-size:13px;font-weight:500">Ask Tabi on WhatsApp</div><div style="font-size:11px;color:var(--t3);margin-top:1px">Balance &#183; Rates &#183; Support</div></div></div>
+     <div style="color:var(--t2)">&rsaquo;</div>
+    </div>
+   </div></div>
+   <div class="tabbar">
+    <div class="ti on" onclick="nav('home')"><div class="ti-ic">&#127968;</div><div class="ti-lb" style="color:var(--g)">Home</div></div>
+    <div class="ti" onclick="nav('send')"><div class="ti-ic">&#128228;</div><div class="ti-lb">Send</div></div>
+    <div class="ti" onclick="nav('earn')"><div class="ti-ic">&#128200;</div><div class="ti-lb">Earn</div></div>
+    <div class="ti" onclick="nav('history')"><div class="ti-ic">&#128203;</div><div class="ti-lb">History</div></div>
+    <div class="ti" onclick="nav('settings')"><div class="ti-ic">&#9881;&#65039;</div><div class="ti-lb">Settings</div></div>
+   </div>
+  </div>
+
+  <!-- ════ SCREEN: dep-amt ════ -->
+  <div class="panel" id="p-dep-amt">
+   <div class="scroll"><div class="content">
+    <div class="bk"><div class="bkb" onclick="nav('home')">&lsaquo;</div><div><div class="h3">Add Money</div><div style="font-size:11px;color:var(--t2);margin-top:1px">NGN &#8594; USDC &#183; Airwallex</div></div></div>
+    <div class="card" style="margin-bottom:12px">
+     <div class="cp" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Amount (NGN)</div>
+     <div class="inp" style="margin-bottom:10px;padding:14px"><span class="ipx" style="font-size:15px">&#8358;</span><span style="font-size:26px;font-weight:700;flex:1">100,000</span></div>
+     <div class="sep"></div>
+     <div class="cp" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">You receive</div>
+     <div style="display:flex;align-items:baseline;gap:7px"><span style="font-family:var(--mo);font-size:24px;font-weight:700;color:var(--g)">$64.52</span><span style="font-size:13px;color:var(--usdc);font-weight:500">USDC</span></div>
+     <div class="cp" style="margin-top:4px">&#8358;1,550/USDC &#183; <span style="color:var(--g);font-weight:600">0 fees</span> &#183; Airwallex+Cobo</div>
+    </div>
+    <div class="prs">
+     <div class="pre" onclick="selPre(this)">&#8358;10k</div>
+     <div class="pre" onclick="selPre(this)">&#8358;25k</div>
+     <div class="pre" onclick="selPre(this)">&#8358;50k</div>
+     <div class="pre on" onclick="selPre(this)">&#8358;100k</div>
+    </div>
+    <div style="background:var(--gd);border:1px solid var(--gb);border-radius:12px;padding:10px 12px;margin-bottom:12px;display:flex;align-items:center;gap:7px">
+     <span style="font-size:15px">&#127873;</span>
+     <div style="font-size:12px;color:var(--g)"><strong>First deposit?</strong> You get $5 USDC bonus automatically.</div>
+    </div>
+    <button class="btn btn-g" onclick="nav('dep-quote')">Get Rate &#8594;</button>
+    <div class="cp" style="text-align:center;margin-top:8px">Min &#8358;5,000 &#183; T1 limit &#8358;160,000/day</div>
+   </div></div>
+  </div>
+
+  <!-- ════ SCREEN: dep-quote ════ -->
+  <div class="panel" id="p-dep-quote">
+   <div class="scroll"><div class="content">
+    <div class="bk"><div class="bkb" onclick="nav('dep-amt')">&lsaquo;</div><div><div class="h3">Confirm Rate</div></div></div>
+    <div class="dots"><div class="dot dn"></div><div class="dot ac"></div><div class="dot"></div></div>
+    <div class="card" style="margin-bottom:12px">
+     <div class="qr"><span class="ql">You send</span><span class="qv">&#8358;100,000</span></div>
+     <div class="qr"><span class="ql">Exchange rate</span><span class="qv mn">&#8358;1,550/USDC</span></div>
+     <div class="qr"><span class="ql">Fees</span><span class="qv cg" style="font-weight:600">$0.00</span></div>
+     <div style="background:var(--gd);border:1px solid var(--gb);border-radius:12px;padding:12px;margin-top:9px;display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:13px;color:var(--t2)">You receive</span>
+      <div><span style="font-family:var(--mo);font-size:20px;font-weight:700;color:var(--g)">$64.52</span><span class="cp" style="margin-left:5px">USDC</span></div>
+     </div>
+    </div>
+    <div style="text-align:center;margin-bottom:12px;font-size:12px;color:var(--g)">&#9201; Rate locked &#183; <span id="t1">14:58</span> remaining</div>
+    <div style="background:var(--bg3);border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:11px;color:var(--t2);line-height:1.7">&#128274; NGN via <strong style="color:var(--t)">Airwallex</strong> (CBN licensed). USDC in <strong style="color:var(--t)">Cobo MAS</strong> wallet.</div>
+    <button class="btn btn-g" onclick="nav('dep-bank')">Confirm &amp; Get Bank Details &#8594;</button>
+    <button class="btn btn-gh" onclick="nav('dep-amt')">&#8592; Change Amount</button>
+   </div></div>
+  </div>
+
+  <!-- ════ SCREEN: dep-bank ════ -->
+  <div class="panel" id="p-dep-bank">
+   <div class="scroll"><div class="content">
+    <div class="bk"><div class="bkb" onclick="nav('dep-quote')">&lsaquo;</div><div><div class="h3">Transfer NGN Now</div></div></div>
+    <div class="dots"><div class="dot dn"></div><div class="dot dn"></div><div class="dot ac"></div></div>
+    <div class="bd" style="margin-bottom:11px;font-size:13px">Transfer &#8358;100,000 to receive $64.52 USDC in ~10 min.</div>
+    <div style="background:rgba(39,117,202,.1);border:1px solid rgba(39,117,202,.25);border-radius:10px;padding:9px 11px;margin-bottom:10px;font-size:11px;color:var(--usdc);line-height:1.6">&#128139; <strong>Why Airwallex?</strong> CBN-compliant licensed payment partner.</div>
+    <div class="cdark" style="margin-bottom:10px">
+     <div class="br"><span class="brl">Bank</span><span style="font-size:13px;font-weight:500">Airwallex Nigeria Ltd.</span></div>
+     <div class="br"><span class="brl">Account</span><div><span class="bra">0123 456 789</span><span class="cpb" onclick="this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)">Copy</span></div></div>
+     <div class="br"><span class="brl">Name</span><span style="font-size:13px;font-weight:500">AIRWALLEX NG LTD</span></div>
+     <div class="br"><span class="brl">Amount</span><span style="font-family:var(--mo);font-size:15px;font-weight:700;color:var(--g)">&#8358;100,000</span></div>
+    </div>
+    <div style="background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.22);border-radius:11px;padding:10px;font-size:11px;color:#F5C842;line-height:1.7;margin-bottom:11px">&#9888; Send exact amount. Rate expires in <span id="t2">14:58</span>.</div>
+    <button class="btn btn-g" onclick="nav('dep-wait')">I have Made the Transfer &#10003;</button>
+    <button class="btn btn-gh" onclick="nav('home')">Do This Later</button>
+   </div></div>
+  </div>
+
+  <!-- ════ SCREEN: dep-wait ════ -->
+  <div class="panel" id="p-dep-wait">
+   <div class="scroll"><div class="content" style="align-items:center;text-align:center;justify-content:center">
+    <div style="font-size:42px;margin-bottom:16px">&#128202;</div>
+    <div class="h2" style="margin-bottom:8px">Waiting for transfer</div>
+    <div class="bd" style="padding:0 14px;margin-bottom:20px">We will notify you when &#8358;100,000 arrives.</div>
+    <div style="width:100%;background:var(--bg3);border-radius:14px;padding:14px;margin-bottom:14px;text-align:left">
+     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span style="font-size:12px;color:var(--t2)">Transfer status</span><span style="font-size:11px;color:var(--amber);font-weight:600">PENDING</span></div>
+     <div class="pb"><div class="pf"></div></div>
+     <div style="font-size:11px;color:var(--t3);line-height:1.8;margin-top:8px">&#128178; Waiting for your bank transfer<br>&#128274; USDC secured by Cobo MPC<br>&#128276; Push notification on arrival</div>
+    </div>
+    <button class="btn btn-g" style="width:100%" onclick="nav('home')">Back to Home</button>
+    <div style="font-size:11px;color:var(--t3);margin-top:10px">~10 min &#183; <span style="color:var(--g);cursor:pointer" onclick="nav('tabi')">Need help?</span></div>
+   </div></div>
+  </div>
+
+  <!-- ════ SCREEN: send ════ -->
+  <div class="panel has-tab" id="p-send">
+   <div class="scroll"><div class="content">
+    <div class="bk"><div class="bkb" onclick="nav('home')">&lsaquo;</div><div><div class="h3">Send USDC</div><div style="font-size:11px;color:var(--t2);margin-top:1px">&#9889; Lightning &#183; 0 fees &#183; Instant</div></div></div>
+    <div class="card" style="margin-bottom:12px">
+     <div class="cp" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Amount (USDC)</div>
+     <div style="display:flex;align-items:baseline;gap:5px;padding:7px 0 11px;border-bottom:1px solid var(--b)"><span style="font-size:24px;font-weight:700;color:var(--g)">$</span><span style="font-family:var(--mo);font-size:32px;font-weight:700">20</span></div>
+     <div style="display:flex;justify-content:space-between;padding-top:9px;font-size:12px"><span style="color:var(--t2)">Available: <strong style="color:var(--t)">$250.07</strong></span><span style="color:var(--g);font-weight:600">MAX</span></div>
+    </div>
+    <div class="h3" style="margin-bottom:9px">Recent Contacts</div>
+    <div class="ctc sel" onclick="nav('send-pin')"><div class="av avb">C</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Chioma Adeyemi</div><div style="font-size:10px;color:var(--t3);font-family:var(--mo);margin-top:2px">0x1a2b...8f9e &#183; StableWallet</div></div><div style="color:var(--g);font-size:14px">&#10003;</div></div>
+    <div class="ctc" onclick="nav('send-pin')"><div class="av avo">E</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Emeka Okafor</div><div style="font-size:10px;color:var(--t3);font-family:var(--mo);margin-top:2px">0x5d6e...2a1b &#183; StableWallet</div></div><div style="color:var(--t3)">&rsaquo;</div></div>
+    <div style="text-align:center;margin:10px 0 12px;font-size:11px;color:var(--t3)">— or send to phone number —</div>
+    <div class="inp" style="margin-bottom:12px"><span class="ipx">&#127475;&#127468;</span><span style="font-size:14px;color:var(--t3);flex:1">+234 phone number<span class="cur"></span></span></div>
+    <button class="btn btn-g" onclick="nav('send-pin')">Continue &#8594;</button>
+   </div></div>
+   <div class="tabbar">
+    <div class="ti" onclick="nav('home')"><div class="ti-ic">&#127968;</div><div class="ti-lb">Home</div></div>
+    <div class="ti on" onclick="nav('send')"><div class="ti-ic">&#128228;</div><div class="ti-lb" style="color:var(--g)">Send</div></div>
+    <div class="ti" onclick="nav('earn')"><div class="ti-ic">&#128200;</div><div class="ti-lb">Earn</div></div>
+    <div class="ti" onclick="nav('history')"><div class="ti-ic">&#128203;</div><div class="ti-lb">History</div></div>
+    <div class="ti" onclick="nav('settings')"><div class="ti-ic">&#9881;&#65039;</div><div class="ti-lb">Settings</div></div>
+   </div>
+  </div>
+
+  <!-- ════ SCREEN: send-pin ════ -->
+  <div class="panel" id="p-send-pin">
+   <div class="scroll"><div class="content" style="align-items:center;text-align:center;justify-content:center">
+    <div style="font-size:36px;margin-bottom:14px">&#128273;</div>
+    <div class="h2" style="margin-bottom:6px">Confirm with PIN</div>
+    <div class="bd" style="margin-bottom:4px;font-size:13px">Sending <strong style="color:var(--t)">$20 USDC</strong> to Chioma</div>
+    <div class="cp">Required for all transfers</div>
+    <div class="pins"><div class="pd f"></div><div class="pd f"></div><div class="pd f"></div><div class="pd f"></div><div class="pd f"></div><div class="pd"></div></div>
+    <button class="btn btn-g" style="margin-bottom:8px" onclick="nav('send-ok')">Confirm Send &#8594;</button>
+    <button class="btn btn-gh" onclick="nav('send')">&#8592; Cancel</button>
+   </div></div>
+  </div>
+
+  <!-- ════ SCREEN: send-ok ════ -->
+  <div class="panel" id="p-send-ok">
+   <div class="scroll"><div class="content" style="align-items:center;text-align:center;justify-content:space-between">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 0">
+     <div class="sring">&#10004;&#65039;</div>
+     <div class="h1" style="margin-bottom:8px">Sent!</div>
+     <div class="bd" style="padding:0 16px;margin-bottom:16px"><strong style="color:var(--t)">$20 USDC</strong> sent to Chioma instantly.</div>
+     <div style="width:100%;background:var(--gd);border:1px solid var(--gb);border-radius:14px;padding:13px 15px;text-align:left"><div style="font-size:12px;color:var(--t2);margin-bottom:3px">&#9889; Cobo Loop — platform lightning</div><div style="font-size:11px;color:var(--t3)">0 fees &#183; Instant &#183; 0 gas</div></div>
+     <div style="width:100%;background:rgba(34,197,94,.06);border:1px solid var(--gb);border-radius:12px;padding:11px 13px;margin-top:10px;display:flex;align-items:center;justify-content:space-between">
+      <div style="font-size:12px">&#127873; Chioma earns <strong style="color:var(--g)">8.5% APY</strong> on this!</div>
+      <div style="font-size:11px;color:var(--g);cursor:pointer" onclick="nav('referral')">Invite her &#8594;</div>
+     </div>
+    </div>
+    <div style="width:100%"><button class="btn btn-g" onclick="nav('home')">Back to Home</button><button class="btn btn-gh" onclick="nav('send')">Send Again</button></div>
+   </div></div>
+  </div>
+
+  <!-- ════ SCREEN: withdraw ════ -->
+  <div class="panel" id="p-withdraw">
+   <div class="scroll"><div class="content">
+    <div class="bk"><div class="bkb" onclick="nav('home')">&lsaquo;</div><div><div class="h3">Withdraw to Bank</div><div style="font-size:11px;color:var(--t2);margin-top:1px">USDC &#8594; NGN &#183; Airwallex</div></div></div>
+    <div class="card" style="margin-bottom:12px">
+     <div class="cp" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">USDC Amount</div>
+     <div style="display:flex;align-items:baseline;gap:5px;padding:7px 0 11px;border-bottom:1px solid var(--b)"><span style="font-size:24px;font-weight:700;color:var(--g)">$</span><span style="font-family:var(--mo);font-size:32px;font-weight:700">50</span></div>
+     <div style="display:flex;justify-content:space-between;padding-top:9px;font-size:12px;margin-bottom:10px"><span style="color:var(--t2)">Available: <strong style="color:var(--t)">$250.07</strong></span><span style="color:var(--g);font-weight:600">MAX</span></div>
+     <div class="sep"></div>
+     <div class="cp" style="text-transform:uppercase;letter-spacing:1px;margin:8px 0 5px">You receive</div>
+     <div style="font-family:var(--mo);font-size:22px;font-weight:700;color:var(--g)">&#8358;80,000</div>
+     <div class="cp" style="margin-top:3px">&#8358;1,600/USDC &#183; <span style="color:var(--g);font-weight:600">0 fees</span></div>
+    </div>
+    <div class="ctc sel" style="margin-bottom:12px"><div style="width:38px;height:38px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:16px">&#127968;</div><div style="flex:1"><div style="font-size:13px;font-weight:500">GTBank <span class="tok">Default</span></div><div style="font-size:10px;color:var(--t3);margin-top:2px">0234567890 &#183; Seun K.</div></div><div style="color:var(--g)">&#10003;</div></div>
+    <button class="btn btn-g" onclick="nav('withdraw-ok')">Withdraw &#8358;80,000 &#8594;</button>
+    <div style="text-align:center;margin-top:8px;font-size:11px;color:var(--t3)">~5-15 min &#183; Airwallex NGN payout</div>
+   </div></div>
+  </div>
+
+  <!-- ════ SCREEN: withdraw-ok ════ -->
+  <div class="panel" id="p-withdraw-ok">
+   <div class="scroll"><div class="content" style="align-items:center;text-align:center;justify-content:space-between">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 0">
+     <div class="sring" style="font-size:30px">&#127968;</div>
+     <div class="h1" style="margin-bottom:8px">On its way!</div>
+     <div class="bd" style="padding:0 16px;margin-bottom:16px"><strong style="color:var(--t)">&#8358;80,000</strong> headed to your GTBank account.</div>
+     <div style="width:100%;background:var(--bg3);border-radius:14px;padding:13px 15px"><div style="font-size:12px;color:var(--t2);margin-bottom:3px">&#128178; Via Airwallex NGN payout</div><div style="font-size:11px;color:var(--t3)">Expected 5-15 min</div></div>
+    </div>
+    <div style="width:100%"><button class="btn btn-g" onclick="nav('home')">Back to Home</button><button class="btn btn-gh" onclick="nav('history')">View History</button></div>
+   </div></div>
+  </div>
+
+  <!-- ════ SCREEN: earn (v4 — USDC + Kolo) ════ -->
+  <div class="panel has-tab" id="p-earn">
+   <div class="scroll"><div class="content">
+    <div class="h3" style="margin-bottom:4px">Earn</div>
+    <div class="cp" style="margin-bottom:14px">Two ways to grow your money</div>
+
+    <!-- USDC Earn card -->
+    <div class="earn-card usdc" onclick="nav('earn-detail')">
+     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+      <div><div style="font-size:11px;color:rgba(39,117,202,.7);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">USDC Savings</div><div style="font-size:30px;font-weight:700;color:var(--usdc);letter-spacing:-1px">8.5% APY</div></div>
+      <div style="background:rgba(39,117,202,.15);border:1px solid rgba(39,117,202,.3);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--usdc)">Active</div>
+     </div>
+     <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.5);padding-top:11px;border-top:1px solid rgba(39,117,202,.15)">
+      <span>Balance: <strong style="color:var(--t)">$250.07</strong></span>
+      <span>Daily: <strong style="color:var(--usdc)">+$0.07</strong></span>
+      <span>Yearly: <strong style="color:var(--usdc)">+$21.26</strong></span>
+     </div>
     </div>
 
-    <!-- ── dep-bank ── -->
-    <div class="panel" id="p-dep-bank">
-      <div class="scroll"><div class="content">
-        <div class="bk"><div class="bkb" onclick="nav('dep-quote')">&lsaquo;</div><div><div class="h3">Transfer NGN Now</div></div></div>
-        <div class="dots"><div class="dot dn"></div><div class="dot dn"></div><div class="dot ac"></div></div>
-        <div class="bd" style="margin-bottom:11px;font-size:13px">Transfer &#8358;100,000 to receive $64.52 USDC in ~10 min.</div>
-        <div style="background:rgba(39,117,202,.1);border:1px solid rgba(39,117,202,.25);border-radius:10px;padding:9px 11px;margin-bottom:10px;font-size:11px;color:var(--usdc);line-height:1.6">&#128139; <strong>Why Airwallex?</strong> Licensed payment partner of StableWallet.</div>
-        <div class="cdark" style="margin-bottom:10px">
-          <div class="br"><span class="brl">Bank</span><span style="font-size:13px;font-weight:500">Airwallex Nigeria Ltd.</span></div>
-          <div class="br"><span class="brl">Account</span><div><span class="bra">0123 456 789</span><span class="cpb" onclick="this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)">Copy</span></div></div>
-          <div class="br"><span class="brl">Name</span><span style="font-size:13px;font-weight:500">AIRWALLEX NG LTD</span></div>
-          <div class="br"><span class="brl">Amount</span><span style="font-family:var(--mo);font-size:15px;font-weight:700;color:var(--g)">&#8358;100,000</span></div>
-        </div>
-        <div style="background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.22);border-radius:11px;padding:10px;font-size:11px;color:#F5C842;line-height:1.7;margin-bottom:11px">&#9888; Send exact amount. Rate expires in <span id="t2">14:58</span>.</div>
-        <button class="btn btn-g" onclick="nav('dep-wait')">I have Made the Transfer &#10003;</button>
-        <button class="btn btn-gh" onclick="nav('home')">Do This Later</button>
-      </div></div>
+    <!-- Kolo BTC card -->
+    <div class="earn-card btc" onclick="nav('btc-savings')">
+     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+      <div><div style="font-size:11px;color:rgba(247,147,26,.7);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">&#129311; Kolo — BTC Savings</div><div style="font-size:30px;font-weight:700;color:var(--btc);letter-spacing:-1px">$1/day</div></div>
+      <div style="background:rgba(247,147,26,.15);border:1px solid rgba(247,147,26,.3);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--btc)">Auto-DCA</div>
+     </div>
+     <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.5);padding-top:11px;border-top:1px solid rgba(247,147,26,.15)">
+      <span>BTC: <strong style="color:var(--t)">&#8383;0.00041</strong></span>
+      <span>≈ <strong style="color:var(--btc)">$27.50</strong></span>
+      <span>YTD: <strong style="color:var(--btc)">+18.3%</strong></span>
+     </div>
     </div>
 
-    <!-- ── dep-wait ── -->
-    <div class="panel" id="p-dep-wait">
-      <div class="scroll"><div class="content" style="align-items:center;text-align:center;justify-content:center">
-        <div style="font-size:42px;margin-bottom:16px">&#128202;</div>
-        <div class="h2" style="margin-bottom:8px">Waiting for transfer</div>
-        <div class="bd" style="padding:0 14px;margin-bottom:20px">We will notify you when &#8358;100,000 arrives.</div>
-        <div style="width:100%;background:var(--bg3);border-radius:14px;padding:14px;margin-bottom:14px;text-align:left">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span style="font-size:12px;color:var(--t2)">Transfer status</span><span style="font-size:11px;color:var(--amber);font-weight:600">PENDING</span></div>
-          <div class="pb"><div class="pf"></div></div>
-          <div style="font-size:11px;color:var(--t3);line-height:1.8;margin-top:8px">&#128178; Waiting for transfer<br>&#128274; Funds secured by Cobo MPC<br>&#128276; Push notification on arrival</div>
-        </div>
-        <button class="btn btn-g" style="width:100%" onclick="nav('home')">Back to Home</button>
-        <div style="font-size:11px;color:var(--t3);margin-top:10px">~10 min &#183; <span style="color:var(--g);cursor:pointer" onclick="nav('tabi')">Need help?</span></div>
-      </div></div>
+    <div class="card" style="margin-bottom:10px">
+     <div class="er"><span class="el">USDC today</span><span class="ev">+$0.07</span></div>
+     <div class="er"><span class="el">USDC this month</span><span class="ev">+$1.77</span></div>
+     <div class="er"><span class="el">BTC saved (Kolo)</span><span class="ev-btc">&#8383;0.00041</span></div>
+     <div class="er"><span class="el">Total portfolio</span><span style="font-size:15px;font-weight:700;color:var(--t)">$277.57</span></div>
     </div>
 
-    <!-- ── send ── -->
-    <div class="panel has-tab" id="p-send">
-      <div class="scroll"><div class="content">
-        <div class="bk"><div class="bkb" onclick="nav('home')">&lsaquo;</div><div><div class="h3">Send USDC</div><div style="font-size:11px;color:var(--t2);margin-top:1px">&#9889; Lightning &#183; 0 fees &#183; Instant</div></div></div>
-        <div class="card" style="margin-bottom:12px">
-          <div class="cp" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Amount (USDC)</div>
-          <div style="display:flex;align-items:baseline;gap:5px;padding:7px 0 11px;border-bottom:1px solid var(--b)"><span style="font-size:24px;font-weight:700;color:var(--g)">$</span><span style="font-family:var(--mo);font-size:32px;font-weight:700">20</span></div>
-          <div style="display:flex;justify-content:space-between;padding-top:9px;font-size:12px"><span style="color:var(--t2)">Available: <strong style="color:var(--t)">$250.00</strong></span><span style="color:var(--g);font-weight:600">MAX</span></div>
-        </div>
-        <div class="h3" style="margin-bottom:9px">Recent Contacts</div>
-        <div class="ctc sel" onclick="nav('send-pin')"><div class="av avb">C</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Chioma Adeyemi</div><div style="font-size:10px;color:var(--t3);font-family:var(--mo);margin-top:2px">0x1a2b...8f9e</div></div><div style="color:var(--g);font-size:14px">&#10003;</div></div>
-        <div class="ctc" onclick="nav('send-pin')"><div class="av avo">E</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Emeka Okafor</div><div style="font-size:10px;color:var(--t3);font-family:var(--mo);margin-top:2px">0x5d6e...2a1b</div></div><div style="color:var(--t3)">&rsaquo;</div></div>
-        <button class="btn btn-g" style="margin-top:10px" onclick="nav('send-pin')">Continue &#8594;</button>
-      </div></div>
-      <div class="tabbar">
-        <div class="ti" onclick="nav('home')"><div class="ti-ic">&#127968;</div><div class="ti-lb">Home</div></div>
-        <div class="ti on" onclick="nav('send')"><div class="ti-ic">&#128228;</div><div class="ti-lb" style="color:var(--g)">Send</div></div>
-        <div class="ti" onclick="nav('earn')"><div class="ti-ic">&#128200;</div><div class="ti-lb">Earn</div></div>
-        <div class="ti" onclick="nav('history')"><div class="ti-ic">&#128203;</div><div class="ti-lb">History</div></div>
-        <div class="ti" onclick="nav('settings')"><div class="ti-ic">&#9881;&#65039;</div><div class="ti-lb">Settings</div></div>
-      </div>
+    <div style="background:var(--bg3);border-radius:10px;padding:10px;font-size:10px;color:var(--t3);line-height:1.6">&#9432; USDC APY via Circle Yield. BTC is volatile — only save what you can hold long-term. Not a bank deposit.</div>
+   </div></div>
+   <div class="tabbar">
+    <div class="ti" onclick="nav('home')"><div class="ti-ic">&#127968;</div><div class="ti-lb">Home</div></div>
+    <div class="ti" onclick="nav('send')"><div class="ti-ic">&#128228;</div><div class="ti-lb">Send</div></div>
+    <div class="ti on" onclick="nav('earn')"><div class="ti-ic">&#128200;</div><div class="ti-lb" style="color:var(--g)">Earn</div></div>
+    <div class="ti" onclick="nav('history')"><div class="ti-ic">&#128203;</div><div class="ti-lb">History</div></div>
+    <div class="ti" onclick="nav('settings')"><div class="ti-ic">&#9881;&#65039;</div><div class="ti-lb">Settings</div></div>
+   </div>
+  </div>
+
+  <!-- ════ SCREEN: btc-savings (Kolo) ════ -->
+  <div class="panel" id="p-btc-savings">
+   <div class="scroll"><div class="content">
+    <div class="bk"><div class="bkb" onclick="nav('earn')">&lsaquo;</div><div><div class="h3">&#129311; Kolo — BTC Savings</div><div style="font-size:11px;color:var(--btc);margin-top:1px">Your Bitcoin piggy bank</div></div></div>
+
+    <div style="background:linear-gradient(145deg,#1a1008,#0e0e0e);border:1px solid var(--btcb);border-radius:22px;padding:20px;position:relative;overflow:hidden;margin-bottom:12px">
+     <div style="position:absolute;top:-50px;right:-50px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(247,147,26,.12) 0%,transparent 70%)"></div>
+     <div class="cp" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px;color:rgba(247,147,26,.6)">Your Kolo</div>
+     <div style="display:flex;align-items:baseline;gap:5px"><span style="font-size:20px;color:var(--btc)">&#8383;</span><span style="font-size:44px;font-weight:700;letter-spacing:-2px;color:var(--btc)">0.00041</span></div>
+     <div style="font-size:12px;color:var(--t2);margin-top:5px">&#8776; $27.50 USD &#183; &#8776; &#8358;44,000</div>
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:11px;border-top:1px solid var(--btcb)">
+      <div style="display:inline-flex;align-items:center;background:var(--btcd);border:1px solid var(--btcb);padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;color:var(--btc)">+18.3% YTD &#128200;</div>
+      <div style="font-size:12px;color:var(--t2)">Auto-saving $1/day</div>
+     </div>
     </div>
 
-    <!-- ── send-pin ── -->
-    <div class="panel" id="p-send-pin">
-      <div class="scroll"><div class="content" style="align-items:center;text-align:center;justify-content:center">
-        <div style="font-size:36px;margin-bottom:14px">&#128273;</div>
-        <div class="h2" style="margin-bottom:6px">Confirm with PIN</div>
-        <div class="bd" style="margin-bottom:4px;font-size:13px">Sending <strong style="color:var(--t)">$20 USDC</strong> to Chioma</div>
-        <div class="cp">Required for all transfers</div>
-        <div class="pins"><div class="pd f"></div><div class="pd f"></div><div class="pd f"></div><div class="pd f"></div><div class="pd f"></div><div class="pd"></div></div>
-        <button class="btn btn-g" style="margin-bottom:8px" onclick="nav('send-ok')">Confirm Send &#8594;</button>
-        <button class="btn btn-gh" onclick="nav('send')">&#8592; Cancel</button>
-      </div></div>
+    <div class="card" style="margin-bottom:12px">
+     <div style="font-size:13px;font-weight:500;margin-bottom:10px">Auto-DCA Settings</div>
+     <div class="br"><div><div style="font-size:13px;font-weight:500">Daily BTC purchase</div><div style="font-size:11px;color:var(--t2);margin-top:1px">From USDC balance, every day 9am</div></div><div style="display:flex;align-items:center;gap:6px"><span style="font-size:13px;font-weight:600;color:var(--g)">$1.00</span><span style="font-size:11px;background:var(--gd);color:var(--g);border:1px solid var(--gb);padding:2px 7px;border-radius:6px">Active</span></div></div>
+     <div class="br"><div><div style="font-size:13px;font-weight:500">Round-up savings</div><div style="font-size:11px;color:var(--t2);margin-top:1px">Round up each USDC spend to BTC</div></div><div style="font-size:11px;background:var(--bg3);color:var(--t3);border:1px solid var(--b);padding:2px 7px;border-radius:6px">Off</div></div>
+     <div class="br" style="border:none"><div><div style="font-size:13px;font-weight:500">Price alert</div><div style="font-size:11px;color:var(--t2);margin-top:1px">Notify when BTC drops 10%+</div></div><div style="font-size:11px;background:var(--gd);color:var(--g);border:1px solid var(--gb);padding:2px 7px;border-radius:6px">On</div></div>
     </div>
 
-    <!-- ── send-ok ── -->
-    <div class="panel" id="p-send-ok">
-      <div class="scroll"><div class="content" style="align-items:center;text-align:center;justify-content:space-between">
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 0">
-          <div class="sring">&#10004;&#65039;</div>
-          <div class="h1" style="margin-bottom:8px">Sent!</div>
-          <div class="bd" style="padding:0 16px;margin-bottom:16px"><strong style="color:var(--t)">$20 USDC</strong> sent to Chioma. Confirmed in &lt;2s.</div>
-          <div style="width:100%;background:var(--gd);border:1px solid var(--gb);border-radius:14px;padding:13px 15px;text-align:left"><div style="font-size:12px;color:var(--t2);margin-bottom:3px">&#9889; Platform lightning transfer</div><div style="font-size:11px;color:var(--t3)">Cobo Loop &#183; 0 Gas &#183; Instant</div></div>
-          <div style="display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--b2);border-radius:11px;padding:8px 13px;margin-top:11px;font-family:var(--mo);font-size:11px;color:var(--t2)"><span>&#128196;</span><span style="color:var(--g)">Receipt #SW-</span>7f3a...c92b</div>
-        </div>
-        <div style="width:100%"><button class="btn btn-g" onclick="nav('home')">Back to Home</button><button class="btn btn-gh" onclick="nav('send')">Send Again</button></div>
-      </div></div>
+    <div style="background:var(--btcd);border:1px solid var(--btcb);border-radius:14px;padding:13px;margin-bottom:12px">
+     <div style="font-size:13px;font-weight:600;margin-bottom:7px;color:var(--btc)">Why Kolo?</div>
+     <div class="bd" style="font-size:12px;line-height:1.8">&#10003; NGN lost 50%+ vs USD in 2024<br>&#10003; USDC protects from NGN devaluation<br>&#10003; Bitcoin as long-term wealth builder<br>&#10003; Withdraw anytime — no lock-up</div>
     </div>
 
-    <!-- ── withdraw ── -->
-    <div class="panel" id="p-withdraw">
-      <div class="scroll"><div class="content">
-        <div class="bk"><div class="bkb" onclick="nav('home')">&lsaquo;</div><div><div class="h3">Withdraw to Bank</div><div style="font-size:11px;color:var(--t2);margin-top:1px">USDC &#8594; NGN &#183; Airwallex</div></div></div>
-        <div class="card" style="margin-bottom:12px">
-          <div class="cp" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">USDC Amount</div>
-          <div style="display:flex;align-items:baseline;gap:5px;padding:7px 0 11px;border-bottom:1px solid var(--b)"><span style="font-size:24px;font-weight:700;color:var(--g)">$</span><span style="font-family:var(--mo);font-size:32px;font-weight:700">50</span></div>
-          <div style="display:flex;justify-content:space-between;padding-top:9px;font-size:12px;margin-bottom:10px"><span style="color:var(--t2)">Available: <strong style="color:var(--t)">$250.00</strong></span><span style="color:var(--g);font-weight:600">MAX</span></div>
-          <div class="sep"></div>
-          <div class="cp" style="text-transform:uppercase;letter-spacing:1px;margin:8px 0 5px">You receive</div>
-          <div style="font-family:var(--mo);font-size:22px;font-weight:700;color:var(--g)">&#8358;80,000</div>
-          <div class="cp" style="margin-top:3px">&#8358;1,600/USDC &#183; 0 fees</div>
-        </div>
-        <div class="ctc sel" style="margin-bottom:12px"><div style="width:38px;height:38px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:16px">&#127968;</div><div style="flex:1"><div style="font-size:13px;font-weight:500">GTBank</div><div style="font-size:10px;color:var(--t3);margin-top:2px">0234567890 &#183; Seun K.</div></div><div style="color:var(--g)">&#10003;</div></div>
-        <button class="btn btn-g" onclick="nav('withdraw-ok')">Withdraw &#8358;80,000 &#8594;</button>
-        <div style="text-align:center;margin-top:8px;font-size:11px;color:var(--t3)">Estimated arrival: 5-15 min</div>
-      </div></div>
+    <div style="background:var(--bg3);border-radius:10px;padding:10px;font-size:10px;color:var(--t3);line-height:1.6;margin-bottom:14px">&#9432; Bitcoin is volatile. Past performance does not guarantee future results. Only save what you can afford to hold long-term.</div>
+
+    <button class="btn btn-g" onclick="nav('earn')">&#8592; Back to Earn</button>
+   </div></div>
+  </div>
+
+  <!-- ════ SCREEN: earn-detail ════ -->
+  <div class="panel" id="p-earn-detail">
+   <div class="scroll"><div class="content">
+    <div class="bk"><div class="bkb" onclick="nav('earn')">&lsaquo;</div><div><div class="h3">USDC Savings — 8.5% APY</div></div></div>
+    <div style="background:linear-gradient(145deg,#0a1520,#0e0e0e);border:1px solid rgba(39,117,202,.3);border-radius:22px;padding:20px;margin-bottom:12px;position:relative;overflow:hidden">
+     <div style="position:absolute;top:-50px;right:-50px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(39,117,202,.12) 0%,transparent 70%)"></div>
+     <div class="cp" style="text-transform:uppercase;letter-spacing:1px;margin-bottom:7px;color:rgba(39,117,202,.6)">Balance</div>
+     <div style="font-size:40px;font-weight:700;letter-spacing:-1.5px;margin-bottom:3px;color:var(--t)">$250.07</div>
+     <div style="font-size:13px;color:var(--t2)">USDC</div>
+     <div style="display:flex;gap:16px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(39,117,202,.15)">
+      <div><div style="font-size:11px;color:var(--t3)">Daily</div><div style="font-size:16px;font-weight:700;color:var(--usdc)">+$0.07</div></div>
+      <div><div style="font-size:11px;color:var(--t3)">Monthly</div><div style="font-size:16px;font-weight:700;color:var(--usdc)">+$1.77</div></div>
+      <div><div style="font-size:11px;color:var(--t3)">Yearly</div><div style="font-size:16px;font-weight:700;color:var(--usdc)">+$21.26</div></div>
+     </div>
+    </div>
+    <div class="card" style="margin-bottom:12px">
+     <div style="font-size:13px;font-weight:600;margin-bottom:7px">How it works</div>
+     <div class="bd" style="font-size:12px;line-height:1.8">&#10003; USDC earns 8.5% APY via Circle Yield<br>&#10003; Credited daily, compounded<br>&#10003; Withdraw anytime — no penalties<br>&#10003; Backed by US Treasuries + cash</div>
+    </div>
+    <div style="background:rgba(39,117,202,.08);border:1px solid rgba(39,117,202,.2);border-radius:12px;padding:11px;font-size:11px;color:rgba(39,117,202,.8);line-height:1.7">&#9432; Not a bank deposit. Not NDIC insured. Circle Yield. APY variable and not guaranteed.</div>
+   </div></div>
+  </div>
+
+  <!-- ════ SCREEN: history ════ -->
+  <div class="panel has-tab" id="p-history">
+   <div class="scroll"><div class="content">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><div class="h3">History</div><div style="font-size:10px;color:var(--t3)">&#9989; On-chain · Base L2</div></div>
+    <div class="card">
+     <div class="tx"><div class="tic ti-in">&#128176;</div><div><div class="tnm">Added USDC</div><div class="tsb">Airwallex &#183; 2h ago</div></div><div class="tam tp">+$64.52</div></div>
+     <div class="tx"><div class="tic ti-btc">&#129311;</div><div><div class="tnm">Kolo — Daily BTC Buy</div><div class="tsb">Auto-DCA &#183; Today 9am</div></div><div class="tam tb">&#8722;$1.00</div></div>
+     <div class="tx"><div class="tic ti-s">&#128228;</div><div><div class="tnm">Sent to Chioma</div><div class="tsb">Lightning &#183; Yesterday</div></div><div class="tam tn">&#8722;$20.00</div></div>
+     <div class="tx"><div class="tic" style="background:var(--gd)">&#127807;</div><div><div class="tnm">USDC Yield</div><div class="tsb">Circle Yield &#183; Daily</div></div><div class="tam tp">+$0.07</div></div>
+     <div class="tx"><div class="tic ti-in">&#128176;</div><div><div class="tnm">Added USDC</div><div class="tsb">Airwallex &#183; Mar 5</div></div><div class="tam tp">+$100.00</div></div>
+     <div class="tx"><div class="tic ti-s">&#128228;</div><div><div class="tnm">Sent to Emeka</div><div class="tsb">Lightning &#183; Mar 3</div></div><div class="tam tn">&#8722;$10.00</div></div>
+    </div>
+   </div></div>
+   <div class="tabbar">
+    <div class="ti" onclick="nav('home')"><div class="ti-ic">&#127968;</div><div class="ti-lb">Home</div></div>
+    <div class="ti" onclick="nav('send')"><div class="ti-ic">&#128228;</div><div class="ti-lb">Send</div></div>
+    <div class="ti" onclick="nav('earn')"><div class="ti-ic">&#128200;</div><div class="ti-lb">Earn</div></div>
+    <div class="ti on" onclick="nav('history')"><div class="ti-ic">&#128203;</div><div class="ti-lb" style="color:var(--g)">History</div></div>
+    <div class="ti" onclick="nav('settings')"><div class="ti-ic">&#9881;&#65039;</div><div class="ti-lb">Settings</div></div>
+   </div>
+  </div>
+
+  <!-- ════ SCREEN: referral ════ -->
+  <div class="panel" id="p-referral">
+   <div class="scroll"><div class="content">
+    <div class="bk"><div class="bkb" onclick="nav('home')">&lsaquo;</div><div><div class="h3">Invite &amp; Earn</div><div style="font-size:11px;color:var(--g);margin-top:1px">Both of you get $5 USDC</div></div></div>
+
+    <div style="background:linear-gradient(145deg,#0d1a0d,#0e0e0e);border:1px solid var(--gb);border-radius:22px;padding:20px;text-align:center;margin-bottom:12px;position:relative;overflow:hidden">
+     <div style="position:absolute;top:-50px;left:50%;transform:translateX(-50%);width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(34,197,94,.15) 0%,transparent 70%)"></div>
+     <div style="font-size:38px;margin-bottom:10px">&#127873;</div>
+     <div style="font-size:22px;font-weight:700;letter-spacing:-.5px;margin-bottom:6px">Give $5, Get $5</div>
+     <div class="bd" style="font-size:13px;padding:0 8px">Invite a friend to StableWallet. When they deposit their first &#8358;5,000, you <em>both</em> get $5 USDC.</div>
     </div>
 
-    <!-- ── withdraw-ok ── -->
-    <div class="panel" id="p-withdraw-ok">
-      <div class="scroll"><div class="content" style="align-items:center;text-align:center;justify-content:space-between">
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 0">
-          <div class="sring" style="font-size:30px">&#127968;</div>
-          <div class="h1" style="margin-bottom:8px">Withdrawal sent!</div>
-          <div class="bd" style="padding:0 16px;margin-bottom:16px"><strong style="color:var(--t)">&#8358;80,000</strong> is on its way to your GTBank.</div>
-          <div style="width:100%;background:var(--bg3);border-radius:14px;padding:13px 15px"><div style="font-size:12px;color:var(--t2);margin-bottom:3px">&#128178; Via Airwallex NGN payout</div><div style="font-size:11px;color:var(--t3)">Expected 5-15 min</div></div>
-        </div>
-        <div style="width:100%"><button class="btn btn-g" onclick="nav('home')">Back to Home</button><button class="btn btn-gh" onclick="nav('history')">View History</button></div>
-      </div></div>
+    <div class="card" style="margin-bottom:12px">
+     <div style="font-size:13px;font-weight:500;margin-bottom:10px">Your invite code</div>
+     <div class="code-box">
+      <span style="font-family:var(--mo);font-size:20px;font-weight:700;color:var(--g);letter-spacing:3px;flex:1">SEUN24</span>
+      <div style="font-size:11px;color:var(--g);background:var(--gd);padding:4px 10px;border-radius:8px;border:1px solid var(--gb);cursor:pointer" onclick="this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)">Copy</div>
+     </div>
+     <button class="btn btn-g" style="margin-bottom:0">&#128172; Share on WhatsApp</button>
     </div>
 
-    <!-- ── earn ── -->
-    <div class="panel has-tab" id="p-earn">
-      <div class="scroll"><div class="content">
-        <div class="bk"><div class="bkb" onclick="nav('home')">&lsaquo;</div><div><div class="h3">Earn 5.2% APY</div></div></div>
-        <div style="background:var(--bg2);border:1px solid var(--b);border-radius:18px;padding:18px;text-align:center;margin-bottom:12px"><div class="cp" style="margin-bottom:7px">Current Balance</div><div style="font-size:40px;font-weight:700;letter-spacing:-1.5px;margin-bottom:3px">$250.00</div><div style="font-size:13px;color:var(--t2)">USDC</div></div>
-        <div class="card" style="margin-bottom:12px">
-          <div class="er"><span class="el">Daily Earnings</span><span class="ev">+$0.04</span></div>
-          <div class="er"><span class="el">Monthly</span><span class="ev">+$1.08</span></div>
-          <div class="er"><span class="el">Yearly (5.2% APY)</span><span class="ev">+$13.00</span></div>
-        </div>
-        <div style="background:var(--gd);border:1px solid var(--gb);border-radius:14px;padding:13px;margin-bottom:10px"><div style="font-size:13px;font-weight:600;margin-bottom:7px">&#128161; How it works</div><div class="bd" style="font-size:12px;line-height:1.75">&#10003; USDC earns 5.2% APY via Circle Yield<br>&#10003; Compounds daily<br>&#10003; Withdraw anytime, no penalties</div></div>
-        <div style="background:var(--bg3);border-radius:10px;padding:10px;font-size:10px;color:var(--t3);line-height:1.6">&#9432; Circle Yield. Not a bank deposit.</div>
-      </div></div>
-      <div class="tabbar">
-        <div class="ti" onclick="nav('home')"><div class="ti-ic">&#127968;</div><div class="ti-lb">Home</div></div>
-        <div class="ti" onclick="nav('send')"><div class="ti-ic">&#128228;</div><div class="ti-lb">Send</div></div>
-        <div class="ti on" onclick="nav('earn')"><div class="ti-ic">&#128200;</div><div class="ti-lb" style="color:var(--g)">Earn</div></div>
-        <div class="ti" onclick="nav('history')"><div class="ti-ic">&#128203;</div><div class="ti-lb">History</div></div>
-        <div class="ti" onclick="nav('settings')"><div class="ti-ic">&#9881;&#65039;</div><div class="ti-lb">Settings</div></div>
-      </div>
+    <div class="card" style="margin-bottom:12px">
+     <div style="font-size:13px;font-weight:500;margin-bottom:10px">Your earnings</div>
+     <div class="qr"><span class="ql">Friends invited</span><span class="qv">3</span></div>
+     <div class="qr"><span class="ql">Pending first deposit</span><span class="qv" style="color:var(--amber)">2</span></div>
+     <div class="qr" style="border:none"><span class="ql">Total earned</span><span class="qv" style="color:var(--g)">$5.00 USDC</span></div>
     </div>
 
-    <!-- ── history ── -->
-    <div class="panel has-tab" id="p-history">
-      <div class="scroll"><div class="content">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><div class="h3">History</div><div class="cp">Verified on Base</div></div>
-        <div class="card">
-          <div class="tx"><div class="tic ti-in">&#128176;</div><div><div class="tnm">Added USDC</div><div class="tsb">Airwallex &#183; 2h ago</div></div><div class="tam tp">+$64.52</div></div>
-          <div class="tx"><div class="tic ti-s">&#128228;</div><div><div class="tnm">Sent to Chioma</div><div class="tsb">Lightning &#183; Yesterday</div></div><div class="tam tn">&#8722;$20.00</div></div>
-          <div class="tx"><div class="tic ti-out">&#11014;&#65039;</div><div><div class="tnm">Withdrew to GTBank</div><div class="tsb">Airwallex &#183; Mar 8</div></div><div class="tam tn">&#8722;$30.00</div></div>
-          <div class="tx"><div class="tic ti-in">&#128176;</div><div><div class="tnm">Added USDC</div><div class="tsb">Airwallex &#183; Mar 5</div></div><div class="tam tp">+$100.00</div></div>
-          <div class="tx"><div class="tic ti-s">&#128228;</div><div><div class="tnm">Sent to Emeka</div><div class="tsb">Lightning &#183; Mar 3</div></div><div class="tam tn">&#8722;$10.00</div></div>
-        </div>
-      </div></div>
-      <div class="tabbar">
-        <div class="ti" onclick="nav('home')"><div class="ti-ic">&#127968;</div><div class="ti-lb">Home</div></div>
-        <div class="ti" onclick="nav('send')"><div class="ti-ic">&#128228;</div><div class="ti-lb">Send</div></div>
-        <div class="ti" onclick="nav('earn')"><div class="ti-ic">&#128200;</div><div class="ti-lb">Earn</div></div>
-        <div class="ti on" onclick="nav('history')"><div class="ti-ic">&#128203;</div><div class="ti-lb" style="color:var(--g)">History</div></div>
-        <div class="ti" onclick="nav('settings')"><div class="ti-ic">&#9881;&#65039;</div><div class="ti-lb">Settings</div></div>
-      </div>
+    <div style="background:var(--gd);border:1px solid var(--gb);border-radius:14px;padding:13px">
+     <div style="font-size:13px;font-weight:600;margin-bottom:8px">How it works</div>
+     <div class="ref-step"><div class="step-n">1</div><div style="font-size:12px">Share your code — SEUN24</div></div>
+     <div class="ref-step"><div class="step-n">2</div><div style="font-size:12px">Friend signs up + deposits &#8358;5,000+</div></div>
+     <div class="ref-step" style="border:none"><div class="step-n">3</div><div style="font-size:12px">You both get $5 USDC — instantly &#9889;</div></div>
+    </div>
+   </div></div>
+  </div>
+
+  <!-- ════ SCREEN: settings (v4 — SEC license) ════ -->
+  <div class="panel has-tab" id="p-settings">
+   <div class="scroll"><div class="content">
+    <div class="h3" style="margin-bottom:14px">Settings</div>
+
+    <!-- Regulatory trust card -->
+    <div style="background:rgba(39,117,202,.06);border:1px solid rgba(39,117,202,.2);border-radius:14px;padding:12px 14px;margin-bottom:14px">
+     <div style="font-size:11px;font-weight:600;color:var(--usdc);margin-bottom:6px">&#9989; Regulatory Status</div>
+     <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <span class="tok-sec">ISA 2025 Compliant</span>
+      <span class="tok-sec">Cobo MAS Licensed</span>
+      <span class="tok-sec">Airwallex CBN</span>
+      <span class="tok-sec">Sumsub KYC</span>
+     </div>
     </div>
 
-    <!-- ── settings ── -->
-    <div class="panel has-tab" id="p-settings">
-      <div class="scroll"><div class="content">
-        <div class="h3" style="margin-bottom:16px">Settings</div>
-        <div class="cp" style="margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px">Bank Accounts</div>
-        <div class="card" style="margin-bottom:12px">
-          <div class="sr"><div class="sl"><span style="font-size:17px;margin-right:9px">&#127968;</span><div><div style="font-size:13px;font-weight:500">GTBank <span class="tok">Default</span></div><div style="font-size:10px;color:var(--t2);margin-top:2px">0234567890 &#183; Seun K.</div></div></div><span style="color:var(--t3)">&rsaquo;</span></div>
-          <div class="sr"><div class="sl"><span style="font-size:17px;margin-right:9px;color:var(--g)">+</span><span style="font-size:13px;color:var(--g)">Add bank account</span></div></div>
-        </div>
-        <div class="cp" style="margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px">Security</div>
-        <div class="card" style="margin-bottom:12px">
-          <div class="sr"><div class="sl"><span style="font-size:17px;margin-right:9px">&#128273;</span><div><div style="font-size:13px;font-weight:500">Change PIN</div><div style="font-size:10px;color:var(--t2);margin-top:1px">Last changed 7 days ago</div></div></div><span style="color:var(--t3)">&rsaquo;</span></div>
-          <div class="sr"><div class="sl"><span style="font-size:17px;margin-right:9px">&#128065;&#65039;</span><div><div style="font-size:13px;font-weight:500">Face ID</div><div style="font-size:10px;color:var(--t2);margin-top:1px">Enabled</div></div></div><span style="font-size:11px;background:var(--gd);color:var(--g);border:1px solid var(--gb);padding:2px 8px;border-radius:8px">On</span></div>
-        </div>
-        <div class="cp" style="margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px">Support</div>
-        <div class="card" style="margin-bottom:12px">
-          <div class="sr" onclick="nav('tabi')"><div class="sl"><span style="font-size:17px;margin-right:9px">&#128172;</span><div><div style="font-size:13px;font-weight:500">WhatsApp (Tabi AI)</div><div style="font-size:10px;color:var(--t2);margin-top:1px">Balance &#183; Rates &#183; Support</div></div></div><span style="color:var(--t3)">&rsaquo;</span></div>
-          <div class="sr"><div class="sl"><span style="font-size:17px;margin-right:9px">&#128140;</span><div><div style="font-size:13px;font-weight:500">Email support</div><div style="font-size:10px;color:var(--t2);margin-top:1px">support&#64;stablewallet.app &#183; 24h</div></div></div><span style="color:var(--t3)">&rsaquo;</span></div>
-        </div>
-        <div class="card" style="margin-bottom:14px"><div style="font-size:10px;color:var(--t3);line-height:1.7;padding:4px 0">Custody: Cobo WaaS 2.0 (MAS)<br>Fiat: Airwallex &#183; KYC: Sumsub<br>5.2% APY via Circle Yield</div></div>
-        <button class="btn btn-d" onclick="nav('onboarding')">Sign out</button>
-      </div></div>
-      <div class="tabbar">
-        <div class="ti" onclick="nav('home')"><div class="ti-ic">&#127968;</div><div class="ti-lb">Home</div></div>
-        <div class="ti" onclick="nav('send')"><div class="ti-ic">&#128228;</div><div class="ti-lb">Send</div></div>
-        <div class="ti" onclick="nav('earn')"><div class="ti-ic">&#128200;</div><div class="ti-lb">Earn</div></div>
-        <div class="ti" onclick="nav('history')"><div class="ti-ic">&#128203;</div><div class="ti-lb">History</div></div>
-        <div class="ti on" onclick="nav('settings')"><div class="ti-ic">&#9881;&#65039;</div><div class="ti-lb" style="color:var(--g)">Settings</div></div>
-      </div>
+    <div class="cp" style="margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px">Bank Accounts</div>
+    <div class="card" style="margin-bottom:12px">
+     <div class="sr"><div class="sl"><span style="font-size:17px;margin-right:9px">&#127968;</span><div><div style="font-size:13px;font-weight:500">GTBank <span class="tok">Default</span></div><div style="font-size:10px;color:var(--t2);margin-top:2px">0234567890 &#183; Seun K.</div></div></div><span style="color:var(--t3)">&rsaquo;</span></div>
+     <div class="sr"><div class="sl"><span style="font-size:17px;margin-right:9px;color:var(--g)">+</span><span style="font-size:13px;color:var(--g)">Add bank account</span></div></div>
     </div>
 
-    <!-- ── tabi ── -->
-    <div class="panel" id="p-tabi">
-      <div class="scroll"><div class="content" style="padding-bottom:14px">
-        <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px">
-          <div style="width:34px;height:34px;border-radius:50%;background:var(--gd);border:1px solid var(--gb);display:flex;align-items:center;justify-content:center;font-size:16px">&#129302;</div>
-          <div><div style="font-size:13px;font-weight:500">Tabi &#183; StableWallet AI</div><div style="font-size:10px;color:var(--g)">&#9679; Online</div></div>
-          <div class="bkb" style="margin-left:auto" onclick="nav('home')">&times;</div>
-        </div>
-        <div class="wabox">
-          <div class="wab wat"><div class="wan">TABI</div>Hi! Check balance, get rates, or create a support ticket.</div>
-          <div class="wab wau">My transfer did not arrive</div>
-          <div class="wab wat"><div class="wan">TABI</div>&#9989; Ticket <strong style="color:var(--g)">#SW-8472</strong> created<br>&#128338; Response within 2 hours. Your USDC is safe.</div>
-          <div class="wab wau">What is today rate?</div>
-          <div class="wab wat"><div class="wan">TABI</div>&#128202; Buy: <strong>&#8358;1,550/USDC</strong><br>Sell: <strong>&#8358;1,600/USDC</strong> &#183; 0 fees &#10003;</div>
-          <div class="wab wau">Check balance</div>
-          <div class="wab wat"><div class="wan">TABI</div>&#128176; <strong style="color:var(--g)">$250.00 USDC</strong> &#8776; &#8358;400,000<br>Earning +$0.04/day &#127807;</div>
-        </div>
-        <div class="wainp"><span style="font-size:12px;color:var(--t2);flex:1">Type a message<span class="cur" style="vertical-align:middle"></span></span><span style="font-size:17px">&#128247;</span><span style="font-size:17px">&#127908;</span></div>
-      </div></div>
+    <div class="cp" style="margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px">KYC & Limits</div>
+    <div class="card" style="margin-bottom:12px">
+     <div class="sr"><div class="sl"><span style="font-size:17px;margin-right:9px">&#128100;</span><div><div style="font-size:13px;font-weight:500">Tier 1 — Basic KYC</div><div style="font-size:10px;color:var(--t2);margin-top:1px">$100/day limit &#183; Upgrade for $1,000/day</div></div></div><span style="font-size:11px;background:var(--gd);color:var(--g);padding:2px 8px;border-radius:8px;border:1px solid var(--gb)">Upgrade</span></div>
     </div>
 
-  </div><!-- /screen -->
+    <div class="cp" style="margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px">Security</div>
+    <div class="card" style="margin-bottom:12px">
+     <div class="sr"><div class="sl"><span style="font-size:17px;margin-right:9px">&#128273;</span><div><div style="font-size:13px;font-weight:500">Change PIN</div><div style="font-size:10px;color:var(--t2);margin-top:1px">Last changed 7 days ago</div></div></div><span style="color:var(--t3)">&rsaquo;</span></div>
+     <div class="sr"><div class="sl"><span style="font-size:17px;margin-right:9px">&#128065;&#65039;</span><div><div style="font-size:13px;font-weight:500">Face ID</div><div style="font-size:10px;color:var(--t2);margin-top:1px">Enabled for withdrawals</div></div></div><span style="font-size:11px;background:var(--gd);color:var(--g);border:1px solid var(--gb);padding:2px 8px;border-radius:8px">On</span></div>
+    </div>
+
+    <div class="cp" style="margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px">Invite & Earn</div>
+    <div class="card" style="margin-bottom:12px">
+     <div class="sr" onclick="nav('referral')"><div class="sl"><span style="font-size:17px;margin-right:9px">&#127873;</span><div><div style="font-size:13px;font-weight:500">Invite Friends — $5 each</div><div style="font-size:10px;color:var(--t2);margin-top:1px">3 invited &#183; $5.00 USDC earned</div></div></div><span style="color:var(--t3)">&rsaquo;</span></div>
+    </div>
+
+    <div class="cp" style="margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px">Support</div>
+    <div class="card" style="margin-bottom:14px">
+     <div class="sr" onclick="nav('tabi')"><div class="sl"><span style="font-size:17px;margin-right:9px">&#128172;</span><div><div style="font-size:13px;font-weight:500">Tabi AI — WhatsApp</div><div style="font-size:10px;color:var(--t2);margin-top:1px">Balance &#183; Rates &#183; Support tickets</div></div></div><span style="color:var(--t3)">&rsaquo;</span></div>
+     <div class="sr"><div class="sl"><span style="font-size:17px;margin-right:9px">&#128140;</span><div><div style="font-size:13px;font-weight:500">Email support</div><div style="font-size:10px;color:var(--t2);margin-top:1px">support@stablewallet.app &#183; 24h SLA</div></div></div><span style="color:var(--t3)">&rsaquo;</span></div>
+    </div>
+
+    <button class="btn btn-d" onclick="nav('onboarding')">Sign out</button>
+   </div></div>
+   <div class="tabbar">
+    <div class="ti" onclick="nav('home')"><div class="ti-ic">&#127968;</div><div class="ti-lb">Home</div></div>
+    <div class="ti" onclick="nav('send')"><div class="ti-ic">&#128228;</div><div class="ti-lb">Send</div></div>
+    <div class="ti" onclick="nav('earn')"><div class="ti-ic">&#128200;</div><div class="ti-lb">Earn</div></div>
+    <div class="ti" onclick="nav('history')"><div class="ti-ic">&#128203;</div><div class="ti-lb">History</div></div>
+    <div class="ti on" onclick="nav('settings')"><div class="ti-ic">&#9881;&#65039;</div><div class="ti-lb" style="color:var(--g)">Settings</div></div>
+   </div>
+  </div>
+
+  <!-- ════ SCREEN: tabi ════ -->
+  <div class="panel" id="p-tabi">
+   <div class="scroll"><div class="content" style="padding-bottom:14px">
+    <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px">
+     <div style="width:34px;height:34px;border-radius:50%;background:var(--gd);border:1px solid var(--gb);display:flex;align-items:center;justify-content:center;font-size:16px">&#129302;</div>
+     <div><div style="font-size:13px;font-weight:500">Tabi &#183; StableWallet AI</div><div style="font-size:10px;color:var(--g)">&#9679; Online &#183; WhatsApp</div></div>
+     <div class="bkb" style="margin-left:auto" onclick="nav('home')">&times;</div>
+    </div>
+    <div class="wabox">
+     <div class="wab wat"><div class="wan">TABI</div>Hello! I can check your balance, get live rates, send money, or create a support ticket. What do you need?</div>
+     <div class="wab wau">What rate am I getting today?</div>
+     <div class="wab wat"><div class="wan">TABI</div>&#128202; Buy: <strong>&#8358;1,550/USDC</strong><br>Sell: <strong>&#8358;1,600/USDC</strong><br>Your 8.5% APY earns +$0.07 today. &#10003;</div>
+     <div class="wab wau">My transfer did not arrive</div>
+     <div class="wab wat"><div class="wan">TABI</div>&#9989; Ticket <strong style="color:var(--g)">#SW-8472</strong> created.<br>&#128338; Response within 2 hours.<br>Your USDC is safe in Cobo MPC.</div>
+     <div class="wab wau">Check my balance</div>
+     <div class="wab wat"><div class="wan">TABI</div>&#128176; <strong style="color:var(--g)">$250.07 USDC</strong> &#8776; &#8358;400,112<br>&#129311; Kolo: &#8383;0.00041 &#8776; $27.50<br>Total: <strong>$277.57</strong> &#183; Earning +$0.07/day &#127807;</div>
+    </div>
+    <div class="wainp"><span style="font-size:12px;color:var(--t2);flex:1">Ask Tabi anything<span class="cur" style="vertical-align:middle"></span></span><span style="font-size:17px">&#128247;</span><span style="font-size:17px">&#127908;</span></div>
+   </div></div>
+  </div>
+
+ </div><!-- /screen -->
 </div><!-- /phone -->
 
-<!-- ══ SIDEBAR — desktop only ══ -->
+<!-- ════ SIDEBAR (desktop) ════ -->
 <div class="sidebar">
-  <div class="dtag">&#9679; Interactive Demo</div>
-  <div class="logo">StableWallet</div>
-  <div class="tline">Nigeria USDC Neobank<br>Tap any button inside the phone</div>
-  <div class="hcard"><div class="ht" id="ht">&#128072; Start here</div><div class="hb" id="hb">Tap "Get Started" to begin</div></div>
-  <div class="nmap" id="nm"></div>
-  <div class="mets">
-    <div class="mt"><div class="mv cg">$10.6B</div><div class="ml">Validated</div></div>
-    <div class="mt"><div class="mv">3.1%</div><div class="ml">Spread</div></div>
-    <div class="mt"><div class="mv cg">v3.2</div><div class="ml">Final</div></div>
-  </div>
-  <button class="rbtn" onclick="nav('onboarding')">&#8635; Restart</button>
+ <div class="dtag">&#9679; Interactive Demo v4</div>
+ <div class="logo">StableWallet</div>
+ <div class="tline">Nigeria USDC Neobank<br>Tap any button on the phone</div>
+ <div class="hcard"><div class="ht" id="ht">&#128072; Start here</div><div class="hb" id="hb">Tap "Get Started" to begin</div></div>
+ <div class="nmap" id="nm"></div>
+
+ <!-- Competitive vs section -->
+ <div style="background:var(--bg2);border:1px solid var(--b);border-radius:12px;padding:10px 12px;margin-bottom:10px">
+  <div style="font-size:10px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px">vs competitors</div>
+  <div class="vs-row"><span class="vs-check">&#10003;</span><span>8.5% APY (Yellow Card: 0%)</span></div>
+  <div class="vs-row"><span class="vs-check">&#10003;</span><span>Non-custodial (Binance: custodial)</span></div>
+  <div class="vs-row"><span class="vs-check">&#10003;</span><span>0 fees (Monica: 1.5% fee)</span></div>
+  <div class="vs-row"><span class="vs-check">&#10003;</span><span>ISA 2025 licensed (P2P: unregulated)</span></div>
+  <div class="vs-row" style="border:none"><span class="vs-check">&#10003;</span><span>Kolo BTC savings (no competitor)</span></div>
+ </div>
+
+ <div class="mets">
+  <div class="mt"><div class="mv cg">$1B+</div><div class="ml">Kontigo model</div></div>
+  <div class="mt"><div class="mv">3.1%</div><div class="ml">Spread</div></div>
+  <div class="mt"><div class="mv cg">v4</div><div class="ml">Final demo</div></div>
+ </div>
+ <button class="rbtn" onclick="nav('onboarding')">&#8635; Restart</button>
 </div>
 
 <script>
 var SCREENS=[
-  {id:'onboarding',label:'Onboarding',group:'Auth',hint:'Tap Get Started'},
-  {id:'phone',label:'Phone number',group:'Auth',hint:'Tap Send Verification Code'},
-  {id:'otp',label:'OTP verification',group:'Auth',hint:'Tap Verify'},
-  {id:'kyc',label:'KYC progress',group:'Auth',hint:'Tap Done to continue'},
-  {id:'home',label:'Home',group:'Main',hint:'Tap any Quick Action'},
-  {id:'dep-amt',label:'Add Money',group:'Deposit',hint:'Choose amount, tap Get Rate'},
-  {id:'dep-quote',label:'Confirm Rate',group:'Deposit',hint:'Tap Confirm & Get Bank Details'},
-  {id:'dep-bank',label:'Bank Transfer',group:'Deposit',hint:'Tap I have Made the Transfer'},
-  {id:'dep-wait',label:'Waiting',group:'Deposit',hint:'Tap Back to Home'},
-  {id:'send',label:'Send USDC',group:'Send',hint:'Select a contact'},
-  {id:'send-pin',label:'PIN confirm',group:'Send',hint:'Tap Confirm Send'},
-  {id:'send-ok',label:'Sent!',group:'Send',hint:'Tap Back to Home'},
-  {id:'withdraw',label:'Withdraw',group:'Withdraw',hint:'Tap Withdraw'},
-  {id:'withdraw-ok',label:'Withdrawal sent',group:'Withdraw',hint:'Tap Back to Home'},
-  {id:'earn',label:'Earn 5.2% APY',group:'Earn',hint:'View earnings'},
-  {id:'history',label:'History',group:'History',hint:'All transactions'},
-  {id:'settings',label:'Settings',group:'Settings',hint:'Bank, PIN, support'},
-  {id:'tabi',label:'Tabi AI',group:'Settings',hint:'AI support assistant'},
+ {id:'onboarding',label:'Onboarding',group:'Auth',hint:'Tap "Get Started" — see $5 bonus CTA'},
+ {id:'phone',label:'Phone number',group:'Auth',hint:'Enter number + referral code'},
+ {id:'otp',label:'OTP verify',group:'Auth',hint:'Tap Verify — see $5 unlock prompt'},
+ {id:'kyc',label:'KYC progress',group:'Auth',hint:'Tap Done to continue'},
+ {id:'home',label:'Home',group:'Main',hint:'See yield notification + Kolo card'},
+ {id:'dep-amt',label:'Add Money',group:'Deposit',hint:'See $5 first-deposit bonus'},
+ {id:'dep-quote',label:'Confirm Rate',group:'Deposit',hint:'0 fees, 15-min lock'},
+ {id:'dep-bank',label:'Bank Transfer',group:'Deposit',hint:'Tap I have Made the Transfer'},
+ {id:'dep-wait',label:'Waiting',group:'Deposit',hint:'~10 min settlement'},
+ {id:'send',label:'Send USDC',group:'Send',hint:'Phone-to-phone or contact send'},
+ {id:'send-pin',label:'PIN confirm',group:'Send',hint:'PIN required for all transfers'},
+ {id:'send-ok',label:'Sent!',group:'Send',hint:'See Chioma referral prompt'},
+ {id:'withdraw',label:'Withdraw',group:'Withdraw',hint:'USDC to NGN to GTBank'},
+ {id:'withdraw-ok',label:'Withdrawal sent',group:'Withdraw',hint:'5-15 min Airwallex payout'},
+ {id:'earn',label:'Earn',group:'Earn',hint:'USDC 8.5% APY + Kolo BTC'},
+ {id:'btc-savings',label:'Kolo — BTC Savings',group:'Earn',hint:'Auto-DCA Bitcoin piggy bank'},
+ {id:'earn-detail',label:'USDC savings detail',group:'Earn',hint:'Circle Yield breakdown'},
+ {id:'referral',label:'Invite & Earn',group:'Growth',hint:'$5 give / $5 get — viral loop'},
+ {id:'history',label:'History',group:'History',hint:'USDC + Kolo + yield transactions'},
+ {id:'settings',label:'Settings',group:'Settings',hint:'ISA 2025 license badges'},
+ {id:'tabi',label:'Tabi AI',group:'Settings',hint:'Balance + rates + support tickets'},
 ];
 
 var cur='onboarding', visited=new Set(['onboarding']);
 
-// Build sidebar nav
-(function(){
-  var nm=document.getElementById('nm');
-  if(!nm)return;
-  var lastG=null;
-  SCREENS.forEach(function(s){
-    if(s.group!==lastG){
-      var gl=document.createElement('div');gl.className='ngl';gl.textContent=s.group;nm.appendChild(gl);lastG=s.group;
-    }
-    var el=document.createElement('div');
-    el.className='ni'+(s.id===cur?' ac':'');el.dataset.id=s.id;
-    el.innerHTML='<span class="nd"></span><span>'+s.label+'</span>';
-    el.addEventListener('click',function(){nav(this.dataset.id);});
-    nm.appendChild(el);
-  });
+(function buildNav(){
+ var nm=document.getElementById('nm');
+ if(!nm)return;
+ var lastG=null;
+ SCREENS.forEach(function(s){
+  if(s.group!==lastG){
+   var gl=document.createElement('div');gl.className='ngl';gl.textContent=s.group;nm.appendChild(gl);lastG=s.group;
+  }
+  var el=document.createElement('div');
+  el.className='ni'+(s.id===cur?' ac':'');el.dataset.id=s.id;
+  el.innerHTML='<span class="nd"></span><span>'+s.label+'</span>';
+  el.addEventListener('click',function(){nav(this.dataset.id);});
+  nm.appendChild(el);
+ });
 })();
 
 function nav(id){
-  if(id===cur)return;
-  var from=document.getElementById('p-'+cur);
-  var to=document.getElementById('p-'+id);
-  if(!from||!to)return;
-
-  // Reset scroll on incoming panel BEFORE showing it
-  var sc=to.querySelector('.scroll');
-  if(sc)sc.scrollTop=0;
-
-  from.classList.remove('on');
-  to.classList.add('on');
-  cur=id; visited.add(id);
-
-  // Update sidebar
-  document.querySelectorAll('.ni').forEach(function(e){
-    var eid=e.dataset.id;
-    e.classList.remove('ac','vi');
-    if(eid===cur)e.classList.add('ac');
-    else if(visited.has(eid))e.classList.add('vi');
-  });
-  var s=SCREENS.find(function(x){return x.id===id;});
-  if(s){
-    var ht=document.getElementById('ht'),hb=document.getElementById('hb');
-    if(ht)ht.textContent=s.label;if(hb)hb.textContent=s.hint;
-  }
-  var ac=document.querySelector('.ni.ac');
-  if(ac)ac.scrollIntoView({behavior:'smooth',block:'nearest'});
+ if(id===cur)return;
+ var from=document.getElementById('p-'+cur);
+ var to=document.getElementById('p-'+id);
+ if(!from||!to)return;
+ var sc=to.querySelector('.scroll');
+ if(sc)sc.scrollTop=0;
+ from.classList.remove('on');
+ to.classList.add('on');
+ cur=id; visited.add(id);
+ document.querySelectorAll('.ni').forEach(function(e){
+  e.classList.remove('ac','vi');
+  if(e.dataset.id===cur)e.classList.add('ac');
+  else if(visited.has(e.dataset.id))e.classList.add('vi');
+ });
+ var s=SCREENS.find(function(x){return x.id===id;});
+ if(s){
+  var ht=document.getElementById('ht'),hb=document.getElementById('hb');
+  if(ht)ht.textContent=s.label;if(hb)hb.textContent=s.hint;
+ }
+ var ac=document.querySelector('.ni.ac');
+ if(ac)ac.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
 function selPre(el){
-  el.parentElement.querySelectorAll('.pre').forEach(function(p){p.classList.remove('on');});
-  el.classList.add('on');
+ el.parentElement.querySelectorAll('.pre').forEach(function(p){p.classList.remove('on');});
+ el.classList.add('on');
 }
 
 function tick(){
-  var n=new Date();
-  var t=('0'+n.getHours()).slice(-2)+':'+('0'+n.getMinutes()).slice(-2);
-  var c=document.getElementById('clk');if(c)c.textContent=t;
+ var n=new Date();
+ var t=('0'+n.getHours()).slice(-2)+':'+('0'+n.getMinutes()).slice(-2);
+ var c=document.getElementById('clk');if(c)c.textContent=t;
 }
 tick();setInterval(tick,30000);
 
 var secs=14*60+58;
 setInterval(function(){
-  if(secs>0)secs--;
-  var v=('0'+Math.floor(secs/60)).slice(-2)+':'+('0'+(secs%60)).slice(-2);
-  var t1=document.getElementById('t1');if(t1)t1.textContent=v;
-  var t2=document.getElementById('t2');if(t2)t2.textContent=v;
+ if(secs>0)secs--;
+ var v=('0'+Math.floor(secs/60)).slice(-2)+':'+('0'+(secs%60)).slice(-2);
+ var t1=document.getElementById('t1');if(t1)t1.textContent=v;
+ var t2=document.getElementById('t2');if(t2)t2.textContent=v;
 },1000);
 </script>
 </body>

@@ -59,7 +59,8 @@ body{width:100%;height:100%;overflow:hidden !important;position:fixed;background
 .scroll{position:absolute;top:0;left:0;right:0;bottom:0;overflow-x:hidden;overflow-y:scroll;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .scroll::-webkit-scrollbar{display:none}
 .panel.has-tab>.scroll{bottom:80px}
-.content{min-height:100%;padding:calc(var(--st) + 18px) 20px 24px;display:flex;flex-direction:column}
+.content{min-height:100%;padding:calc(var(--st) + 20px) 20px 24px;display:flex;flex-direction:column}
+@media(min-width:700px){.content{padding:calc(54px + var(--st) + 10px) 20px 24px}}
 .tabbar{position:absolute;left:0;right:0;bottom:0;height:calc(80px + var(--sb));padding-bottom:var(--sb);
   background:rgba(10,10,10,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:flex-start;
@@ -71,7 +72,6 @@ body{width:100%;height:100%;overflow:hidden !important;position:fixed;background
 /* Sidebar — desktop only */
 .sidebar{display:none}
 @media(min-width:700px){.sidebar{display:block;width:280px;flex-shrink:0;padding-top:8px}}
-@media(min-width:700px){.content{padding:calc(54px + var(--st) + 10px) 20px 24px}}
 
 /* ── Typography ── */
 .h1{font-size:27px;font-weight:700;letter-spacing:-.7px;line-height:1.15}
@@ -382,7 +382,7 @@ body{width:100%;height:100%;overflow:hidden !important;position:fixed;background
      <div style="font-size:11px;color:var(--btc);font-weight:600">+18.3% &#8599;</div>
     </div>
 
-    <div class="chips"><div class="chip">&#128274; Cobo MAS</div><div class="chip">&#9989; ISA 2025</div><div class="chip">&#9935; Base L2</div><div class="chip" style="background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.3);color:var(--amber);cursor:pointer" onclick="nav('settings')">T1 · $100/day ↑</div></div>
+    <div class="chips"><div class="chip">&#128274; Cobo MAS</div><div class="chip">&#9989; ISA 2025</div><div class="chip">&#9935; Base L2</div><div class="chip" style="background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.3);color:var(--amber);cursor:pointer" onclick="nav('settings')">T1 · $100/day &#8599;</div></div>
 
     <div class="h3" style="margin-bottom:8px">Quick Actions</div>
     <div class="card" style="padding:12px;margin-bottom:12px">
@@ -495,7 +495,7 @@ body{width:100%;height:100%;overflow:hidden !important;position:fixed;background
     <div style="width:100%;background:var(--bg3);border-radius:14px;padding:14px;margin-bottom:14px;text-align:left">
      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span style="font-size:12px;color:var(--t2)">Transfer status</span><span style="font-size:11px;color:var(--amber);font-weight:600">PENDING</span></div>
      <div class="pb"><div class="pf"></div></div>
-     <div style="font-size:11px;color:var(--t3);line-height:1.9;margin-top:8px">&#128178; Waiting for your bank transfer<br>&#128274; USDC secured in Cobo MPC — even if delayed, funds are safe<br>&#128276; Push notification on arrival<br>&#9989; Rate locked for 15 min — transfer now</div>
+     <div style="font-size:11px;color:var(--t3);line-height:1.9;margin-top:8px">&#128178; Waiting for your bank transfer<br>&#128274; USDC secured in Cobo MPC — even if delayed, your funds are safe<br>&#128276; Push notification on arrival<br>&#9989; Rate locked for 15 min — transfer now</div>
     </div>
     <button class="btn btn-g" style="width:100%" onclick="nav('home')">Back to Home</button>
     <div style="font-size:11px;color:var(--t3);margin-top:10px">~10 min &#183; <span style="color:var(--g);cursor:pointer" onclick="nav('tabi')">Need help?</span></div>
@@ -583,15 +583,7 @@ body{width:100%;height:100%;overflow:hidden !important;position:fixed;background
      <div class="sring" style="font-size:30px">&#127968;</div>
      <div class="h1" style="margin-bottom:8px">On its way!</div>
      <div class="bd" style="padding:0 16px;margin-bottom:16px"><strong style="color:var(--t)">&#8358;80,000</strong> headed to your GTBank account.</div>
-     <div style="width:100%;background:var(--bg3);border-radius:14px;padding:13px 15px">
-        <div style="font-size:12px;color:var(--t2);margin-bottom:3px">&#128178; Via Airwallex NGN payout</div>
-        <div style="font-size:11px;color:var(--t3);margin-bottom:10px">Expected 5-15 min</div>
-        <div style="display:flex;justify-content:space-between;padding-top:9px;border-top:1px solid var(--b)">
-          <div style="text-align:center"><div style="font-size:16px;font-weight:700;color:var(--g)">7 min</div><div style="font-size:9px;color:var(--t3);margin-top:2px">Avg today</div></div>
-          <div style="text-align:center"><div style="font-size:16px;font-weight:700">98.7%</div><div style="font-size:9px;color:var(--t3);margin-top:2px">Success rate</div></div>
-          <div style="text-align:center"><div style="font-size:16px;font-weight:700">2,841</div><div style="font-size:9px;color:var(--t3);margin-top:2px">Processed</div></div>
-        </div>
-      </div>
+     <div style="width:100%;background:var(--bg3);border-radius:14px;padding:13px 15px"><div style="font-size:12px;color:var(--t2);margin-bottom:3px">&#128178; Via Airwallex NGN payout</div><div style="font-size:11px;color:var(--t3);margin-bottom:9px">Expected 5-15 min</div><div style="display:flex;justify-content:space-between;padding-top:9px;border-top:1px solid var(--b)"><div style="text-align:center"><div style="font-size:16px;font-weight:700;color:var(--g)">7 min</div><div style="font-size:9px;color:var(--t3);margin-top:2px">Avg today</div></div><div style="text-align:center"><div style="font-size:16px;font-weight:700">98.7%</div><div style="font-size:9px;color:var(--t3);margin-top:2px">Success rate</div></div><div style="text-align:center"><div style="font-size:16px;font-weight:700">2,841</div><div style="font-size:9px;color:var(--t3);margin-top:2px">Processed</div></div></div></div>
     </div>
     <div style="width:100%"><button class="btn btn-g" onclick="nav('home')">Back to Home</button><button class="btn btn-gh" onclick="nav('history')">View History</button></div>
    </div></div>
@@ -630,12 +622,11 @@ body{width:100%;height:100%;overflow:hidden !important;position:fixed;background
     </div>
 
     <div class="card" style="margin-bottom:10px">
-     <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px">Your Earnings</div>
      <div class="er"><span class="el">USDC today</span><span class="ev">+$0.07</span></div>
      <div class="er"><span class="el">USDC this month</span><span class="ev">+$1.77</span></div>
      <div class="er"><span class="el">USDC this year (proj.)</span><span class="ev">+$21.26</span></div>
-     <div class="er"><span class="el">Kolo BTC saved</span><span class="ev-btc">&#8383;0.00041 ≈ $27.50</span></div>
-     <div class="er" style="border:none;padding-top:10px;border-top:1px solid var(--b);margin-top:2px"><span style="font-size:12px;font-weight:500">Total portfolio</span><span style="font-size:18px;font-weight:700;color:var(--t)">$277.57</span></div>
+     <div class="er"><span class="el">Kolo BTC saved</span><span class="ev-btc">&#8383;0.00041 &#8776; $27.50</span></div>
+     <div class="er" style="border:none;padding-top:9px;border-top:1px solid var(--b)"><span style="font-size:12px;font-weight:500">Total portfolio</span><span style="font-size:18px;font-weight:700;color:var(--t)">$277.57</span></div>
     </div>
 
     <div style="background:var(--bg3);border-radius:10px;padding:10px;font-size:10px;color:var(--t3);line-height:1.6">&#9432; USDC APY via Circle Yield. BTC is volatile — only save what you can hold long-term. Not a bank deposit.</div>
@@ -677,18 +668,7 @@ body{width:100%;height:100%;overflow:hidden !important;position:fixed;background
      <div class="bd" style="font-size:12px;line-height:1.8">&#10003; NGN lost 50%+ vs USD in 2024<br>&#10003; USDC protects from NGN devaluation<br>&#10003; Bitcoin as long-term wealth builder<br>&#10003; Withdraw anytime — no lock-up</div>
     </div>
 
-    <div style="background:var(--bg3);border-radius:12px;padding:12px;margin-bottom:14px">
-      <div style="font-size:11px;font-weight:500;margin-bottom:8px">Risk Level</div>
-      <div style="display:flex;gap:3px;margin-bottom:6px">
-        <div style="flex:1;height:5px;border-radius:3px;background:var(--g)"></div>
-        <div style="flex:1;height:5px;border-radius:3px;background:var(--g)"></div>
-        <div style="flex:1;height:5px;border-radius:3px;background:var(--amber)"></div>
-        <div style="flex:1;height:5px;border-radius:3px;background:var(--amber)"></div>
-        <div style="flex:1;height:5px;border-radius:3px;background:var(--b2)"></div>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--t3)"><span>Low</span><span style="color:var(--amber);font-weight:500">Medium-High ←</span><span>Very High</span></div>
-      <div style="font-size:10px;color:var(--t3);line-height:1.6;margin-top:7px;padding-top:7px;border-top:1px solid var(--b)">&#9432; Bitcoin is volatile. Only save what you can hold long-term. Auto-DCA helps average your entry price over time.</div>
-    </div>
+    <div style="background:var(--bg3);border-radius:12px;padding:12px;margin-bottom:14px"><div style="font-size:11px;font-weight:500;margin-bottom:7px">Risk Level</div><div style="display:flex;gap:3px;margin-bottom:5px"><div style="flex:1;height:5px;border-radius:3px;background:var(--g)"></div><div style="flex:1;height:5px;border-radius:3px;background:var(--g)"></div><div style="flex:1;height:5px;border-radius:3px;background:var(--amber)"></div><div style="flex:1;height:5px;border-radius:3px;background:var(--amber)"></div><div style="flex:1;height:5px;border-radius:3px;background:var(--b2)"></div></div><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--t3)"><span>Low</span><span style="color:var(--amber);font-weight:500">Medium-High &#8592;</span><span>Max</span></div><div style="font-size:10px;color:var(--t3);line-height:1.6;margin-top:7px;padding-top:7px;border-top:1px solid var(--b)">&#9432; Bitcoin is volatile. Only save what you can hold long-term. Auto-DCA averages your entry price over time.</div></div>
 
     <button class="btn btn-g" onclick="nav('earn')">&#8592; Back to Earn</button>
    </div></div>
@@ -713,7 +693,7 @@ body{width:100%;height:100%;overflow:hidden !important;position:fixed;background
      <div style="font-size:13px;font-weight:600;margin-bottom:7px">How it works</div>
      <div class="bd" style="font-size:12px;line-height:1.8">&#10003; USDC earns 8.5% APY via Circle Yield<br>&#10003; Credited daily, compounded<br>&#10003; Withdraw anytime — no penalties<br>&#10003; Backed by US Treasuries + cash</div>
     </div>
-    <div style="background:rgba(39,117,202,.08);border:1px solid rgba(39,117,202,.2);border-radius:12px;padding:12px;font-size:11px;color:rgba(39,117,202,.85);line-height:1.85">&#9432; <strong>Where does 8.5% come from?</strong> Your USDC is placed in Circle Yield — a regulated institutional lending product by Circle (who issues USDC). Circle lends to vetted institutional borrowers and passes the interest to you daily. APY is variable and reviewed weekly. Not a bank deposit. Not NDIC insured.</div>
+    <div style="background:rgba(39,117,202,.08);border:1px solid rgba(39,117,202,.2);border-radius:12px;padding:11px;font-size:11px;color:rgba(39,117,202,.8);line-height:1.7">&#9432; <strong>Where does 8.5% come from?</strong> Your USDC is placed in Circle Yield — a regulated product by Circle (USDC issuer). They lend to vetted institutional borrowers and pass interest to you daily. APY is variable. Not a bank deposit. Not NDIC insured.</div>
    </div></div>
   </div>
 
@@ -800,32 +780,7 @@ body{width:100%;height:100%;overflow:hidden !important;position:fixed;background
 
     <div class="cp" style="margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px">KYC & Limits</div>
     <div class="card" style="margin-bottom:12px">
-     <div class="sr" style="border:none;flex-direction:column;align-items:flex-start;gap:10px">
-      <div style="display:flex;justify-content:space-between;align-items:center;width:100%">
-        <div style="font-size:13px;font-weight:500">&#128100; KYC &amp; Limits</div>
-        <span style="font-size:10px;background:var(--gd);color:var(--g);border:1px solid var(--gb);padding:2px 8px;border-radius:8px">Tier 1 Active</span>
-      </div>
-      <div style="display:flex;gap:6px;width:100%">
-        <div style="flex:1;background:var(--gd);border:1.5px solid var(--gb);border-radius:10px;padding:8px 9px">
-          <div style="font-size:9px;color:var(--g);font-weight:700;text-transform:uppercase;letter-spacing:.5px">T1 &#10003;</div>
-          <div style="font-size:13px;font-weight:700;margin-top:3px">$100</div>
-          <div style="font-size:9px;color:var(--t3);margin-top:1px">per day</div>
-          <div style="font-size:9px;color:var(--t2);margin-top:4px">Phone verified</div>
-        </div>
-        <div style="flex:1;background:var(--bg3);border:1px solid var(--b);border-radius:10px;padding:8px 9px;cursor:pointer">
-          <div style="font-size:9px;color:var(--amber);font-weight:700;text-transform:uppercase;letter-spacing:.5px">T2 Upgrade</div>
-          <div style="font-size:13px;font-weight:700;margin-top:3px;color:var(--t2)">$1,000</div>
-          <div style="font-size:9px;color:var(--t3);margin-top:1px">per day</div>
-          <div style="font-size:9px;color:var(--t2);margin-top:4px">NIN + Selfie · 5 min</div>
-        </div>
-        <div style="flex:1;background:var(--bg3);border:1px solid var(--b);border-radius:10px;padding:8px 9px;opacity:.5">
-          <div style="font-size:9px;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.5px">T3 Biz</div>
-          <div style="font-size:13px;font-weight:700;margin-top:3px;color:var(--t3)">$10k</div>
-          <div style="font-size:9px;color:var(--t3);margin-top:1px">per day</div>
-          <div style="font-size:9px;color:var(--t3);margin-top:4px">CAC docs · 24h</div>
-        </div>
-      </div>
-    </div>
+     <div class="sr" style="border:none;flex-direction:column;align-items:flex-start;gap:9px"><div style="display:flex;justify-content:space-between;align-items:center;width:100%"><span style="font-size:13px;font-weight:500">&#128100; KYC &amp; Limits</span><span style="font-size:10px;background:var(--gd);color:var(--g);border:1px solid var(--gb);padding:2px 8px;border-radius:8px">T1 Active</span></div><div style="display:flex;gap:6px;width:100%"><div style="flex:1;background:var(--gd);border:1.5px solid var(--gb);border-radius:10px;padding:8px 9px"><div style="font-size:9px;color:var(--g);font-weight:700;letter-spacing:.5px">T1 &#10003;</div><div style="font-size:13px;font-weight:700;margin-top:2px">$100</div><div style="font-size:9px;color:var(--t3)">/ day</div><div style="font-size:9px;color:var(--t2);margin-top:3px">Phone verified</div></div><div style="flex:1;background:var(--bg3);border:1px solid var(--b);border-radius:10px;padding:8px 9px;cursor:pointer"><div style="font-size:9px;color:var(--amber);font-weight:700;letter-spacing:.5px">T2 &#8599;</div><div style="font-size:13px;font-weight:700;margin-top:2px;color:var(--t2)">$1,000</div><div style="font-size:9px;color:var(--t3)">/ day</div><div style="font-size:9px;color:var(--t2);margin-top:3px">NIN+Selfie 5min</div></div><div style="flex:1;background:var(--bg3);border:1px solid var(--b);border-radius:10px;padding:8px 9px;opacity:.45"><div style="font-size:9px;color:var(--t3);font-weight:700;letter-spacing:.5px">T3 BIZ</div><div style="font-size:13px;font-weight:700;margin-top:2px;color:var(--t3)">$10k</div><div style="font-size:9px;color:var(--t3)">/ day</div><div style="font-size:9px;color:var(--t3);margin-top:3px">CAC docs 24h</div></div></div></div>
     </div>
 
     <div class="cp" style="margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px">Security</div>
@@ -844,7 +799,7 @@ body{width:100%;height:100%;overflow:hidden !important;position:fixed;background
     <div class="cp" style="margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px">Support</div>
     <div class="card" style="margin-bottom:14px">
      <div class="sr" onclick="nav('tabi')"><div class="sl"><span style="font-size:17px;margin-right:9px">&#128172;</span><div><div style="font-size:13px;font-weight:500">Tabi AI — WhatsApp</div><div style="font-size:10px;color:var(--t2);margin-top:1px">Balance &#183; Rates &#183; Support tickets</div></div></div><span style="color:var(--t3)">&rsaquo;</span></div>
-     <div class="sr"><div class="sl"><span style="font-size:17px;margin-right:9px">&#128140;</span><div><div style="font-size:13px;font-weight:500">Email support</div><div style="font-size:10px;color:var(--t2);margin-top:1px"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4e3d3b3e3e213c3a0e3d3a2f2c222b392f22222b3a602f3e3e">[email&#160;protected]</a> &#183; 24h SLA</div></div></div><span style="color:var(--t3)">&rsaquo;</span></div>
+     <div class="sr"><div class="sl"><span style="font-size:17px;margin-right:9px">&#128140;</span><div><div style="font-size:13px;font-weight:500">Email support</div><div style="font-size:10px;color:var(--t2);margin-top:1px"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="562523262639242216252237343a3321373a3a332278372626">[email&#160;protected]</a> &#183; 24h SLA</div></div></div><span style="color:var(--t3)">&rsaquo;</span></div>
     </div>
 
     <button class="btn btn-d" onclick="nav('onboarding')">Sign out</button>
@@ -874,8 +829,8 @@ body{width:100%;height:100%;overflow:hidden !important;position:fixed;background
      <div class="wab wat"><div class="wan">TABI</div>&#9989; Ticket <strong style="color:var(--g)">#SW-8472</strong> created.<br>&#128338; Response within 2 hours.<br>Your USDC is safe in Cobo MPC.</div>
      <div class="wab wau">Check my balance</div>
      <div class="wab wat"><div class="wan">TABI</div>&#128176; <strong style="color:var(--g)">$250.07 USDC</strong> &#8776; &#8358;400,112<br>&#129311; Kolo: &#8383;0.00041 &#8776; $27.50<br>Total: <strong>$277.57</strong> &#183; Earning +$0.07/day &#127807;</div>
-    <div class="wab wau">Set a rate alert when USD/NGN hits 1700</div>
-    <div class="wab wat"><div class="wan">TABI</div>&#9989; Alert set! I'll notify you when the buy rate hits <strong>&#8358;1,700/USDC</strong>. Current: &#8358;1,550. <span style="color:var(--g)">~9.7% away.</span></div>
+    <div class="wab wau">Set a rate alert when NGN hits &#8358;1,700</div>
+    <div class="wab wat"><div class="wan">TABI</div>&#9989; Alert set! I'll notify you when buy rate hits <strong>&#8358;1,700/USDC</strong>. Current: &#8358;1,550 &#183; <span style="color:var(--g)">~9.7% away</span>.</div>
     </div>
     <div class="wainp"><span style="font-size:12px;color:var(--t2);flex:1">Ask Tabi anything<span class="cur" style="vertical-align:middle"></span></span><span style="font-size:17px">&#128247;</span><span style="font-size:17px">&#127908;</span></div>
    </div></div>
@@ -991,4 +946,11 @@ tick();setInterval(tick,30000);
 
 var secs=14*60+58;
 setInterval(function(){
- if(secs>0)secs--
+ if(secs>0)secs--;
+  var v=('0'+Math.floor(secs/60)).slice(-2)+':'+('0'+(secs%60)).slice(-2);
+  var t1=document.getElementById('t1');if(t1)t1.textContent=v;
+  var t2=document.getElementById('t2');if(t2)t2.textContent=v;
+},1000);
+</script>
+</body>
+</html>

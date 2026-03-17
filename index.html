@@ -445,7 +445,7 @@ body{
      <div class="body" style="font-size:12px;line-height:1.75">&#10003; You'll get a push notification when verified<br>&#10003; Usually takes 2-5 minutes<br>&#10003; You can close the app and come back</div>
     </div>
     <button class="btn btn-green" onclick="nav('home')">Done — Go to Home &#8594;</button>
-    <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--t3)">Problem? <span style="color:var(--g);cursor:pointer">Email support@stablewallet.app</span></div>
+    <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--t3)">Problem? <span style="color:var(--g);cursor:pointer">Email support&#64;stablewallet.app</span></div>
    </div>
   </div>
 
@@ -802,7 +802,7 @@ body{
     <div class="caption" style="margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px">Support</div>
     <div class="card" style="margin-bottom:12px">
      <div class="setting-row" onclick="nav('tabi')"><div class="setting-left"><span style="font-size:17px;margin-right:9px">&#128172;</span><div><div style="font-size:13px;font-weight:500">WhatsApp (Tabi AI)</div><div style="font-size:10px;color:var(--t2);margin-top:1px">Balance · Rates · Support tickets</div></div></div><span style="color:var(--t3)">&rsaquo;</span></div>
-     <div class="setting-row"><div class="setting-left"><span style="font-size:17px;margin-right:9px">&#128140;</span><div><div style="font-size:13px;font-weight:500">Email support</div><div style="font-size:10px;color:var(--t2);margin-top:1px">support@stablewallet.app · 24h</div></div></div><span style="color:var(--t3)">&rsaquo;</span></div>
+     <div class="setting-row"><div class="setting-left"><span style="font-size:17px;margin-right:9px">&#128140;</span><div><div style="font-size:13px;font-weight:500">Email support</div><div style="font-size:10px;color:var(--t2);margin-top:1px">support&#64;stablewallet&#46;app · 24h</div></div></div><span style="color:var(--t3)">&rsaquo;</span></div>
     </div>
     <div class="caption" style="margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px">Legal</div>
     <div class="card" style="margin-bottom:14px">
@@ -873,7 +873,7 @@ const NAV = [
   {id:'home',          label:'Home — Balance',      group:'② Home',          hint:'Tap any Quick Action button to explore'},
   {id:'deposit-amount',label:'Add Money — Amount',  group:'③ Deposit (NGN→USDC)', hint:'Select amount, tap "Get Rate"'},
   {id:'deposit-quote', label:'Confirm Rate',        group:'③ Deposit (NGN→USDC)', hint:'Tap "Confirm & Get Bank Details"'},
-  {id:'deposit-bank',  label:'Bank Transfer',       group:'③ Deposit (NGN→USDC)', hint:'Tap "I've Made the Transfer"'},
+  {id:'deposit-bank',  label:'Bank Transfer',       group:'③ Deposit (NGN→USDC)', hint:'Tap "I\'ve Made the Transfer"'},
   {id:'deposit-waiting',label:'Waiting for deposit',group:'③ Deposit (NGN→USDC)', hint:'Tap "Back to Home" or "Need help?"'},
   {id:'send',          label:'Send USDC',           group:'④ Send',          hint:'Select a contact to send to'},
   {id:'send-pin',      label:'PIN confirmation',    group:'④ Send',          hint:'Tap "Confirm Send"'},
@@ -964,16 +964,6 @@ function updateClock() {
 }
 
 buildNav();
-updateClock();
-setInterval(updateClock, 30000);
-
-// Quote timers
-let sec = 14 * 60 + 58;
-setInterval(() => {
-  if (sec > 0) sec--;
-  const v = String(Math.floor(sec/60)).padStart(2,'0') + ':' + String(sec%60).padStart(2,'0');
-  ['t1','t2'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent = v; });
-}, 1000);
 </script>
 </body>
 </html>
